@@ -4,7 +4,7 @@ Theme URI: https://example.com
 Description: Child Theme dari Hello Elementor untuk Website Portofolio Pribadi Rafi (Standar Digital Agency).
 Author: Rafi
 Template: hello-elementor
-Version: 1.5.0
+Version: 1.5.1
 Text Domain: hello-elementor-child
 */
 
@@ -737,7 +737,44 @@ body.page-id-19 [data-elementor-type="wp-page"]>.e-con:nth-of-type(2) {
 	font-size: 0.9rem;
 }
 
+/* ==========================================================================
+   Responsive Polish — Tablet (768px–1024px) & Mobile (<=767px / 390px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+	.rf-modern-cta > .e-con-inner,
+	.rf-modern-cta {
+		flex-direction: column !important;
+		align-items: flex-start !important;
+	}
+
+	/* Comfortable touch targets on HFE mobile/tablet dropdown */
+	.hfe-nav-menu .menu-item > a.hfe-menu-item {
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.hfe-nav-menu__breakpoint-tablet .hfe-nav-menu {
+		box-shadow: 0 18px 38px -18px rgba(15, 23, 42, 0.18);
+		border-bottom: 1px solid var(--rf-border);
+	}
+}
+
 @media (max-width: 767px) {
+	/* Keep portrait compact & centered on 390px mobile so headline stays above/near fold */
+	.rf-hero-photo {
+		max-width: 240px;
+		margin: 0 auto;
+	}
+
+	.rf-hero-photo img {
+		border-radius: 18px !important;
+	}
+
+	.rf-modern-cta {
+		border-radius: 18px !important;
+	}
+
 	.rf-case-study {
 		padding: 40px 18px 64px;
 	}
