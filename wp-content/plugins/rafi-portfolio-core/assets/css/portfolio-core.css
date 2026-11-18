@@ -1,0 +1,434 @@
+/* Rafi Portfolio Core — Compact Editorial Projects & Verified Credential Tiles (v1.5.0) */
+
+.rf-portfolio-module {
+	width: 100%;
+	font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Filter Bar */
+.rf-filter-bar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 22px;
+}
+
+.rf-filter-btn {
+	appearance: none;
+	border: 1px solid #e2e8f0;
+	background: #ffffff;
+	color: #475569;
+	padding: 7px 15px;
+	border-radius: 999px;
+	font-family: inherit;
+	font-size: 0.85rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rf-filter-btn:hover {
+	border-color: #2563eb;
+	color: #2563eb;
+}
+
+.rf-filter-btn.is-active {
+	background: #0f172a;
+	border-color: #0f172a;
+	color: #ffffff;
+}
+
+.rf-card.is-hidden {
+	display: none !important;
+}
+
+/* ==========================================================================
+   1. COMPACT EDITORIAL PROJECT ROWS (Hemat ruang, modern, animasi ringan)
+   ========================================================================== */
+.rf-project-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.rf-proj-row {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 20px 24px;
+	background: #ffffff;
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 4px 16px -10px rgba(15, 23, 42, 0.07);
+	transition:
+		transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+		border-color 0.24s ease,
+		box-shadow 0.24s ease;
+}
+
+/* Subtle animated left accent bar on hover */
+.rf-proj-row::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 14px;
+	bottom: 14px;
+	width: 3.5px;
+	border-radius: 0 4px 4px 0;
+	background: #2563eb;
+	transform: scaleY(0);
+	transform-origin: center;
+	transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rf-proj-row:hover {
+	transform: translateX(5px);
+	border-color: rgba(37, 99, 235, 0.3);
+	box-shadow: 0 14px 30px -16px rgba(37, 99, 235, 0.16);
+}
+
+.rf-proj-row:hover::before {
+	transform: scaleY(1);
+}
+
+.rf-proj-row-left {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	min-width: 0;
+	flex: 1;
+}
+
+.rf-proj-index {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: #f1f5f9;
+	color: #0f172a;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.86rem;
+	font-weight: 700;
+	flex-shrink: 0;
+	transition: background-color 0.24s ease, color 0.24s ease, transform 0.24s ease;
+}
+
+.rf-proj-row:hover .rf-proj-index {
+	background: #eff6ff;
+	color: #2563eb;
+	transform: scale(1.05);
+}
+
+.rf-proj-mini-thumb {
+	display: block;
+	width: 96px;
+	height: 64px;
+	border-radius: 10px;
+	overflow: hidden;
+	border: 1px solid #e2e8f0;
+	flex-shrink: 0;
+}
+
+.rf-proj-mini-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rf-proj-row:hover .rf-proj-mini-thumb img {
+	transform: scale(1.07);
+}
+
+.rf-proj-info {
+	min-width: 0;
+	flex: 1;
+}
+
+.rf-proj-meta-line {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 5px;
+}
+
+.rf-pill {
+	display: inline-block;
+	padding: 2px 9px;
+	border-radius: 999px;
+	background: #eff6ff;
+	color: #2563eb;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.rf-year {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.76rem;
+	color: #64748b;
+}
+
+.rf-tech-inline {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.74rem;
+	color: #64748b;
+}
+
+.rf-proj-title {
+	margin: 0 0 4px;
+	font-size: 1.06rem;
+	font-weight: 700;
+	line-height: 1.3;
+	color: #0f172a;
+}
+
+.rf-proj-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.rf-proj-row:hover .rf-proj-title a {
+	color: #2563eb;
+}
+
+.rf-proj-desc {
+	margin: 0;
+	font-size: 0.89rem;
+	line-height: 1.5;
+	color: #475569;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.rf-proj-row-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+}
+
+.rf-action-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 12px;
+	border-radius: 999px;
+	border: 1px solid #e2e8f0;
+	background: #f8fafc;
+	color: #475569;
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.rf-action-chip:hover {
+	border-color: #2563eb;
+	background: #eff6ff;
+	color: #2563eb;
+}
+
+.rf-arrow-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 999px;
+	background: #f1f5f9;
+	color: #0f172a;
+	text-decoration: none;
+	flex-shrink: 0;
+	transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
+}
+
+.rf-arrow-btn svg {
+	transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rf-proj-row:hover .rf-arrow-btn,
+.rf-cert-tile:hover .rf-arrow-btn,
+.rf-arrow-btn:hover {
+	background: #2563eb;
+	color: #ffffff;
+}
+
+.rf-proj-row:hover .rf-arrow-btn svg,
+.rf-cert-tile:hover .rf-arrow-btn svg,
+.rf-arrow-btn:hover svg {
+	transform: translate(2px, -2px);
+}
+
+.rf-arrow-btn-sm {
+	width: 34px;
+	height: 34px;
+}
+
+/* ==========================================================================
+   2. COMPACT VERIFIED CREDENTIAL TILES (Sertifikat — 2 Kolom Rapi & Modern)
+   ========================================================================== */
+.rf-cert-grid {
+	display: grid;
+	gap: 14px;
+}
+
+.rf-grid-cols-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rf-grid-cols-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rf-cert-tile {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px 20px;
+	background: #ffffff;
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	border-radius: 16px;
+	box-shadow: 0 4px 16px -10px rgba(15, 23, 42, 0.07);
+	transition:
+		transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+		border-color 0.24s ease,
+		box-shadow 0.24s ease;
+}
+
+.rf-cert-tile:hover {
+	transform: translateY(-3px);
+	border-color: rgba(37, 99, 235, 0.32);
+	box-shadow: 0 14px 28px -16px rgba(37, 99, 235, 0.16);
+}
+
+.rf-cert-badge-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: #eff6ff;
+	color: #2563eb;
+	flex-shrink: 0;
+	transition: background-color 0.24s ease, color 0.24s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rf-cert-tile:hover .rf-cert-badge-icon {
+	background: #2563eb;
+	color: #ffffff;
+	transform: rotate(-6deg) scale(1.06);
+}
+
+.rf-cert-content {
+	min-width: 0;
+	flex: 1;
+}
+
+.rf-cert-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 4px;
+	font-size: 0.78rem;
+}
+
+.rf-cert-issuer {
+	font-weight: 700;
+	color: #2563eb;
+}
+
+.rf-cert-dot {
+	color: #94a3b8;
+}
+
+.rf-cert-title {
+	margin: 0 0 4px;
+	font-size: 0.97rem;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #0f172a;
+}
+
+.rf-cert-code {
+	display: inline-block;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	color: #64748b;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	padding: 1px 7px;
+	border-radius: 6px;
+}
+
+/* Smooth filter reveal animation */
+@keyframes rfCardFilterIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 10px, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.rf-card.is-filtering-in {
+	animation: rfCardFilterIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rf-empty-state {
+	padding: 24px;
+	border-radius: 14px;
+	border: 1px dashed #cbd5e1;
+	background: #ffffff;
+	color: #475569;
+	text-align: center;
+	font-size: 0.92rem;
+}
+
+@media (max-width: 900px) {
+	.rf-grid-cols-2,
+	.rf-grid-cols-3 {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 767px) {
+	.rf-proj-row {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 18px;
+		gap: 14px;
+	}
+
+	.rf-proj-row-left {
+		width: 100%;
+		align-items: flex-start;
+	}
+
+	.rf-proj-desc {
+		-webkit-line-clamp: 2;
+	}
+
+	.rf-proj-row-actions {
+		width: 100%;
+		justify-content: flex-end;
+	}
+
+	.rf-tech-inline {
+		display: none;
+	}
+}

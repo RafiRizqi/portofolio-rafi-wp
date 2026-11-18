@@ -1,0 +1,22 @@
+# Ignore everything by default except custom development code
+*
+!.gitignore
+
+# Allow wp-content traversal
+!wp-content/
+!wp-content/themes/
+!wp-content/plugins/
+
+# Track our custom Child Theme
+!wp-content/themes/hello-elementor-child/
+!wp-content/themes/hello-elementor-child/**
+
+# Track our custom Portfolio Core Plugin
+!wp-content/plugins/rafi-portfolio-core/
+!wp-content/plugins/rafi-portfolio-core/**
+
+# Always ignore OS/editor/log clutter inside tracked folders
+.DS_Store
+Thumbs.db
+*.log
+node_modules/

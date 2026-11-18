@@ -1,0 +1,767 @@
+/*
+Theme Name: Hello Elementor Child — Portofolio Rafi
+Theme URI: https://example.com
+Description: Child Theme dari Hello Elementor untuk Website Portofolio Pribadi Rafi (Standar Digital Agency).
+Author: Rafi
+Template: hello-elementor
+Version: 1.5.0
+Text Domain: hello-elementor-child
+*/
+
+:root {
+	--rf-primary: #2563eb;
+	--rf-primary-hover: #1d4ed8;
+	--rf-primary-soft: #eff6ff;
+	--rf-dark: #0f172a;
+	--rf-body: #475569;
+	--rf-muted: #64748b;
+	--rf-surface: #f8fafc;
+	--rf-border: #e2e8f0;
+	--rf-bg: #eef5ff;
+	--rf-radius: 14px;
+	--rf-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--rf-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	/* Seamless Soft Multi-Section Pastel Palette */
+	--rf-sec-blue: #eaf3ff;
+	--rf-sec-lavender: #f3eeff;
+	--rf-sec-mint: #ecfaf4;
+	--rf-sec-peach: #fff5eb;
+	--rf-sec-rose: #fdf2f8;
+	--rf-sec-indigo: #eef2ff;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--rf-font-sans);
+	color: var(--rf-body);
+	background-color: var(--rf-sec-blue);
+	overflow-x: clip;
+}
+
+/* ==========================================================================
+   Sticky Header & Seamless Soft Footer (Zero heavy backdrop-filter lag)
+   ========================================================================== */
+header#masthead {
+	position: sticky;
+	top: 0;
+	z-index: 999;
+	transition: box-shadow 0.25s ease;
+}
+
+header#masthead>.elementor>.e-con {
+	background-color: rgba(255, 255, 255, 0.96) !important;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.75) !important;
+}
+
+header#masthead.is-scrolled {
+	box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.1);
+}
+
+footer#colophon>.elementor>.e-con {
+	background: linear-gradient(180deg, var(--rf-sec-indigo) 0%, #e5ecff 100%) !important;
+	border-top: none !important;
+}
+
+.admin-bar header#masthead {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar header#masthead {
+		top: 46px;
+	}
+}
+
+/* ==========================================================================
+   Seamless Soft Multi-Section Backgrounds (Each section distinct, soft blend)
+   ========================================================================== */
+.rf-sec,
+[data-elementor-type="wp-page"]>.e-con {
+	border-top: none !important;
+	border-bottom: none !important;
+}
+
+/* Beranda — 6 Sections with smooth color-to-color blending seams */
+.rf-sec-hero {
+	background: linear-gradient(180deg, var(--rf-sec-blue) 0%, var(--rf-sec-blue) 74%, var(--rf-sec-lavender) 100%) !important;
+}
+
+.rf-sec-marquee {
+	background: linear-gradient(180deg, var(--rf-sec-lavender) 0%, var(--rf-sec-lavender) 72%, var(--rf-sec-mint) 100%) !important;
+}
+
+.rf-sec-projects {
+	background: linear-gradient(180deg, var(--rf-sec-mint) 0%, var(--rf-sec-mint) 80%, var(--rf-sec-peach) 100%) !important;
+}
+
+.rf-sec-about {
+	background: linear-gradient(180deg, var(--rf-sec-peach) 0%, var(--rf-sec-peach) 80%, var(--rf-sec-rose) 100%) !important;
+}
+
+.rf-sec-certs {
+	background: linear-gradient(180deg, var(--rf-sec-rose) 0%, var(--rf-sec-rose) 80%, var(--rf-sec-indigo) 100%) !important;
+}
+
+.rf-sec-cta {
+	background: var(--rf-sec-indigo) !important;
+}
+
+/* Sub-halaman (CV, Sertifikat, Proyek, Kontak) — Seamless soft section blending */
+body:not(.home) [data-elementor-type="wp-page"]>.e-con:nth-of-type(1) {
+	background: linear-gradient(180deg, var(--rf-sec-blue) 0%, var(--rf-sec-blue) 74%, var(--rf-sec-mint) 100%) !important;
+}
+
+body:not(.home) [data-elementor-type="wp-page"]>.e-con:nth-of-type(2) {
+	background: linear-gradient(180deg, var(--rf-sec-mint) 0%, var(--rf-sec-mint) 80%, var(--rf-sec-indigo) 100%) !important;
+}
+
+body:not(.home) [data-elementor-type="wp-page"]>.e-con:nth-of-type(3) {
+	background: linear-gradient(180deg, var(--rf-sec-peach) 0%, var(--rf-sec-peach) 80%, var(--rf-sec-indigo) 100%) !important;
+}
+
+/* Jika halaman punya 3 section (seperti CV), buat transisi section 2 ke section 3 mulus */
+body.page-id-19 [data-elementor-type="wp-page"]>.e-con:nth-of-type(2) {
+	background: linear-gradient(180deg, var(--rf-sec-mint) 0%, var(--rf-sec-mint) 80%, var(--rf-sec-peach) 100%) !important;
+}
+
+/* Soft cards on pastel sections */
+.rf-soft-card {
+	background: #ffffff;
+	border: 1px solid rgba(226, 232, 240, 0.85);
+	border-radius: 14px;
+	padding: 20px 22px;
+	box-shadow: 0 6px 20px -12px rgba(15, 23, 42, 0.08);
+	transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.rf-soft-card:hover {
+	transform: translateY(-3px);
+	border-color: rgba(37, 99, 235, 0.28);
+	box-shadow: 0 14px 28px -14px rgba(37, 99, 235, 0.16);
+}
+
+/* Hero Portrait Photo Frame (Left Column) */
+.rf-hero-photo img {
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	object-fit: cover;
+	object-position: center top;
+	border-radius: 22px !important;
+	border: 4px solid rgba(255, 255, 255, 0.92);
+	box-shadow: 0 24px 50px -22px rgba(15, 23, 42, 0.24);
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.rf-hero-photo img:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 30px 58px -22px rgba(15, 23, 42, 0.28);
+}
+
+/* ==========================================================================
+   Infinite Right-to-Left Logo Marquee (Zero-Gap, Never Stops on Hover, 60fps)
+   ========================================================================== */
+.rf-logo-marquee {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	padding: 14px 0;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+	mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.rf-marquee-track {
+	display: flex;
+	align-items: center;
+	width: max-content;
+	will-change: transform;
+	animation: rfMarqueeRTL 46s linear infinite;
+}
+
+.rf-marquee-group {
+	display: flex;
+	align-items: center;
+	gap: 36px;
+	padding-right: 36px;
+	flex-shrink: 0;
+}
+
+.rf-logo-item {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 72px;
+	height: 72px;
+	border-radius: 18px;
+	background: #ffffff;
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	box-shadow: 0 6px 18px -10px rgba(15, 23, 42, 0.09);
+	transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+	cursor: default;
+	flex-shrink: 0;
+}
+
+.rf-logo-item svg {
+	display: block;
+}
+
+.rf-logo-item:hover {
+	transform: translateY(-4px) scale(1.08);
+	border-color: rgba(37, 99, 235, 0.35);
+	box-shadow: 0 14px 26px -12px rgba(37, 99, 235, 0.22);
+}
+
+@keyframes rfMarqueeRTL {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		transform: translate3d(-50%, 0, 0);
+	}
+}
+
+/* ==========================================================================
+   Lightweight Continuous & Interactive Animations (60fps GPU-only)
+   ========================================================================== */
+.rf-scroll-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	z-index: 1001;
+	transform-origin: left center;
+	transform: scaleX(0);
+	background: linear-gradient(90deg, #2563eb 0%, #8b5cf6 50%, #06b6d4 100%);
+	pointer-events: none;
+}
+
+.admin-bar .rf-scroll-progress {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar .rf-scroll-progress {
+		top: 46px;
+	}
+}
+
+@keyframes rfGradientShift {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes rfHeroIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 14px, 0);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes rfStatusPulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
+	}
+
+	70% {
+		box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+	}
+}
+
+@keyframes rfShimmerSweep {
+	0% {
+		transform: translateX(-140%) skewX(-22deg);
+	}
+
+	32%,
+	100% {
+		transform: translateX(260%) skewX(-22deg);
+	}
+}
+
+.rf-gradient-flow-text {
+	background: linear-gradient(90deg, #2563eb 0%, #7c3aed 40%, #0891b2 75%, #2563eb 100%);
+	background-size: 240% auto;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent !important;
+	animation: rfGradientShift 5s ease infinite;
+}
+
+/* Modern Architectural CTA Card (Simple, Light-Elevated, Subtle Dot Pattern) */
+.rf-modern-cta {
+	position: relative;
+	overflow: hidden;
+	background-color: #ffffff !important;
+	background-image:
+		radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 48%),
+		radial-gradient(#cbd5e1 1px, transparent 1px) !important;
+	background-size: 100% 100%, 22px 22px !important;
+	border: 1px solid rgba(37, 99, 235, 0.16) !important;
+	border-radius: 22px !important;
+	box-shadow: 0 20px 44px -26px rgba(15, 23, 42, 0.18);
+	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.rf-modern-cta:hover {
+	transform: translateY(-2px);
+	border-color: rgba(37, 99, 235, 0.3) !important;
+	box-shadow: 0 26px 52px -26px rgba(37, 99, 235, 0.22);
+}
+
+.rf-hero-stagger {
+	animation: rfHeroIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rf-js-ready .rf-reveal {
+	opacity: 0;
+	transform: translate3d(0, 20px, 0);
+	transition:
+		opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--rf-delay, 0ms),
+		transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--rf-delay, 0ms);
+}
+
+.rf-js-ready .rf-reveal.is-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+
+.rf-status-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: #ffffff;
+	border: 1px solid #bbf7d0;
+	color: #15803d;
+	font-size: 0.84rem;
+	font-weight: 600;
+	box-shadow: 0 4px 12px -6px rgba(22, 163, 74, 0.2);
+}
+
+.rf-status-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #16a34a;
+	display: inline-block;
+	animation: rfStatusPulse 2s ease-out infinite;
+}
+
+/* Buttons — Clean tactile hover (no flashy AI shimmer) */
+.elementor-button,
+.rf-btn {
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.elementor-button:hover,
+.rf-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 22px -10px rgba(15, 23, 42, 0.22);
+}
+
+.elementor-button:active,
+.rf-btn:active {
+	transform: translateY(0);
+}
+
+/* Animated Header Nav Underline */
+.hfe-nav-menu .menu-item>a.hfe-menu-item {
+	position: relative;
+}
+
+.hfe-nav-menu .menu-item>a.hfe-menu-item::after {
+	content: '';
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	bottom: 2px;
+	height: 2px;
+	background: linear-gradient(90deg, #2563eb, #8b5cf6);
+	border-radius: 999px;
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hfe-nav-menu .menu-item>a.hfe-menu-item:hover::after,
+.hfe-nav-menu .menu-item.current-menu-item>a.hfe-menu-item::after {
+	transform: scaleX(1);
+}
+
+/* Tech pills (CV page) */
+.rf-inline-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.rf-inline-pill {
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #f8fafc;
+	border: 1px solid var(--rf-border);
+	font-family: var(--rf-font-mono);
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: var(--rf-dark);
+	transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.rf-inline-pill:hover {
+	transform: translateY(-2px);
+	border-color: var(--rf-primary);
+	background-color: var(--rf-primary-soft);
+	color: var(--rf-primary);
+}
+
+/* ==========================================================================
+   Single Case Study Template (single-proyek.php)
+   ========================================================================== */
+.rf-case-study {
+	padding: 64px 24px 96px;
+	background: linear-gradient(180deg, var(--rf-sec-blue) 0%, var(--rf-sec-mint) 55%, var(--rf-sec-indigo) 100%);
+}
+
+.rf-case-container {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.rf-back-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.92rem;
+	font-weight: 600;
+	color: var(--rf-muted);
+	text-decoration: none;
+	margin-bottom: 28px;
+	transition: color 0.2s ease;
+}
+
+.rf-back-link:hover {
+	color: var(--rf-primary);
+}
+
+.rf-case-header {
+	margin-bottom: 36px;
+}
+
+.rf-case-cats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.rf-cat-pill {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 999px;
+	background: #ffffff;
+	border: 1px solid #dbeafe;
+	color: var(--rf-primary);
+	font-family: var(--rf-font-mono);
+	font-size: 0.78rem;
+	font-weight: 600;
+}
+
+.rf-case-title {
+	margin: 0 0 16px;
+	font-size: clamp(1.9rem, 4vw, 2.75rem);
+	font-weight: 800;
+	color: var(--rf-dark);
+	letter-spacing: -0.03em;
+	line-height: 1.18;
+}
+
+.rf-case-excerpt {
+	margin: 0 0 28px;
+	font-size: 1.1rem;
+	color: var(--rf-body);
+	line-height: 1.65;
+}
+
+.rf-case-meta-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 16px;
+	padding: 20px 24px;
+	background: #ffffff;
+	border: 1px solid var(--rf-border);
+	border-radius: var(--rf-radius);
+	margin-bottom: 24px;
+	box-shadow: 0 6px 20px -12px rgba(15, 23, 42, 0.08);
+}
+
+.rf-meta-item span {
+	display: block;
+	font-size: 0.78rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-family: var(--rf-font-mono);
+	color: var(--rf-muted);
+	margin-bottom: 4px;
+}
+
+.rf-meta-item strong {
+	font-size: 0.96rem;
+	color: var(--rf-dark);
+	font-weight: 600;
+}
+
+.rf-case-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 36px;
+}
+
+.rf-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 11px 20px;
+	border-radius: 8px;
+	font-size: 0.92rem;
+	font-weight: 600;
+	text-decoration: none;
+	border: 1px solid transparent;
+}
+
+.rf-btn-primary {
+	background: var(--rf-primary);
+	color: #ffffff;
+}
+
+.rf-btn-primary:hover {
+	background: var(--rf-primary-hover);
+	color: #ffffff;
+}
+
+.rf-btn-outline {
+	background: #ffffff;
+	color: var(--rf-dark);
+	border-color: var(--rf-border);
+}
+
+.rf-btn-outline:hover {
+	border-color: var(--rf-dark);
+	color: var(--rf-dark);
+}
+
+.rf-case-hero-img {
+	border-radius: 16px;
+	overflow: hidden;
+	border: 1px solid var(--rf-border);
+	margin-bottom: 40px;
+	background: #ffffff;
+}
+
+.rf-case-hero-img img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.rf-case-blocks {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+	margin-bottom: 40px;
+}
+
+.rf-case-block {
+	padding: 24px;
+	border-radius: var(--rf-radius);
+	background: #ffffff;
+	border: 1px solid var(--rf-border);
+	box-shadow: 0 6px 20px -12px rgba(15, 23, 42, 0.08);
+	transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.rf-case-block:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.14);
+}
+
+.rf-case-block.full {
+	grid-column: 1 / -1;
+}
+
+.rf-case-block h2 {
+	margin: 0 0 10px;
+	font-size: 1.08rem;
+	font-weight: 700;
+	color: var(--rf-dark);
+}
+
+.rf-case-block p {
+	margin: 0;
+	color: var(--rf-body);
+	line-height: 1.65;
+}
+
+.rf-case-content {
+	font-size: 1.03rem;
+	line-height: 1.75;
+	color: var(--rf-body);
+	margin-bottom: 48px;
+}
+
+.rf-case-content h2,
+.rf-case-content h3 {
+	color: var(--rf-dark);
+	margin-top: 32px;
+}
+
+.rf-case-cta {
+	padding: 36px;
+	border-radius: 16px;
+	background: linear-gradient(125deg, #0f172a 0%, #1e293b 50%, #172554 100%);
+	color: #ffffff;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.rf-case-cta h3 {
+	margin: 0 0 6px;
+	font-size: 1.3rem;
+	color: #ffffff;
+}
+
+.rf-case-cta p {
+	margin: 0;
+	color: #cbd5e1;
+	font-size: 0.96rem;
+}
+
+/* ==========================================================================
+   Contact Form 7 Clean Agency Styling
+   ========================================================================== */
+.wpcf7-form {
+	display: grid;
+	gap: 16px;
+}
+
+.wpcf7-form p {
+	margin: 0;
+}
+
+.wpcf7-form label {
+	display: block;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--rf-dark);
+	margin-bottom: 6px;
+}
+
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form select,
+.wpcf7-form textarea {
+	width: 100%;
+	padding: 11px 14px;
+	border: 1px solid var(--rf-border);
+	border-radius: 8px;
+	font-family: var(--rf-font-sans);
+	font-size: 0.94rem;
+	color: var(--rf-dark);
+	background: #ffffff;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	margin-top: 6px;
+}
+
+.wpcf7-form input:focus,
+.wpcf7-form select:focus,
+.wpcf7-form textarea:focus {
+	outline: none;
+	border-color: var(--rf-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.wpcf7-form input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 8px;
+	background: var(--rf-primary);
+	color: #ffffff;
+	font-family: var(--rf-font-sans);
+	font-size: 0.94rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.wpcf7-form input[type="submit"]:hover {
+	background: var(--rf-primary-hover);
+	transform: translateY(-1px);
+}
+
+.wpcf7 form .wpcf7-response-output {
+	margin: 12px 0 0;
+	padding: 12px 16px;
+	border-radius: 8px;
+	font-size: 0.9rem;
+}
+
+@media (max-width: 767px) {
+	.rf-case-study {
+		padding: 40px 18px 64px;
+	}
+
+	.rf-case-blocks {
+		grid-template-columns: 1fr;
+	}
+
+	.rf-case-cta {
+		padding: 26px 22px;
+	}
+
+	.rf-marquee-group {
+		gap: 24px;
+		padding-right: 24px;
+	}
+
+	.rf-logo-item {
+		width: 60px;
+		height: 60px;
+		border-radius: 14px;
+	}
+
+	.rf-logo-item svg {
+		transform: scale(0.84);
+	}
+}
