@@ -1,6 +1,7 @@
 # Ignore everything by default except custom development code
 *
 !.gitignore
+!README.md
 
 # Allow wp-content traversal
 !wp-content/
