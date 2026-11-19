@@ -7,6 +7,7 @@
 !wp-content/
 !wp-content/themes/
 !wp-content/plugins/
+!wp-content/uploads/
 
 # Track our custom Child Theme
 !wp-content/themes/hello-elementor-child/
@@ -15,6 +16,10 @@
 # Track our custom Portfolio Core Plugin
 !wp-content/plugins/rafi-portfolio-core/
 !wp-content/plugins/rafi-portfolio-core/**
+
+# Track custom compressed portfolio thumbnails
+!wp-content/uploads/portfolio-thumbnails/
+!wp-content/uploads/portfolio-thumbnails/**
 
 # Always ignore OS/editor/log clutter inside tracked folders
 .DS_Store
