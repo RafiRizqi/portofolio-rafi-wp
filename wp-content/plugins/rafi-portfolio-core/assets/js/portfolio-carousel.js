@@ -1,10 +1,12 @@
 /**
- * 3D Glassmorphism Carousel for Portfolio Showcase (v1.6.0)
- * Features:
- * - 3-Card Stage: Center focused, Left & Right in glass/blur behind
- * - Circular Nav Buttons & Pagination Dots
- * - Touch Swipe for Mobile & Keyboard Arrow Support
- * - Direct Click on Peeking Cards to Focus
+ * 3D Glassmorphism Coverflow Carousel (v1.7.0 - Dark Atmospheric Edition)
+ * Matches reference design:
+ * - 3-Card Stage with glowing spheres & orbit rings
+ * - Center card in sharp focus (z-index 10, scale 1.05, no blur)
+ * - Left & Right cards in frosted glass behind (z-index 4, scale 0.86, blur 3px, opacity 0.65)
+ * - Circular frosted glass nav buttons
+ * - Elongated active pill indicator + dynamic slide counter (e.g. 02 / 04)
+ * - Touch swipe & keyboard support
  */
 document.addEventListener('DOMContentLoaded', () => {
 	const carousels = document.querySelectorAll('[data-rf-carousel]');
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const prevBtn = wrap.querySelector('.rf-btn-prev');
 		const nextBtn = wrap.querySelector('.rf-btn-next');
 		const dots = Array.from(wrap.querySelectorAll('.rf-dot'));
+		const counterEl = wrap.querySelector('.rf-carousel-counter');
 
 		if (!cards.length) {
 			return;
@@ -25,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		let currentIndex = 0;
 		const total = cards.length;
+
+		function formatNum(n) {
+			return String(n).padStart(2, '0');
+		}
 
 		function updateClasses() {
 			const prevIndex = (currentIndex - 1 + total) % total;
@@ -58,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				dot.classList.toggle('is-active', active);
 				dot.setAttribute('aria-selected', String(active));
 			});
+
+			if (counterEl) {
+				counterEl.textContent = `${formatNum(currentIndex + 1)} / ${formatNum(total)}`;
+			}
 		}
 
 		function goTo(index) {
@@ -124,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Touch swipe support for mobile
 		let touchStartX = 0;
 		let touchEndX = 0;
-		const minSwipeDistance = 45;
+		const minSwipeDistance = 40;
 
 		wrap.addEventListener(
 			'touchstart',
