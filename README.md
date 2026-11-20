@@ -43,7 +43,8 @@ wp-content/
 │       │   └── shortcodes.php        # Shortcode [rafi_projects] & [rafi_certificates] untuk Elementor
 │       └── assets/
 │           ├── css/portfolio-core.css
-│           └── js/portfolio-filter.js
+│           ├── js/portfolio-filter.js
+│           └── js/portfolio-carousel.js
 └── uploads/
     └── portfolio-thumbnails/         # Compressed WebP project thumbnails (<40 KB each)
 ```
@@ -56,6 +57,7 @@ wp-content/
 
 ## Fitur & Praktik Standar Industri
 - **Elementor First**: Halaman *Beranda*, *CV*, *Sertifikat*, *Proyek*, *Kontak*, serta *Header & Footer* dibangun menggunakan Flexbox Containers & Global Site Settings.
+- **3D Glassmorphism Card Carousel**: Modul showcase proyek beranda menampilkan 3 kartu berdimensi—kartu tengah fokus tajam dan menonjol, kartu samping kanan-kiri berada di belakang dengan efek frosted glass blur, tombol navigasi bulat di kedua sisi, indikator dot interaktif, serta gesture touch swipe di mobile.
 - **Keamanan PHP WordPress**: Setiap meta box menerapkan verifikasi `nonce`, capability check (`current_user_can`), sanitization saat simpan (`sanitize_text_field`, `sanitize_textarea_field`, `esc_url_raw`), dan output escaping (`esc_html`, `esc_url`, `esc_attr`).
 - **Performa & Responsivitas**: Plugin minimal (`6` plugin aktif), animasi murni GPU (`translate3d` & `opacity`, tanpa library eksternal berat), thumbnail WebP terkompresi super ringan (<40 KB), dan responsif di Desktop (`1280px`), Tablet (`768px`), dan Mobile (`390px`).
 - **SEO & Email**: Terintegrasi dengan **Rank Math SEO** (meta title, description, Open Graph, XML Sitemap) dan **WP Mail SMTP** untuk formulir kontak **Contact Form 7**.

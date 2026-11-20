@@ -38,6 +38,14 @@ function rafi_core_enqueue_assets() {
 		RAFI_CORE_VERSION,
 		true
 	);
+
+	wp_enqueue_script(
+		'rafi-portfolio-carousel',
+		RAFI_CORE_URL . 'assets/js/portfolio-carousel.js',
+		array(),
+		RAFI_CORE_VERSION,
+		true
+	);
 }
 add_action( 'wp_enqueue_scripts', 'rafi_core_enqueue_assets' );
 
