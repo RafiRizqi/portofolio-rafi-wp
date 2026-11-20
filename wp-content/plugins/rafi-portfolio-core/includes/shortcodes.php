@@ -48,52 +48,24 @@ function rafi_core_projects_shortcode( $atts ) {
 
 	if ( $is_carousel ) :
 		$total_count = $query->post_count;
-		$sphere_themes = array(
-			array(
-				'kicker' => 'F&B SYSTEM',
-				'light'  => '#c084fc',
-				'main'   => '#8b5cf6',
-				'dark'   => '#4c1d95',
-				'glow'   => 'rgba(168, 85, 247, 0.45)',
-			),
-			array(
-				'kicker' => 'WORDPRESS CMS',
-				'light'  => '#818cf8',
-				'main'   => '#6366f1',
-				'dark'   => '#312e81',
-				'glow'   => 'rgba(99, 102, 241, 0.45)',
-			),
-			array(
-				'kicker' => 'BUSINESS SYSTEM',
-				'light'  => '#38bdf8',
-				'main'   => '#0284c7',
-				'dark'   => '#0c4a6e',
-				'glow'   => 'rgba(14, 165, 233, 0.45)',
-			),
-			array(
-				'kicker' => 'DECISION SUPPORT',
-				'light'  => '#fb7185',
-				'main'   => '#e11d48',
-				'dark'   => '#881337',
-				'glow'   => 'rgba(244, 63, 94, 0.45)',
-			),
-		);
 		?>
-		<section class="rf-dark-showcase" data-rf-carousel aria-label="Koleksi Proyek Pilihan">
-			<!-- Atmospheric Top Header -->
+		<div class="rf-showcase-container" data-rf-carousel aria-label="Koleksi Proyek Pilihan">
+			<!-- Header Proyek Pilihan Bersih & Profesional -->
 			<div class="rf-showcase-header">
-				<div class="rf-showcase-kicker-row">
-					<span class="rf-kicker-tag">KURASI / 01</span>
-					<span class="rf-kicker-count"><?php echo esc_html( sprintf( '%02d koleksi', $total_count ) ); ?></span>
+				<div>
+					<span class="rf-pill">PROYEK PILIHAN</span>
+					<h2 class="rf-showcase-title">Karya &amp; Studi Kasus Terbaru</h2>
+					<p class="rf-showcase-subtitle">Sistem web, aplikasi kasir &amp; manajemen inventaris, dan website bisnis yang dibangun secara fungsional.</p>
 				</div>
-				<h2 class="rf-showcase-title">Ide berikutnya dimulai di sini.</h2>
-				<p class="rf-showcase-subtitle">Jelajahi karya, temukan solusi web yang paling menginspirasimu.</p>
+				<a href="<?php echo esc_url( home_url( '/proyek/' ) ); ?>" class="rf-action-chip rf-all-proj-link">
+					Semua Proyek &rarr;
+				</a>
 			</div>
 
-			<!-- 3D Glass Stage -->
+			<!-- 3D Glass Carousel Stage -->
 			<div class="rf-carousel-stage">
 				<button type="button" class="rf-carousel-btn rf-btn-prev" aria-label="Geser ke proyek sebelumnya" title="Sebelumnya">
-					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
 				</button>
 
 				<div class="rf-carousel-track">
@@ -102,49 +74,63 @@ function rafi_core_projects_shortcode( $atts ) {
 					while ( $query->have_posts() ) :
 						$query->the_post();
 						$post_id    = get_the_ID();
+						$year       = get_post_meta( $post_id, '_rf_proyek_year', true );
+						$tech_raw   = get_post_meta( $post_id, '_rf_proyek_tech', true );
+						$demo_url   = get_post_meta( $post_id, '_rf_proyek_demo_url', true );
+						$repo_url   = get_post_meta( $post_id, '_rf_proyek_repo_url', true );
+						$tech_list  = array_filter( array_map( 'trim', explode( ',', (string) $tech_raw ) ) );
 						$post_terms = get_the_terms( $post_id, 'kategori_proyek' );
-						$cat_name   = ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) ? $post_terms[0]->name : '';
-						$theme      = $sphere_themes[ $card_idx % count( $sphere_themes ) ];
-						$kicker_txt = $cat_name ? strtoupper( $cat_name ) : $theme['kicker'];
+						$term_name  = ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) ? $post_terms[0]->name : 'Web App';
 						?>
 						<article class="rf-carousel-card" data-index="<?php echo esc_attr( $card_idx ); ?>">
-							<a href="<?php the_permalink(); ?>" class="rf-card-inner-link" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
-								<!-- Top Card Bar -->
-								<div class="rf-card-top-bar">
-									<span class="rf-card-badge-txt"><?php echo esc_html( $kicker_txt ); ?></span>
-									<span class="rf-card-num-txt"><?php echo esc_html( sprintf( '%02d', $card_idx + 1 ) ); ?></span>
+							<div class="rf-card-media">
+								<?php if ( has_post_thumbnail() ) : ?>
+									<a href="<?php the_permalink(); ?>" class="rf-card-media-link" tabindex="-1">
+										<?php the_post_thumbnail( 'large', array( 'loading' => 'lazy', 'alt' => esc_attr( get_the_title() ) ) ); ?>
+									</a>
+								<?php else : ?>
+									<div class="rf-card-media-fallback">
+										<span><?php echo esc_html( sprintf( '%02d', $card_idx + 1 ) ); ?></span>
+									</div>
+								<?php endif; ?>
+								<span class="rf-card-tag-floating"><?php echo esc_html( $term_name ); ?></span>
+							</div>
+
+							<div class="rf-card-body">
+								<div class="rf-card-meta">
+									<?php if ( $year ) : ?>
+										<span class="rf-card-year"><?php echo esc_html( $year ); ?></span>
+									<?php endif; ?>
+									<?php if ( ! empty( $tech_list ) ) : ?>
+										<span class="rf-card-tech"><?php echo esc_html( implode( ' · ', array_slice( $tech_list, 0, 3 ) ) ); ?></span>
+									<?php endif; ?>
 								</div>
 
-								<!-- Center Visual: Glowing Sphere with Concentric Orbit Rings -->
-								<div class="rf-card-visual-area">
-									<svg class="rf-orbit-svg" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-										<ellipse cx="140" cy="100" rx="48" ry="48" stroke="rgba(255,255,255,0.16)" stroke-width="1" />
-										<ellipse cx="140" cy="100" rx="72" ry="68" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-										<ellipse cx="140" cy="100" rx="98" ry="86" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
-										<ellipse cx="140" cy="100" rx="124" ry="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-										<defs>
-											<radialGradient id="sphere-grad-<?php echo esc_attr( $card_idx ); ?>" cx="35%" cy="30%" r="65%">
-												<stop offset="0%" stop-color="<?php echo esc_attr( $theme['light'] ); ?>" />
-												<stop offset="60%" stop-color="<?php echo esc_attr( $theme['main'] ); ?>" />
-												<stop offset="100%" stop-color="<?php echo esc_attr( $theme['dark'] ); ?>" />
-											</radialGradient>
-											<filter id="sphere-glow-<?php echo esc_attr( $card_idx ); ?>" x="-30%" y="-30%" width="160%" height="160%">
-												<feGaussianBlur stdDeviation="12" result="blur" />
-												<feComposite in="SourceGraphic" in2="blur" operator="over" />
-											</filter>
-										</defs>
-										<circle cx="140" cy="100" r="44" fill="url(#sphere-grad-<?php echo esc_attr( $card_idx ); ?>)" filter="url(#sphere-glow-<?php echo esc_attr( $card_idx ); ?>)" />
-									</svg>
-								</div>
+								<h3 class="rf-card-title">
+									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+								</h3>
 
-								<!-- Card Text Content -->
-								<div class="rf-card-info-content">
-									<h3 class="rf-card-main-title"><?php the_title(); ?></h3>
-									<p class="rf-card-main-desc"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 14 ) ); ?></p>
-								</div>
-							</a>
+								<p class="rf-card-desc">
+									<?php echo esc_html( wp_trim_words( get_the_excerpt(), 16 ) ); ?>
+								</p>
 
-							<!-- Frosted Glass Mask for Behind Layers -->
+								<div class="rf-card-footer">
+									<div class="rf-card-action-links">
+										<?php if ( $demo_url ) : ?>
+											<a href="<?php echo esc_url( $demo_url ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">Demo</a>
+										<?php endif; ?>
+										<?php if ( $repo_url ) : ?>
+											<a href="<?php echo esc_url( $repo_url ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">GitHub</a>
+										<?php endif; ?>
+									</div>
+									<a href="<?php the_permalink(); ?>" class="rf-card-view-btn" title="Buka Studi Kasus">
+										<span>Studi Kasus</span>
+										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+									</a>
+								</div>
+							</div>
+
+							<!-- Frosted Glass Overlay for non-active cards -->
 							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
 						</article>
 						<?php
@@ -155,11 +141,11 @@ function rafi_core_projects_shortcode( $atts ) {
 				</div>
 
 				<button type="button" class="rf-carousel-btn rf-btn-next" aria-label="Geser ke proyek berikutnya" title="Berikutnya">
-					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
 				</button>
 			</div>
 
-			<!-- Atmospheric Bottom Bar: Pill Indicators & Counter -->
+			<!-- Circular Pagination Indicators & Counter -->
 			<div class="rf-showcase-footer">
 				<div class="rf-carousel-dots" role="tablist" aria-label="Navigasi Proyek">
 					<?php for ( $d = 0; $d < $card_idx; $d++ ) : ?>
@@ -168,7 +154,7 @@ function rafi_core_projects_shortcode( $atts ) {
 				</div>
 				<span class="rf-carousel-counter" aria-live="polite">01 / <?php echo esc_html( sprintf( '%02d', $total_count ) ); ?></span>
 			</div>
-		</section>
+		</div>
 		<?php
 	else :
 		?>
