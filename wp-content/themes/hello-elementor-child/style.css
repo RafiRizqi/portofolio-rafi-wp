@@ -509,6 +509,469 @@ body.page-id-19 [data-elementor-type="wp-page"]>.e-con:nth-of-type(2) {
 }
 
 /* ==========================================================================
+   CV INTERACTIVE SUITE (Mode Switcher, Audio Intro, Tech Drawer, Timeline, ATS Print)
+   ========================================================================== */
+
+/* 1. Dual-View Mode Switcher */
+.rf-cv-mode-bar {
+	display: inline-flex;
+	align-items: center;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	border-radius: 999px;
+	padding: 4px;
+	gap: 4px;
+	margin-top: 14px;
+}
+
+.rf-mode-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	border: none;
+	background: transparent;
+	color: #64748b;
+	font-family: var(--rf-font-sans);
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.rf-mode-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.rf-mode-btn:hover {
+	color: #0f172a;
+}
+
+.rf-mode-btn.is-active {
+	background: #ffffff;
+	color: #0f172a;
+	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+/* 2. Audio Elevator Pitch (Voice Intro) */
+.rf-voice-card {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 12px 18px;
+	background: #ffffff;
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	border-radius: 14px;
+	box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.06);
+	margin: 12px 0 6px;
+	max-width: 480px;
+}
+
+.rf-voice-play-btn {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	background: #2563eb;
+	color: #ffffff;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	flex-shrink: 0;
+	transition: all 0.2s ease;
+	box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.rf-voice-play-btn:hover {
+	background: #1d4ed8;
+	transform: scale(1.06);
+}
+
+.rf-voice-info {
+	min-width: 0;
+	flex: 1;
+}
+
+.rf-voice-label {
+	display: block;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #0f172a;
+	margin-bottom: 3px;
+}
+
+.rf-voice-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.rf-voice-waves {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	height: 14px;
+	flex: 1;
+}
+
+.rf-wave-bar {
+	width: 3px;
+	height: 6px;
+	border-radius: 999px;
+	background: #94a3b8;
+	animation: rf-wave 1s ease-in-out infinite alternate;
+	animation-play-state: paused;
+}
+
+.rf-wave-bar:nth-child(2) { animation-delay: 0.15s; }
+.rf-wave-bar:nth-child(3) { animation-delay: 0.3s; }
+.rf-wave-bar:nth-child(4) { animation-delay: 0.45s; }
+.rf-wave-bar:nth-child(5) { animation-delay: 0.2s; }
+.rf-wave-bar:nth-child(6) { animation-delay: 0.35s; }
+.rf-wave-bar:nth-child(7) { animation-delay: 0.5s; }
+.rf-wave-bar:nth-child(8) { animation-delay: 0.1s; }
+
+@keyframes rf-wave {
+	0% { height: 4px; background: #94a3b8; }
+	100% { height: 14px; background: #2563eb; }
+}
+
+.rf-voice-time {
+	font-family: var(--rf-font-mono);
+	font-size: 0.74rem;
+	color: #64748b;
+	white-space: nowrap;
+}
+
+/* 3. Interactive Tech Logo Detail Drawer */
+.rf-tech-detail-panel {
+	display: none;
+	margin-top: 18px;
+	padding: 18px 22px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	position: relative;
+	animation: rfFadeDown 0.25s ease-out;
+}
+
+.rf-tech-detail-panel.is-open {
+	display: block;
+}
+
+@keyframes rfFadeDown {
+	from { opacity: 0; transform: translateY(-8px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.rf-tech-logo-tile.is-selected {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.35), 0 8px 20px -6px rgba(37, 99, 235, 0.25);
+	transform: translateY(-4px) scale(1.08);
+}
+
+.rf-tech-detail-inner {
+	position: relative;
+}
+
+.rf-tech-detail-close {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	color: #475569;
+	font-size: 18px;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rf-tech-detail-close:hover {
+	background: #0f172a;
+	color: #ffffff;
+	border-color: #0f172a;
+}
+
+.rf-tech-detail-head {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 6px;
+}
+
+.rf-tech-detail-badge {
+	font-family: var(--rf-font-mono);
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #2563eb;
+	background: #eff6ff;
+	padding: 2px 8px;
+	border-radius: 6px;
+}
+
+.rf-tech-detail-exp {
+	font-family: var(--rf-font-mono);
+	font-size: 0.74rem;
+	color: #059669;
+	font-weight: 600;
+}
+
+.rf-tech-detail-title {
+	margin: 0 0 6px;
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.rf-tech-detail-desc {
+	font-size: 0.88rem;
+	color: #475569;
+	line-height: 1.55;
+	margin: 0 0 12px;
+}
+
+.rf-tech-detail-proof {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.rf-tech-proof-label {
+	font-size: 0.76rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.rf-tech-proof-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.rf-tech-proj-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 11px;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #0f172a;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.rf-tech-proj-chip:hover {
+	border-color: #2563eb;
+	color: #2563eb;
+	background: #eff6ff;
+	transform: translateY(-1px);
+}
+
+/* 4. Tech Lead Mode Deep-Dive Expanders */
+.rf-tech-deep-dive {
+	display: none;
+	margin-top: 12px;
+	padding: 14px 16px;
+	background: #f8fafc;
+	border-left: 3px solid #2563eb;
+	border-radius: 0 10px 10px 0;
+	font-size: 0.84rem;
+	color: #334155;
+	line-height: 1.6;
+}
+
+.rf-tech-mode-active .rf-tech-deep-dive {
+	display: block;
+	animation: rfFadeDown 0.3s ease-out;
+}
+
+.rf-deep-dive-title {
+	font-family: var(--rf-font-mono);
+	font-size: 0.74rem;
+	font-weight: 700;
+	color: #2563eb;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 4px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+/* 5. Interactive Leadership Timeline */
+.rf-timeline {
+	position: relative;
+	padding-left: 24px;
+	margin-top: 14px;
+}
+
+.rf-timeline::before {
+	content: '';
+	position: absolute;
+	left: 7px;
+	top: 8px;
+	bottom: 8px;
+	width: 2px;
+	background: #e2e8f0;
+}
+
+.rf-timeline-item {
+	position: relative;
+	margin-bottom: 14px;
+}
+
+.rf-timeline-item:last-child {
+	margin-bottom: 0;
+}
+
+.rf-timeline-dot {
+	position: absolute;
+	left: -24px;
+	top: 8px;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: #ffffff;
+	border: 3px solid #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+	transition: all 0.2s ease;
+}
+
+.rf-timeline-item.is-open .rf-timeline-dot {
+	background: #2563eb;
+	transform: scale(1.15);
+}
+
+.rf-timeline-head {
+	cursor: pointer;
+	padding: 10px 14px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	transition: all 0.2s ease;
+}
+
+.rf-timeline-head:hover {
+	background: #ffffff;
+	border-color: #2563eb;
+	box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.08);
+}
+
+.rf-timeline-head strong {
+	font-size: 0.88rem;
+	color: #0f172a;
+}
+
+.rf-timeline-year {
+	font-family: var(--rf-font-mono);
+	font-size: 0.74rem;
+	color: #64748b;
+}
+
+.rf-timeline-body {
+	display: none;
+	padding: 10px 14px;
+	font-size: 0.83rem;
+	color: #475569;
+	line-height: 1.6;
+}
+
+.rf-timeline-item.is-open .rf-timeline-body {
+	display: block;
+	animation: rfFadeDown 0.2s ease-out;
+}
+
+.rf-timeline-insight {
+	display: block;
+	margin-top: 6px;
+	padding: 8px 12px;
+	background: #eff6ff;
+	border-radius: 6px;
+	color: #1e40af;
+	font-size: 0.8rem;
+	font-style: italic;
+	border-left: 2px solid #2563eb;
+}
+
+/* 6. ATS Print Stylesheet */
+@media print {
+	header#masthead,
+	footer#colophon,
+	.rf-voice-card,
+	.rf-cv-mode-bar,
+	.rf-tech-detail-panel,
+	.rf-card-glass-overlay,
+	.elementor-button-wrapper a,
+	.hfe-search-icon-toggle,
+	.admin-bar,
+	#wpadminbar {
+		display: none !important;
+	}
+
+	body {
+		background: #ffffff !important;
+		color: #000000 !important;
+		font-size: 10.5pt !important;
+		line-height: 1.45 !important;
+	}
+
+	.e-con,
+	.elementor-widget-container,
+	.rf-soft-card {
+		box-shadow: none !important;
+		border: none !important;
+		background: transparent !important;
+		padding: 0 !important;
+		margin-bottom: 12pt !important;
+		page-break-inside: avoid !important;
+	}
+
+	h1 { font-size: 20pt !important; color: #000 !important; margin-bottom: 4pt !important; }
+	h2 { font-size: 14pt !important; color: #000 !important; border-bottom: 1.5pt solid #333 !important; padding-bottom: 2pt !important; margin-top: 14pt !important; }
+	h3 { font-size: 11pt !important; color: #000 !important; }
+
+	.rf-tech-logo-grid {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		gap: 6pt !important;
+	}
+
+	.rf-tech-logo-tile {
+		width: auto !important;
+		height: auto !important;
+		border: 1px solid #ccc !important;
+		padding: 3pt 6pt !important;
+		box-shadow: none !important;
+	}
+
+	.rf-tech-logo-tile svg {
+		display: inline-block !important;
+		width: 14pt !important;
+		height: 14pt !important;
+		vertical-align: middle !important;
+	}
+}
+
+/* ==========================================================================
    Single Case Study Template (single-proyek.php)
    ========================================================================== */
 .rf-case-study {

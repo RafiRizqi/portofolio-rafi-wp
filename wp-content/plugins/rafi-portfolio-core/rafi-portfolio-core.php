@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RAFI_CORE_VERSION', '1.5.0' );
+define( 'RAFI_CORE_VERSION', '1.9.0' );
 define( 'RAFI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'RAFI_CORE_URL', plugin_dir_url( __FILE__ ) );
 
@@ -42,6 +42,14 @@ function rafi_core_enqueue_assets() {
 	wp_enqueue_script(
 		'rafi-portfolio-carousel',
 		RAFI_CORE_URL . 'assets/js/portfolio-carousel.js',
+		array(),
+		RAFI_CORE_VERSION,
+		true
+	);
+
+	wp_enqueue_script(
+		'rafi-portfolio-cv',
+		RAFI_CORE_URL . 'assets/js/portfolio-cv.js',
 		array(),
 		RAFI_CORE_VERSION,
 		true
