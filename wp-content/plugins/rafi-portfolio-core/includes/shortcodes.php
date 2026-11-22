@@ -318,6 +318,8 @@ function rafi_core_certificates_shortcode( $atts ) {
 							$preview_url = '/wp-content/uploads/2026/11/cert-bnsp-garuda.svg';
 						} elseif ( false !== stripos( $title, 'Kampus Mengajar' ) ) {
 							$preview_url = '/wp-content/uploads/2026/11/cert-kampus-mengajar.svg';
+						} elseif ( false !== stripos( $title, 'HIMA' ) || false !== stripos( $issuer, 'HIMTIF' ) || 63 === (int) $post_id ) {
+							$preview_url = '/wp-content/uploads/2026/11/cert-ketua-hima.svg';
 						} elseif ( false !== stripos( $title, 'Workshop' ) ) {
 							$preview_url = '/wp-content/uploads/2026/11/cert-workshop-ti.svg';
 						} elseif ( false !== stripos( $title, 'TOEFL' ) ) {

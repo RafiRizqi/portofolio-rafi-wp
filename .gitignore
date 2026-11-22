@@ -25,6 +25,7 @@
 !wp-content/uploads/2026/
 !wp-content/uploads/2026/11/
 !wp-content/uploads/2026/11/cert-*.svg
+!wp-content/uploads/2026/11/cert-ketua-hima.svg
 
 # Always ignore OS/editor/log clutter inside tracked folders
 .DS_Store

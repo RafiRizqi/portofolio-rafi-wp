@@ -139,11 +139,11 @@ function rafi_core_output_seo_schema() {
 			),
 			array(
 				'@type'              => 'EducationalOccupationalCredential',
-				'name'               => 'Workshop TI: Persuasive Technology, Gamification & AI Big Data',
-				'credentialCategory' => 'Technical Workshop Certification',
+				'name'               => 'Sertifikat — Ketua Umum HIMTIF UNPAM',
+				'credentialCategory' => 'Leadership & Organizational Certification',
 				'recognizedBy'       => array(
 					'@type' => 'EducationalOrganization',
-					'name'  => 'Program Studi Teknik Informatika Universitas Pamulang',
+					'name'  => 'Himpunan Mahasiswa Teknik Informatika & Universitas Pamulang',
 				),
 				'validFrom'          => '2024',
 			),
