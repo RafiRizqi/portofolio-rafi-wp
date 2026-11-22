@@ -68,6 +68,203 @@
 			w.classList.add('rf-hero-stagger');
 			w.style.animationDelay = `${Math.min(idx, 5) * 75}ms`;
 		});
+
+		// Hero Micro-Interactions: Mouse-Tracking Spotlight & Subtle Tech Canvas
+		const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+		const noMotionPreference = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		if (canHover && noMotionPreference) {
+			hero.classList.add('rf-hero-container');
+
+			// A. Ambient Radial Spotlight
+			const spotlight = document.createElement('div');
+			spotlight.className = 'rf-hero-spotlight';
+			spotlight.setAttribute('aria-hidden', 'true');
+			hero.prepend(spotlight);
+
+			let spotTicking = false;
+			let heroRect = hero.getBoundingClientRect();
+
+			const updateHeroRect = () => {
+				heroRect = hero.getBoundingClientRect();
+			};
+			window.addEventListener('resize', updateHeroRect, { passive: true });
+			window.addEventListener('scroll', updateHeroRect, { passive: true });
+
+			hero.addEventListener('mouseenter', () => {
+				spotlight.classList.add('is-active');
+				updateHeroRect();
+			});
+
+			hero.addEventListener('mouseleave', () => {
+				spotlight.classList.remove('is-active');
+			});
+
+			hero.addEventListener(
+				'mousemove',
+				(e) => {
+					if (!spotTicking) {
+						spotTicking = true;
+						requestAnimationFrame(() => {
+							const x = e.clientX - heroRect.left;
+							const y = e.clientY - heroRect.top;
+							spotlight.style.setProperty('--spot-x', `${Math.round(x)}px`);
+							spotlight.style.setProperty('--spot-y', `${Math.round(y)}px`);
+							spotTicking = false;
+						});
+					}
+				},
+				{ passive: true }
+			);
+
+			// B. Interactive Subtle Tech Canvas
+			const canvas = document.createElement('canvas');
+			canvas.className = 'rf-hero-canvas';
+			canvas.setAttribute('aria-hidden', 'true');
+			hero.prepend(canvas);
+
+			const ctx = canvas.getContext('2d', { alpha: true });
+			const dpr = Math.min(window.devicePixelRatio || 1, 2);
+			let width = 0;
+			let height = 0;
+			let animId = null;
+			let isHeroVisible = true;
+
+			const resizeCanvas = () => {
+				width = hero.clientWidth;
+				height = hero.clientHeight;
+				canvas.width = Math.round(width * dpr);
+				canvas.height = Math.round(height * dpr);
+				canvas.style.width = `${width}px`;
+				canvas.style.height = `${height}px`;
+				ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+			};
+
+			resizeCanvas();
+			window.addEventListener('resize', resizeCanvas, { passive: true });
+
+			// Initialize subtle floating nodes
+			const nodeCount = Math.max(16, Math.min(28, Math.floor(width / 45)));
+			const nodes = [];
+			for (let i = 0; i < nodeCount; i++) {
+				nodes.push({
+					x: Math.random() * width,
+					y: Math.random() * height,
+					vx: (Math.random() - 0.5) * 0.35,
+					vy: (Math.random() - 0.5) * 0.35,
+					radius: Math.random() * 1.5 + 1.2,
+				});
+			}
+
+			let cursorX = -9999;
+			let cursorY = -9999;
+			hero.addEventListener(
+				'mousemove',
+				(e) => {
+					cursorX = e.clientX - heroRect.left;
+					cursorY = e.clientY - heroRect.top;
+				},
+				{ passive: true }
+			);
+			hero.addEventListener('mouseleave', () => {
+				cursorX = -9999;
+				cursorY = -9999;
+			});
+
+			const renderTechCanvas = () => {
+				if (!isHeroVisible) return;
+
+				ctx.clearRect(0, 0, width, height);
+
+				for (let i = 0; i < nodes.length; i++) {
+					const node = nodes[i];
+					node.x += node.vx;
+					node.y += node.vy;
+
+					if (node.x < 0 || node.x > width) node.vx *= -1;
+					if (node.y < 0 || node.y > height) node.vy *= -1;
+
+					const cdx = node.x - cursorX;
+					const cdy = node.y - cursorY;
+					const cdist = Math.hypot(cdx, cdy);
+
+					ctx.beginPath();
+					ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+
+					if (cdist < 130) {
+						const glow = 1 - cdist / 130;
+						ctx.fillStyle = `rgba(56, 189, 248, ${0.45 + glow * 0.45})`;
+						ctx.fill();
+
+						ctx.beginPath();
+						ctx.moveTo(node.x, node.y);
+						ctx.lineTo(cursorX, cursorY);
+						ctx.strokeStyle = `rgba(56, 189, 248, ${(glow * 0.2).toFixed(3)})`;
+						ctx.lineWidth = 1;
+						ctx.stroke();
+					} else {
+						ctx.fillStyle = 'rgba(37, 99, 235, 0.28)';
+						ctx.fill();
+					}
+
+					for (let j = i + 1; j < nodes.length; j++) {
+						const n2 = nodes[j];
+						const dist = Math.hypot(node.x - n2.x, node.y - n2.y);
+						if (dist < 95) {
+							const alpha = (1 - dist / 95) * 0.09;
+							ctx.beginPath();
+							ctx.moveTo(node.x, node.y);
+							ctx.lineTo(n2.x, n2.y);
+							ctx.strokeStyle = `rgba(37, 99, 235, ${alpha.toFixed(3)})`;
+							ctx.lineWidth = 0.8;
+							ctx.stroke();
+						}
+					}
+				}
+
+				animId = requestAnimationFrame(renderTechCanvas);
+			};
+
+			// Pause animation when hero leaves viewport (zero CPU drain)
+			if ('IntersectionObserver' in window) {
+				const heroObserver = new IntersectionObserver(
+					([entry]) => {
+						isHeroVisible = entry.isIntersecting;
+						if (isHeroVisible) {
+							if (!animId) {
+								animId = requestAnimationFrame(renderTechCanvas);
+							}
+						} else {
+							if (animId) {
+								cancelAnimationFrame(animId);
+								animId = null;
+							}
+						}
+					},
+					{ threshold: 0.05 }
+				);
+				heroObserver.observe(hero);
+			} else {
+				animId = requestAnimationFrame(renderTechCanvas);
+			}
+
+			// C. Tactile 3D Tilt on Hero Portrait
+			const portraitCard = hero.querySelector('.rf-hero-photo, .elementor-widget-image');
+			if (portraitCard) {
+				portraitCard.classList.add('rf-hero-tilt');
+				portraitCard.addEventListener('mousemove', (e) => {
+					const rect = portraitCard.getBoundingClientRect();
+					const px = (e.clientX - rect.left) / rect.width - 0.5;
+					const py = (e.clientY - rect.top) / rect.height - 0.5;
+					const rotX = (-py * 7).toFixed(2);
+					const rotY = (px * 7).toFixed(2);
+					portraitCard.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+				});
+				portraitCard.addEventListener('mouseleave', () => {
+					portraitCard.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+				});
+			}
+		}
 	}
 
 	// Mark sections after Hero (and marquee stays always visible smoothly)

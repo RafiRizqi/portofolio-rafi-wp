@@ -80,7 +80,19 @@ function rafi_core_projects_shortcode( $atts ) {
 						$repo_url   = get_post_meta( $post_id, '_rf_proyek_repo_url', true );
 						$tech_list  = array_filter( array_map( 'trim', explode( ',', (string) $tech_raw ) ) );
 						$post_terms = get_the_terms( $post_id, 'kategori_proyek' );
-						$term_name  = ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) ? $post_terms[0]->name : 'Web App';
+						$term_name  = 'Fullstack Web';
+						if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
+							$term_slugs = wp_list_pluck( $post_terms, 'slug' );
+							if ( in_array( 'homelab', $term_slugs, true ) ) {
+								$term_name = 'Home Lab';
+							} elseif ( in_array( 'spk-algoritma', $term_slugs, true ) ) {
+								$term_name = 'SPK / Algoritma';
+							} elseif ( in_array( 'wordpress', $term_slugs, true ) ) {
+								$term_name = 'WordPress';
+							} else {
+								$term_name = $post_terms[0]->name;
+							}
+						}
 						?>
 						<article class="rf-carousel-card" data-index="<?php echo esc_attr( $card_idx ); ?>">
 							<div class="rf-card-media">
@@ -168,14 +180,40 @@ function rafi_core_projects_shortcode( $atts ) {
 					)
 				);
 				if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) :
+					$order_slugs = array( 'fullstack-web', 'homelab', 'spk-algoritma', 'wordpress' );
+					usort(
+						$terms,
+						function( $a, $b ) use ( $order_slugs ) {
+							$pos_a = array_search( $a->slug, $order_slugs, true );
+							$pos_b = array_search( $b->slug, $order_slugs, true );
+							if ( false === $pos_a ) {
+								$pos_a = 999;
+							}
+							if ( false === $pos_b ) {
+								$pos_b = 999;
+							}
+							return $pos_a - $pos_b;
+						}
+					);
 					?>
-					<div class="rf-filter-bar" role="group" aria-label="Filter kategori proyek">
-						<button type="button" class="rf-filter-btn is-active" data-filter="all" aria-pressed="true">Semua</button>
-						<?php foreach ( $terms as $term ) : ?>
-							<button type="button" class="rf-filter-btn" data-filter="<?php echo esc_attr( $term->slug ); ?>" aria-pressed="false">
-								<?php echo esc_html( $term->name ); ?>
+					<div class="rf-filter-bar-wrapper">
+						<div class="rf-filter-bar" role="tablist" aria-label="Filter kategori proyek">
+							<button type="button" class="rf-filter-btn is-active" data-filter="all" role="tab" aria-selected="true" tabindex="0">
+								<span class="rf-filter-dot" aria-hidden="true"></span>
+								<span class="rf-filter-label">Semua</span>
+								<span class="rf-filter-count" data-count="all"><?php echo esc_html( $query->found_posts ); ?></span>
 							</button>
-						<?php endforeach; ?>
+							<?php foreach ( $terms as $term ) : ?>
+								<button type="button" class="rf-filter-btn" data-filter="<?php echo esc_attr( $term->slug ); ?>" role="tab" aria-selected="false" tabindex="-1">
+									<span class="rf-filter-dot" aria-hidden="true"></span>
+									<span class="rf-filter-label"><?php echo esc_html( $term->name ); ?></span>
+									<span class="rf-filter-count"><?php echo esc_html( $term->count ); ?></span>
+								</button>
+							<?php endforeach; ?>
+						</div>
+						<div class="rf-filter-status" aria-live="polite">
+							Menampilkan <strong class="rf-status-current"><?php echo esc_html( $query->found_posts ); ?></strong> dari <span class="rf-status-total"><?php echo esc_html( $query->found_posts ); ?></span> proyek
+						</div>
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -195,13 +233,11 @@ function rafi_core_projects_shortcode( $atts ) {
 						$tech_list  = array_filter( array_map( 'trim', explode( ',', (string) $tech_raw ) ) );
 						$post_terms = get_the_terms( $post_id, 'kategori_proyek' );
 						$slugs      = array();
-						$term_name  = '';
 
 						if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
 							foreach ( $post_terms as $pt ) {
 								$slugs[] = $pt->slug;
 							}
-							$term_name = $post_terms[0]->name;
 						}
 						?>
 						<article class="rf-card rf-project-card rf-proj-row" data-categories="<?php echo esc_attr( implode( ' ', $slugs ) ); ?>">
@@ -216,8 +252,10 @@ function rafi_core_projects_shortcode( $atts ) {
 
 								<div class="rf-proj-info">
 									<div class="rf-proj-meta-line">
-										<?php if ( $term_name ) : ?>
-											<span class="rf-pill"><?php echo esc_html( $term_name ); ?></span>
+										<?php if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) : ?>
+											<?php foreach ( $post_terms as $pt ) : ?>
+												<span class="rf-pill <?php echo 'homelab' === $pt->slug ? 'rf-pill-homelab' : ''; ?>"><?php echo esc_html( $pt->name ); ?></span>
+											<?php endforeach; ?>
 										<?php endif; ?>
 										<?php if ( $year ) : ?>
 											<span class="rf-year"><?php echo esc_html( $year ); ?></span>
@@ -251,6 +289,15 @@ function rafi_core_projects_shortcode( $atts ) {
 						</article>
 					<?php endwhile; ?>
 					<?php wp_reset_postdata(); ?>
+
+					<!-- Dynamic Empty State Container -->
+					<div class="rf-filter-empty" style="display: none;" aria-live="polite">
+						<div class="rf-empty-icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+						</div>
+						<p class="rf-empty-text">Tidak ada proyek yang sesuai dengan kategori ini.</p>
+						<button type="button" class="rf-reset-filter-btn">Tampilkan Semua Proyek</button>
+					</div>
 				</div>
 			<?php else : ?>
 				<div class="rf-empty-state">

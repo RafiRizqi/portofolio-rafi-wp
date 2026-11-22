@@ -4,7 +4,7 @@ Theme URI: https://example.com
 Description: Child Theme dari Hello Elementor untuk Website Portofolio Pribadi Rafi (Standar Digital Agency).
 Author: Rafi
 Template: hello-elementor
-Version: 1.5.1
+Version: 2.3.0
 Text Domain: hello-elementor-child
 */
 
@@ -1754,4 +1754,57 @@ body.page-id-19 [data-elementor-type="wp-page"]>.e-con:nth-of-type(2) {
 	.rf-logo-item svg {
 		transform: scale(0.84);
 	}
+}
+
+/* ==========================================================================
+   Hero Micro-Interactions: Mouse-Tracking Spotlight & Subtle Tech Canvas
+   ========================================================================== */
+.rf-hero-container {
+	position: relative !important;
+	overflow: hidden !important;
+}
+
+.rf-hero-spotlight {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.45s ease;
+	background: radial-gradient(
+		650px circle at var(--spot-x, 50%) var(--spot-y, 35%),
+		rgba(37, 99, 235, 0.085) 0%,
+		rgba(56, 189, 248, 0.04) 40%,
+		transparent 75%
+	);
+}
+
+.rf-hero-spotlight.is-active {
+	opacity: 1;
+}
+
+.rf-hero-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.7;
+	transition: opacity 0.6s ease;
+}
+
+/* Ensure hero content stays sharp above canvas & spotlight */
+.rf-hero-container > .e-con-inner,
+.rf-hero-container > .elementor-element {
+	position: relative;
+	z-index: 2;
+}
+
+/* Tactile 3D Tilt on Hero Portrait */
+.rf-hero-photo,
+.rf-hero-tilt {
+	transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease;
+	will-change: transform;
+	transform-style: preserve-3d;
 }
