@@ -291,6 +291,9 @@ function rafi_core_certificates_shortcode( $atts ) {
 		)
 	);
 
+	// Mark that certificates are present on page so modal is rendered in wp_footer
+	$GLOBALS['rf_has_certificates'] = true;
+
 	ob_start();
 	?>
 	<div class="rf-portfolio-module">
@@ -300,12 +303,45 @@ function rafi_core_certificates_shortcode( $atts ) {
 				while ( $query->have_posts() ) :
 					$query->the_post();
 					$post_id       = get_the_ID();
+					$title         = get_the_title();
 					$issuer        = get_post_meta( $post_id, '_rf_cert_issuer', true );
 					$date_issued   = get_post_meta( $post_id, '_rf_cert_date', true );
 					$credential_id = get_post_meta( $post_id, '_rf_cert_id', true );
 					$verify_url    = get_post_meta( $post_id, '_rf_cert_url', true );
+					$preview_url   = get_post_meta( $post_id, '_rf_cert_preview_url', true );
+
+					// Fallback preview URL matching known certificates
+					if ( empty( $preview_url ) ) {
+						if ( has_post_thumbnail( $post_id ) ) {
+							$preview_url = get_the_post_thumbnail_url( $post_id, 'full' );
+						} elseif ( false !== stripos( $title, 'BNSP' ) || false !== stripos( $title, 'GARUDA' ) ) {
+							$preview_url = '/wp-content/uploads/2026/11/cert-bnsp-garuda.svg';
+						} elseif ( false !== stripos( $title, 'Kampus Mengajar' ) ) {
+							$preview_url = '/wp-content/uploads/2026/11/cert-kampus-mengajar.svg';
+						} elseif ( false !== stripos( $title, 'Workshop' ) ) {
+							$preview_url = '/wp-content/uploads/2026/11/cert-workshop-ti.svg';
+						} elseif ( false !== stripos( $title, 'TOEFL' ) ) {
+							$preview_url = '/wp-content/uploads/2026/11/cert-toefl-440.svg';
+						}
+					}
+					if ( ! empty( $preview_url ) && strpos( $preview_url, 'http' ) !== 0 ) {
+						$preview_url = home_url( $preview_url );
+					}
 					?>
-					<article class="rf-card rf-cert-tile">
+					<article class="rf-card rf-cert-tile rf-cert-interactive"
+						data-cert-id="<?php echo esc_attr( $post_id ); ?>"
+						data-cert-title="<?php echo esc_attr( $title ); ?>"
+						data-cert-issuer="<?php echo esc_attr( $issuer ?: 'Sertifikasi' ); ?>"
+						data-cert-date="<?php echo esc_attr( $date_issued ); ?>"
+						data-cert-code="<?php echo esc_attr( $credential_id ?: 'Predikat Resmi' ); ?>"
+						data-cert-desc="<?php echo esc_attr( get_the_excerpt() ); ?>"
+						data-cert-img="<?php echo esc_url( $preview_url ); ?>"
+						data-cert-verify="<?php echo esc_url( $verify_url ); ?>"
+						tabindex="0"
+						role="button"
+						aria-haspopup="dialog"
+						aria-label="Lihat dokumen sertifikat <?php echo esc_attr( $title ); ?>">
+						
 						<div class="rf-cert-badge-icon" aria-hidden="true">
 							<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
 						</div>
@@ -319,18 +355,19 @@ function rafi_core_certificates_shortcode( $atts ) {
 								<?php endif; ?>
 							</div>
 
-							<h3 class="rf-cert-title"><?php the_title(); ?></h3>
+							<h3 class="rf-cert-title"><?php echo esc_html( $title ); ?></h3>
 
 							<?php if ( $credential_id ) : ?>
 								<span class="rf-cert-code"><?php echo esc_html( $credential_id ); ?></span>
 							<?php endif; ?>
 						</div>
 
-						<?php if ( $verify_url ) : ?>
-							<a href="<?php echo esc_url( $verify_url ); ?>" target="_blank" rel="noopener noreferrer" class="rf-arrow-btn rf-arrow-btn-sm" aria-label="Verifikasi <?php echo esc_attr( get_the_title() ); ?>" title="Lihat Kredensial">
-								<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-							</a>
-						<?php endif; ?>
+						<div class="rf-cert-actions">
+							<span class="rf-cert-view-chip" title="Buka Pratinjau Dokumen">
+								<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+								<span>Pratinjau</span>
+							</span>
+						</div>
 					</article>
 				<?php endwhile; ?>
 				<?php wp_reset_postdata(); ?>
@@ -346,3 +383,89 @@ function rafi_core_certificates_shortcode( $atts ) {
 	return ob_get_clean();
 }
 add_shortcode( 'rafi_certificates', 'rafi_core_certificates_shortcode' );
+
+/**
+ * Render Certificate Lightbox Modal into footer.
+ */
+function rafi_core_render_cert_modal() {
+	// Always render on frontend or if certificates are flagged
+	if ( is_admin() ) {
+		return;
+	}
+	?>
+	<!-- Certificate Lightbox Modal (Rafi Portfolio Core v2.0.0) -->
+	<div id="rf-cert-modal" class="rf-cert-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rf-modal-title">
+		<div class="rf-cert-modal-card" role="document">
+			
+			<!-- Modal Header Bar -->
+			<div class="rf-cert-modal-header">
+				<div class="rf-cert-status-badge">
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+					<span>Dokumen Resmi Terverifikasi</span>
+				</div>
+				<button type="button" class="rf-cert-modal-close" aria-label="Tutup jendela pratinjau" title="Tutup (Esc)">
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</button>
+			</div>
+
+			<!-- Modal Body: 2-Column Responsive Layout -->
+			<div class="rf-cert-modal-body">
+				
+				<!-- Left Column: Certificate Document Frame -->
+				<div class="rf-cert-preview-pane">
+					<div class="rf-cert-doc-frame" id="rf-modal-frame">
+						<img id="rf-modal-img" src="" alt="Pratinjau Dokumen Sertifikat" loading="lazy" />
+					</div>
+					<p class="rf-cert-doc-hint">Dokumen vektor resolusi tinggi resmi &bull; Bebas distorsi &amp; tajam</p>
+				</div>
+
+				<!-- Right Column: Verification Metadata & Actions -->
+				<div class="rf-cert-meta-pane">
+					<div class="rf-cert-meta-tags">
+						<span id="rf-modal-issuer" class="rf-pill rf-pill-primary">Penerbit</span>
+						<span id="rf-modal-date" class="rf-pill rf-pill-muted">Tahun</span>
+					</div>
+
+					<h3 id="rf-modal-title" class="rf-cert-modal-heading">Judul Sertifikat</h3>
+					
+					<p id="rf-modal-desc" class="rf-cert-modal-summary">Keterangan kompetensi sertifikasi.</p>
+
+					<!-- Credential Box with Copy Button -->
+					<div class="rf-cert-cred-card">
+						<div class="rf-cred-card-header">
+							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="13" y2="12"></line><circle cx="16" cy="16" r="2"></circle></svg>
+							<span class="rf-cred-label">Nomor / Predikat Kredensial</span>
+						</div>
+						<div class="rf-cred-card-body">
+							<code id="rf-modal-code" class="rf-cred-code-val"></code>
+							<button type="button" id="rf-modal-copy-btn" class="rf-copy-trigger" title="Salin ke Clipboard" aria-label="Salin nomor kredensial">
+								<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+								<span class="rf-copy-text">Salin</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- Security Notice -->
+					<div class="rf-cert-security-note">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#16a34a" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+						<span>Tervalidasi secara akademis dan profesional dalam portofolio resmi Muhammad Rafi Rizqi.</span>
+					</div>
+
+					<!-- Action Buttons -->
+					<div class="rf-cert-modal-actions">
+						<a id="rf-modal-full-link" href="#" target="_blank" rel="noopener noreferrer" class="rf-btn-full-doc">
+							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+							<span>Buka Resolusi Penuh</span>
+						</a>
+						<button type="button" class="rf-btn-modal-dismiss rf-modal-close-btn">Tutup</button>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<?php
+}
+add_action( 'wp_footer', 'rafi_core_render_cert_modal' );

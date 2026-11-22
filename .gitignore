@@ -21,6 +21,11 @@
 !wp-content/uploads/portfolio-thumbnails/
 !wp-content/uploads/portfolio-thumbnails/**
 
+# Track high-definition vector certificates
+!wp-content/uploads/2026/
+!wp-content/uploads/2026/11/
+!wp-content/uploads/2026/11/cert-*.svg
+
 # Always ignore OS/editor/log clutter inside tracked folders
 .DS_Store
 Thumbs.db
