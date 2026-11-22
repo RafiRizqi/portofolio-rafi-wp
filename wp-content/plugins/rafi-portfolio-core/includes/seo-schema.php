@@ -215,7 +215,91 @@ function rafi_core_output_seo_schema() {
 		'@graph'   => $graph,
 	);
 
-	echo "\n<!-- JSON-LD SEO Structured Data (Rafi Portfolio Core v2.0.0) -->\n";
+	echo "\n<!-- JSON-LD SEO Structured Data (Rafi Portfolio Core v2.2.0) -->\n";
 	echo '<script type="application/ld+json">' . wp_json_encode( $json_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ) . "</script>\n";
 }
 add_action( 'wp_head', 'rafi_core_output_seo_schema', 20 );
+
+/**
+ * 4. Rich Open Graph, Twitter Cards, WhatsApp Share & Favicon Suite (v2.2.0).
+ */
+function rafi_core_get_og_image_url() {
+	if ( is_singular( 'proyek' ) && has_post_thumbnail() ) {
+		return get_the_post_thumbnail_url( get_the_ID(), 'large' );
+	}
+	return home_url( '/wp-content/uploads/2026/11/og-preview-banner.jpg' );
+}
+
+// Filter Rank Math Open Graph Image
+add_filter( 'rank_math/opengraph/facebook/image', 'rafi_core_filter_rm_og_image' );
+add_filter( 'rank_math/opengraph/twitter/image', 'rafi_core_filter_rm_og_image' );
+function rafi_core_filter_rm_og_image( $image ) {
+	if ( empty( $image ) || is_front_page() || is_page( array( 'cv', 'sertifikat', 'proyek', 'kontak' ) ) ) {
+		return rafi_core_get_og_image_url();
+	}
+	return $image;
+}
+
+// Filter Rank Math Locale to id_ID
+add_filter( 'rank_math/opengraph/facebook/locale', function() {
+	return 'id_ID';
+} );
+
+// Update description on /sertifikat/ page if handled by Rank Math
+add_filter( 'rank_math/description', function( $desc ) {
+	if ( is_page( 'sertifikat' ) ) {
+		return 'Daftar sertifikasi & kredensial resmi Muhammad Rafi Rizqi: BNSP Skema Pemrograman (Predikat GARUDA), Ketua Umum HIMTIF UNPAM, Kampus Mengajar Angkatan 7, dan TOEFL 440.';
+	}
+	return $desc;
+} );
+
+// Invalidate & Inject Complete Social Meta Tags into wp_head
+function rafi_core_social_share_meta_tags() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$og_img     = rafi_core_get_og_image_url();
+	$fav_svg    = home_url( '/wp-content/uploads/2026/11/favicon-rafi.svg' );
+	$site_title = 'Portofolio Muhammad Rafi Rizqi';
+
+	// Determine title and description
+	if ( is_front_page() ) {
+		$title = 'Muhammad Rafi Rizqi — Web Developer & S1 Teknik Informatika UNPAM';
+		$desc  = 'Portofolio resmi Muhammad Rafi Rizqi: Web Developer asal Depok dengan keahlian React, TypeScript, PHP, MySQL, dan WordPress Elementor.';
+	} elseif ( is_page( 'cv' ) ) {
+		$title = 'CV & Resume — Muhammad Rafi Rizqi | Web Developer';
+		$desc  = 'Curriculum Vitae interaktif Muhammad Rafi Rizqi: Pengalaman proyek nyata (Area51, SIM Barokah, TOPSIS), 17 logo keahlian, dan unduh PDF resmi.';
+	} elseif ( is_page( 'sertifikat' ) ) {
+		$title = 'Sertifikat & Pencapaian Resmi — Muhammad Rafi Rizqi';
+		$desc  = 'Daftar sertifikasi terverifikasi: BNSP Pemrograman (Predikat GARUDA), Ketua Umum HIMTIF UNPAM, Kampus Mengajar 7 Kemendikbud, dan TOEFL 440.';
+	} elseif ( is_page( 'proyek' ) ) {
+		$title = 'Studi Kasus & Proyek Web — Muhammad Rafi Rizqi';
+		$desc  = 'Koleksi studi kasus sistem web, POS kasir, manajemen inventaris, dan website bisnis performa tinggi.';
+	} elseif ( is_singular( 'proyek' ) ) {
+		$title = get_the_title() . ' — Studi Kasus Portofolio Rafi';
+		$desc  = get_the_excerpt() ?: 'Studi kasus teknis sistem web oleh Muhammad Rafi Rizqi.';
+	} else {
+		$title = wp_get_document_title();
+		$desc  = 'Portofolio resmi Muhammad Rafi Rizqi — Web Developer & Software Engineer.';
+	}
+	?>
+<!-- Favicon Suite (SVG Scalable) -->
+<link rel="icon" type="image/svg+xml" href="<?php echo esc_url( $fav_svg ); ?>">
+<link rel="apple-touch-icon" href="<?php echo esc_url( home_url( '/wp-content/uploads/2026/11/rafi-portrait-asli.jpg' ) ); ?>">
+
+<!-- Open Graph / WhatsApp / LinkedIn Rich Preview (v2.2.0) -->
+<meta property="og:image" content="<?php echo esc_url( $og_img ); ?>">
+<meta property="og:image:secure_url" content="<?php echo esc_url( $og_img ); ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="<?php echo esc_attr( $title ); ?>">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:locale" content="id_ID">
+
+<!-- Twitter Card Large Image -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="<?php echo esc_url( $og_img ); ?>">
+	<?php
+}
+add_action( 'wp_head', 'rafi_core_social_share_meta_tags', 5 );

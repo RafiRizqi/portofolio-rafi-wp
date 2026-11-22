@@ -21,11 +21,14 @@
 !wp-content/uploads/portfolio-thumbnails/
 !wp-content/uploads/portfolio-thumbnails/**
 
-# Track high-definition vector certificates
+# Track high-definition vector certificates & social share assets
 !wp-content/uploads/2026/
 !wp-content/uploads/2026/11/
 !wp-content/uploads/2026/11/cert-*.svg
 !wp-content/uploads/2026/11/cert-ketua-hima.svg
+!wp-content/uploads/2026/11/og-preview-banner.jpg
+!wp-content/uploads/2026/11/favicon-rafi.svg
+!wp-content/uploads/2026/11/rafi-portrait-asli.jpg
 
 # Always ignore OS/editor/log clutter inside tracked folders
 .DS_Store
