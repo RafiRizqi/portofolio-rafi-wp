@@ -42,6 +42,7 @@ function rafi_core_defer_scripts( $tag, $handle, $src ) {
 		'rafi-portfolio-carousel',
 		'rafi-portfolio-cv',
 		'rafi-portfolio-modal',
+		'rafi-portfolio-palette',
 		'rafi-child-animations',
 	);
 
