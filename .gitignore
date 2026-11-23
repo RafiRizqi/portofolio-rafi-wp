@@ -30,6 +30,10 @@
 !wp-content/uploads/2026/11/favicon-rafi.svg
 !wp-content/uploads/2026/11/rafi-portrait-asli.jpg
 
+# Track agent skills & guidance
+!.agents/
+!.agents/**
+
 # Always ignore OS/editor/log clutter inside tracked folders
 .DS_Store
 Thumbs.db
