@@ -2,10 +2,12 @@
 /**
  * Hello Elementor Child — Functions.
  *
- * Hanya berisi enqueue asset & setup tampilan (presentation layer).
- * Seluruh data CPT & shortcode dipisahkan ke plugin rafi-portfolio-core.
+ * Presentation layer: enqueue assets & suppress Elementor header/footer
+ * on pages that use our custom front-page.php template.
+ * All CPT data & shortcodes live in plugin rafi-portfolio-core.
  *
  * @package Hello_Elementor_Child
+ * @version 3.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enqueue parent & child stylesheets plus Google Fonts fallback.
+ * Enqueue Google Fonts, base style, legacy animations, and
+ * the new Taqy✦Farline stylesheet + script (front-page only).
  */
 function rafi_child_enqueue_assets() {
 	wp_enqueue_style(
@@ -30,6 +33,7 @@ function rafi_child_enqueue_assets() {
 		wp_get_theme()->get( 'Version' )
 	);
 
+	// Legacy animation helpers (non-front-page pages)
 	wp_enqueue_script(
 		'rafi-child-animations',
 		get_stylesheet_directory_uri() . '/assets/js/animations.js',
@@ -37,5 +41,34 @@ function rafi_child_enqueue_assets() {
 		wp_get_theme()->get( 'Version' ),
 		true
 	);
+
+	// ── Taqy✦Farline Full-Site Transformation (front-page only) ───────
+	if ( is_front_page() ) {
+		wp_enqueue_style(
+			'rafi-taqy-farline',
+			get_stylesheet_directory_uri() . '/assets/portfolio-taqy-farline.css',
+			array( 'rafi-google-fonts' ),
+			'3.0.0'
+		);
+
+		wp_enqueue_script(
+			'rafi-taqy-farline',
+			get_stylesheet_directory_uri() . '/assets/portfolio-taqy-farline.js',
+			array(),
+			'3.0.0',
+			true
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'rafi_child_enqueue_assets', 20 );
+
+/**
+ * On the front-page (using our custom front-page.php), suppress the
+ * Hello Elementor default header/footer to avoid double chrome.
+ */
+function rafi_suppress_hello_header_footer() {
+	if ( is_front_page() ) {
+		add_filter( 'hello_elementor_display_header_footer', '__return_false' );
+	}
+}
+add_action( 'wp', 'rafi_suppress_hello_header_footer' );
