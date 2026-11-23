@@ -48,94 +48,133 @@ function rafi_core_projects_shortcode( $atts ) {
 
 	if ( $is_carousel ) :
 		$total_count = $query->post_count;
+
+		// Pre-process project records for Dual-View (Carousel & Minimalist List)
+		$projects_data = array();
+		$card_idx      = 0;
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$card_idx++;
+			$post_id    = get_the_ID();
+			$year       = get_post_meta( $post_id, '_rf_proyek_year', true );
+			$tech_raw   = get_post_meta( $post_id, '_rf_proyek_tech', true );
+			$demo_url   = get_post_meta( $post_id, '_rf_proyek_demo_url', true );
+			$repo_url   = get_post_meta( $post_id, '_rf_proyek_repo_url', true );
+			$tech_list  = array_filter( array_map( 'trim', explode( ',', (string) $tech_raw ) ) );
+			$post_terms = get_the_terms( $post_id, 'kategori_proyek' );
+			$term_name  = 'Fullstack Web';
+			$is_homelab = false;
+
+			if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
+				$term_slugs = wp_list_pluck( $post_terms, 'slug' );
+				if ( in_array( 'homelab', $term_slugs, true ) ) {
+					$term_name  = 'Home Lab';
+					$is_homelab = true;
+				} elseif ( in_array( 'spk-algoritma', $term_slugs, true ) ) {
+					$term_name = 'SPK / Algoritma';
+				} elseif ( in_array( 'wordpress', $term_slugs, true ) ) {
+					$term_name = 'WordPress';
+				} else {
+					$term_name = $post_terms[0]->name;
+				}
+			}
+
+			$thumb_large  = has_post_thumbnail( $post_id ) ? get_the_post_thumbnail_url( $post_id, 'large' ) : '';
+			$thumb_medium = has_post_thumbnail( $post_id ) ? get_the_post_thumbnail_url( $post_id, 'medium' ) : '';
+
+			$projects_data[] = array(
+				'id'           => $post_id,
+				'index'        => $card_idx,
+				'code'         => sprintf( 'PRJ-%02d', $card_idx ),
+				'title'        => get_the_title(),
+				'permalink'    => get_permalink(),
+				'excerpt'      => wp_trim_words( get_the_excerpt(), 16 ),
+				'year'         => $year,
+				'demo_url'     => $demo_url,
+				'repo_url'     => $repo_url,
+				'tech_list'    => $tech_list,
+				'term_name'    => $term_name,
+				'is_homelab'   => $is_homelab,
+				'thumb_large'  => $thumb_large,
+				'thumb_medium' => $thumb_medium,
+			);
+		}
+		wp_reset_postdata();
 		?>
-		<div class="rf-showcase-container" data-rf-carousel aria-label="Koleksi Proyek Pilihan">
-			<!-- Header Proyek Pilihan Bersih & Profesional -->
+		<div class="rf-showcase-container" data-rf-showcase aria-label="Koleksi Proyek Pilihan">
+			<!-- Header Proyek Pilihan dengan Dual-View Switcher -->
 			<div class="rf-showcase-header">
 				<div>
 					<span class="rf-pill">PROYEK PILIHAN</span>
 					<h2 class="rf-showcase-title">Karya &amp; Studi Kasus Terbaru</h2>
 					<p class="rf-showcase-subtitle">Sistem web, aplikasi kasir &amp; manajemen inventaris, dan website bisnis yang dibangun secara fungsional.</p>
 				</div>
-				<a href="<?php echo esc_url( home_url( '/proyek/' ) ); ?>" class="rf-action-chip rf-all-proj-link">
-					Semua Proyek &rarr;
-				</a>
+				<div class="rf-showcase-actions">
+					<!-- Segmented Control Pill: 3D Visual vs Minimalist List ala Taqy -->
+					<div class="rf-view-switcher" role="tablist" aria-label="Pilihan Tampilan Showcase">
+						<button type="button" class="rf-view-btn is-active" data-view="carousel" role="tab" aria-selected="true" title="Tampilan 3D Visual">
+							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+							<span>3D Visual</span>
+						</button>
+						<button type="button" class="rf-view-btn" data-view="list" role="tab" aria-selected="false" title="Tampilan Minimalist List">
+							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+							<span>Minimalist List</span>
+						</button>
+					</div>
+					<a href="<?php echo esc_url( home_url( '/proyek/' ) ); ?>" class="rf-action-chip rf-all-proj-link">
+						Semua Proyek &rarr;
+					</a>
+				</div>
 			</div>
 
-			<!-- 3D Glass Carousel Stage -->
-			<div class="rf-carousel-stage">
+			<!-- STAGE 1: 3D Coverflow Carousel Stage -->
+			<div class="rf-carousel-stage" data-stage="carousel" role="tabpanel" aria-label="Showcase 3D Visual">
 				<button type="button" class="rf-carousel-btn rf-btn-prev" aria-label="Geser ke proyek sebelumnya" title="Sebelumnya">
 					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
 				</button>
 
 				<div class="rf-carousel-track">
-					<?php
-					$card_idx = 0;
-					while ( $query->have_posts() ) :
-						$query->the_post();
-						$post_id    = get_the_ID();
-						$year       = get_post_meta( $post_id, '_rf_proyek_year', true );
-						$tech_raw   = get_post_meta( $post_id, '_rf_proyek_tech', true );
-						$demo_url   = get_post_meta( $post_id, '_rf_proyek_demo_url', true );
-						$repo_url   = get_post_meta( $post_id, '_rf_proyek_repo_url', true );
-						$tech_list  = array_filter( array_map( 'trim', explode( ',', (string) $tech_raw ) ) );
-						$post_terms = get_the_terms( $post_id, 'kategori_proyek' );
-						$term_name  = 'Fullstack Web';
-						if ( ! empty( $post_terms ) && ! is_wp_error( $post_terms ) ) {
-							$term_slugs = wp_list_pluck( $post_terms, 'slug' );
-							if ( in_array( 'homelab', $term_slugs, true ) ) {
-								$term_name = 'Home Lab';
-							} elseif ( in_array( 'spk-algoritma', $term_slugs, true ) ) {
-								$term_name = 'SPK / Algoritma';
-							} elseif ( in_array( 'wordpress', $term_slugs, true ) ) {
-								$term_name = 'WordPress';
-							} else {
-								$term_name = $post_terms[0]->name;
-							}
-						}
-						?>
+					<?php foreach ( $projects_data as $card_idx => $p ) : ?>
 						<article class="rf-carousel-card" data-index="<?php echo esc_attr( $card_idx ); ?>">
 							<div class="rf-card-media">
-								<?php if ( has_post_thumbnail() ) : ?>
-									<a href="<?php the_permalink(); ?>" class="rf-card-media-link" tabindex="-1">
-										<?php the_post_thumbnail( 'large', array( 'loading' => 'lazy', 'alt' => esc_attr( get_the_title() ) ) ); ?>
+								<?php if ( $p['thumb_large'] ) : ?>
+									<a href="<?php echo esc_url( $p['permalink'] ); ?>" class="rf-card-media-link" tabindex="-1">
+										<img src="<?php echo esc_url( $p['thumb_large'] ); ?>" alt="<?php echo esc_attr( $p['title'] ); ?>" loading="lazy" />
 									</a>
 								<?php else : ?>
 									<div class="rf-card-media-fallback">
-										<span><?php echo esc_html( sprintf( '%02d', $card_idx + 1 ) ); ?></span>
+										<span><?php echo esc_html( sprintf( '%02d', $p['index'] ) ); ?></span>
 									</div>
 								<?php endif; ?>
-								<span class="rf-card-tag-floating"><?php echo esc_html( $term_name ); ?></span>
+								<span class="rf-card-tag-floating <?php echo $p['is_homelab'] ? 'rf-pill-homelab' : ''; ?>"><?php echo esc_html( $p['term_name'] ); ?></span>
 							</div>
 
 							<div class="rf-card-body">
 								<div class="rf-card-meta">
-									<?php if ( $year ) : ?>
-										<span class="rf-card-year"><?php echo esc_html( $year ); ?></span>
-									<?php endif; ?>
-									<?php if ( ! empty( $tech_list ) ) : ?>
-										<span class="rf-card-tech"><?php echo esc_html( implode( ' · ', array_slice( $tech_list, 0, 3 ) ) ); ?></span>
+									<span class="rf-card-code"><?php echo esc_html( $p['code'] ); ?><?php if ( $p['year'] ) : ?> // <?php echo esc_html( $p['year'] ); ?><?php endif; ?></span>
+									<?php if ( ! empty( $p['tech_list'] ) ) : ?>
+										<span class="rf-card-tech">// <?php echo esc_html( implode( ' · ', array_slice( $p['tech_list'], 0, 3 ) ) ); ?></span>
 									<?php endif; ?>
 								</div>
 
 								<h3 class="rf-card-title">
-									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									<a href="<?php echo esc_url( $p['permalink'] ); ?>"><?php echo esc_html( $p['title'] ); ?></a>
 								</h3>
 
 								<p class="rf-card-desc">
-									<?php echo esc_html( wp_trim_words( get_the_excerpt(), 16 ) ); ?>
+									<?php echo esc_html( $p['excerpt'] ); ?>
 								</p>
 
 								<div class="rf-card-footer">
 									<div class="rf-card-action-links">
-										<?php if ( $demo_url ) : ?>
-											<a href="<?php echo esc_url( $demo_url ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">Demo</a>
+										<?php if ( $p['demo_url'] ) : ?>
+											<a href="<?php echo esc_url( $p['demo_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">Demo</a>
 										<?php endif; ?>
-										<?php if ( $repo_url ) : ?>
-											<a href="<?php echo esc_url( $repo_url ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">GitHub</a>
+										<?php if ( $p['repo_url'] ) : ?>
+											<a href="<?php echo esc_url( $p['repo_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">GitHub</a>
 										<?php endif; ?>
 									</div>
-									<a href="<?php the_permalink(); ?>" class="rf-card-view-btn" title="Buka Studi Kasus">
+									<a href="<?php echo esc_url( $p['permalink'] ); ?>" class="rf-card-view-btn" title="Buka Studi Kasus">
 										<span>Studi Kasus</span>
 										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
 									</a>
@@ -145,11 +184,7 @@ function rafi_core_projects_shortcode( $atts ) {
 							<!-- Frosted Glass Overlay for non-active cards -->
 							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
 						</article>
-						<?php
-						$card_idx++;
-					endwhile;
-					wp_reset_postdata();
-					?>
+					<?php endforeach; ?>
 				</div>
 
 				<button type="button" class="rf-carousel-btn rf-btn-next" aria-label="Geser ke proyek berikutnya" title="Berikutnya">
@@ -157,14 +192,71 @@ function rafi_core_projects_shortcode( $atts ) {
 				</button>
 			</div>
 
-			<!-- Circular Pagination Indicators & Counter -->
-			<div class="rf-showcase-footer">
+			<!-- Circular Pagination Indicators & Counter (Aktif pada Carousel) -->
+			<div class="rf-showcase-footer" data-stage-footer="carousel">
 				<div class="rf-carousel-dots" role="tablist" aria-label="Navigasi Proyek">
-					<?php for ( $d = 0; $d < $card_idx; $d++ ) : ?>
+					<?php for ( $d = 0; $d < count( $projects_data ); $d++ ) : ?>
 						<button type="button" class="rf-dot <?php echo 0 === $d ? 'is-active' : ''; ?>" data-slide="<?php echo esc_attr( $d ); ?>" aria-label="Ke Proyek <?php echo esc_attr( $d + 1 ); ?>" aria-selected="<?php echo 0 === $d ? 'true' : 'false'; ?>"></button>
 					<?php endfor; ?>
 				</div>
-				<span class="rf-carousel-counter" aria-live="polite">01 / <?php echo esc_html( sprintf( '%02d', $total_count ) ); ?></span>
+				<span class="rf-carousel-counter" aria-live="polite">01 / <?php echo esc_html( sprintf( '%02d', count( $projects_data ) ) ); ?></span>
+			</div>
+
+			<!-- STAGE 2: Minimalist List Stage ala Taqy dengan Floating Cursor Preview -->
+			<div class="rf-taqy-list-stage" data-stage="list" style="display: none;" role="tabpanel" aria-label="Showcase Minimalist List">
+				<div class="rf-taqy-list">
+					<?php foreach ( $projects_data as $p ) : ?>
+						<article class="rf-taqy-row" data-preview-img="<?php echo esc_url( $p['thumb_large'] ); ?>" data-title="<?php echo esc_attr( $p['title'] ); ?>" data-cat="<?php echo esc_attr( $p['term_name'] ); ?>">
+							<div class="rf-taqy-col-left">
+								<!-- Mobile Inline Thumbnail -->
+								<div class="rf-taqy-mobile-thumb" aria-hidden="true">
+									<?php if ( $p['thumb_medium'] ) : ?>
+										<img src="<?php echo esc_url( $p['thumb_medium'] ); ?>" alt="<?php echo esc_attr( $p['title'] ); ?>" loading="lazy" />
+									<?php else : ?>
+										<span><?php echo esc_html( sprintf( '%02d', $p['index'] ) ); ?></span>
+									<?php endif; ?>
+								</div>
+
+								<div class="rf-taqy-meta-block">
+									<div class="rf-taqy-header-line">
+										<span class="rf-taqy-code"><?php echo esc_html( $p['code'] ); ?><?php if ( $p['year'] ) : ?> // <?php echo esc_html( $p['year'] ); ?><?php endif; ?></span>
+										<span class="rf-pill <?php echo $p['is_homelab'] ? 'rf-pill-homelab' : ''; ?>"><?php echo esc_html( $p['term_name'] ); ?></span>
+									</div>
+									<h3 class="rf-taqy-title">
+										<a href="<?php echo esc_url( $p['permalink'] ); ?>"><?php echo esc_html( $p['title'] ); ?></a>
+									</h3>
+									<?php if ( ! empty( $p['tech_list'] ) ) : ?>
+										<span class="rf-taqy-tech">// <?php echo esc_html( implode( ' · ', array_slice( $p['tech_list'], 0, 4 ) ) ); ?></span>
+									<?php endif; ?>
+								</div>
+							</div>
+
+							<div class="rf-taqy-col-actions">
+								<?php if ( $p['demo_url'] ) : ?>
+									<a href="<?php echo esc_url( $p['demo_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">Demo</a>
+								<?php endif; ?>
+								<?php if ( $p['repo_url'] ) : ?>
+									<a href="<?php echo esc_url( $p['repo_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="rf-action-chip">GitHub</a>
+								<?php endif; ?>
+								<a href="<?php echo esc_url( $p['permalink'] ); ?>" class="rf-taqy-view-btn" aria-label="Lihat Studi Kasus <?php echo esc_attr( $p['title'] ); ?>" title="Lihat Studi Kasus">
+									<span>Studi Kasus</span>
+									<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+								</a>
+							</div>
+						</article>
+					<?php endforeach; ?>
+				</div>
+
+				<!-- Shared Floating Cursor Preview Container (Desktop Only via JS) -->
+				<div class="rf-floating-preview" aria-hidden="true">
+					<div class="rf-preview-card">
+						<img src="" alt="" class="rf-preview-img" />
+						<div class="rf-preview-overlay">
+							<span class="rf-preview-badge"></span>
+							<span class="rf-preview-caption">Buka Studi Kasus &rarr;</span>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php

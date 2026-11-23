@@ -619,6 +619,56 @@
 	line-height: 1.5;
 }
 
+.rf-showcase-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.rf-view-switcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	padding: 4px;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	border-radius: 999px;
+}
+
+.rf-view-btn {
+	appearance: none;
+	border: none;
+	background: transparent;
+	color: #64748b;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	user-select: none;
+}
+
+.rf-view-btn:hover {
+	color: #0f172a;
+}
+
+.rf-view-btn.is-active {
+	background: #0f172a;
+	color: #ffffff;
+	box-shadow: 0 2px 8px -1px rgba(15, 23, 42, 0.25);
+}
+
+.rf-view-btn svg {
+	flex-shrink: 0;
+	stroke-width: 2.2;
+}
+
 .rf-all-proj-link {
 	padding: 8px 18px;
 	font-size: 0.88rem;
@@ -792,6 +842,14 @@
 	gap: 10px;
 	margin-bottom: 8px;
 	flex-wrap: wrap;
+}
+
+.rf-card-code {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.74rem;
+	font-weight: 700;
+	color: #2563eb;
+	letter-spacing: 0.04em;
 }
 
 .rf-card-year {
@@ -1011,6 +1069,262 @@
 	font-size: 0.8rem;
 	color: #64748b;
 	letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Stage 2: Minimalist List Showcase ala Taqy & Farline
+   ========================================================================== */
+.rf-taqy-list-stage {
+	position: relative;
+	width: 100%;
+	margin: 10px auto 28px;
+}
+
+.rf-taqy-list {
+	display: flex;
+	flex-direction: column;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px -8px rgba(15, 23, 42, 0.06);
+}
+
+.rf-taqy-row {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 22px 28px;
+	border-bottom: 1px solid #f1f5f9;
+	transition: background 0.22s ease, transform 0.22s ease, padding-left 0.22s ease;
+	text-decoration: none;
+}
+
+.rf-taqy-row:last-child {
+	border-bottom: none;
+}
+
+.rf-taqy-row::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 14px;
+	bottom: 14px;
+	width: 4px;
+	border-radius: 0 4px 4px 0;
+	background: #2563eb;
+	transform: scaleY(0);
+	transform-origin: center;
+	transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rf-taqy-row:hover {
+	background: #f8fafc;
+	padding-left: 34px;
+}
+
+.rf-taqy-row:hover::before {
+	transform: scaleY(1);
+}
+
+.rf-taqy-col-left {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	min-width: 0;
+	flex: 1;
+}
+
+/* Mobile inline thumbnail hidden on desktop */
+.rf-taqy-mobile-thumb {
+	display: none;
+	width: 84px;
+	height: 56px;
+	border-radius: 10px;
+	overflow: hidden;
+	border: 1px solid #e2e8f0;
+	flex-shrink: 0;
+	background: #0f172a;
+}
+
+.rf-taqy-mobile-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.rf-taqy-meta-block {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+}
+
+.rf-taqy-header-line {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.rf-taqy-code {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.76rem;
+	font-weight: 700;
+	color: #2563eb;
+	letter-spacing: 0.05em;
+}
+
+.rf-taqy-title {
+	margin: 0;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: -0.015em;
+	line-height: 1.35;
+}
+
+.rf-taqy-title a {
+	color: #0f172a;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.rf-taqy-row:hover .rf-taqy-title a {
+	color: #2563eb;
+}
+
+.rf-taqy-tech {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.78rem;
+	color: #64748b;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+}
+
+.rf-taqy-col-actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.rf-taqy-view-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 16px;
+	background: #0f172a;
+	color: #ffffff;
+	border-radius: 999px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rf-taqy-view-btn:hover {
+	background: #2563eb;
+	transform: translateX(3px);
+}
+
+/* FLOATING CURSOR IMAGE PREVIEW (Taqy-Style Desktop) */
+.rf-floating-preview {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 320px;
+	height: 200px;
+	pointer-events: none;
+	z-index: 60;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate3d(0, 0, 0) scale(0.92);
+	transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+	            visibility 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+	            scale 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+	will-change: transform, opacity;
+}
+
+.rf-floating-preview.is-active {
+	opacity: 1;
+	visibility: visible;
+	transform: translate3d(0, 0, 0) scale(1);
+}
+
+.rf-preview-card {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: 14px;
+	overflow: hidden;
+	background: #0f172a;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	box-shadow: 0 24px 50px -15px rgba(15, 23, 42, 0.32),
+	            0 4px 16px -2px rgba(15, 23, 42, 0.1);
+}
+
+.rf-preview-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.rf-preview-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 14px;
+	background: linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, transparent 100%);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.rf-preview-badge {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #38bdf8;
+	background: rgba(15, 23, 42, 0.7);
+	padding: 2px 8px;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rf-preview-caption {
+	font-size: 0.76rem;
+	font-weight: 600;
+	color: #ffffff;
+}
+
+@media (max-width: 860px) {
+	.rf-floating-preview {
+		display: none !important;
+	}
+
+	.rf-taqy-mobile-thumb {
+		display: block;
+	}
+
+	.rf-taqy-row {
+		padding: 18px 20px;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.rf-taqy-col-actions {
+		width: 100%;
+		justify-content: flex-end;
+		margin-top: 10px;
+		border-top: 1px dashed #e2e8f0;
+		padding-top: 12px;
+	}
 }
 
 /* Responsive adjustments */
