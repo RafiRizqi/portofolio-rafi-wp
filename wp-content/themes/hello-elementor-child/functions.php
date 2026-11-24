@@ -64,11 +64,15 @@ add_action( 'wp_enqueue_scripts', 'rafi_child_enqueue_assets', 20 );
 
 /**
  * On the front-page (using our custom front-page.php), suppress the
- * Hello Elementor default header/footer to avoid double chrome.
+ * Hello Elementor default header/footer and Header Footer Elementor (HFE) plugin.
  */
 function rafi_suppress_hello_header_footer() {
 	if ( is_front_page() ) {
-		add_filter( 'hello_elementor_display_header_footer', '__return_false' );
+		add_filter( 'hello_elementor_header_footer', '__return_false' );
+		add_filter( 'enable_hfe_render_header', '__return_false' );
+		add_filter( 'enable_hfe_render_footer', '__return_false' );
+		add_filter( 'hfe_header_enabled', '__return_false' );
+		add_filter( 'hfe_footer_enabled', '__return_false' );
 	}
 }
-add_action( 'wp', 'rafi_suppress_hello_header_footer' );
+add_action( 'wp', 'rafi_suppress_hello_header_footer', 5 );
