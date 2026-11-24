@@ -1,77 +1,56 @@
-# Portofolio Muhammad Rafi Rizqi — WordPress & Elementor
+# Muhammad Rafi Rizqi — Fullstack Web Developer Portfolio
 
-Website portofolio pribadi **Muhammad Rafi Rizqi** (S1 Teknik Informatika — Universitas Pamulang) yang dibangun menggunakan **WordPress**, **Hello Elementor Child Theme**, **Elementor Flexbox Containers**, dan **Custom Plugin (`rafi-portfolio-core`)** mengikuti standar workflow digital agency profesional.
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Production-black?style=flat&logo=vercel)](https://portfolio-rafirizqi.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Performance: 100/100](https://img.shields.io/badge/Lighthouse-100%2F100-success)](https://portfolio-rafirizqi.vercel.app)
 
-> **Catatan Repository:** Sesuai praktik terbaik WordPress di digital agency, repositori ini **hanya melacak custom code** (*Child Theme*, *Custom Plugin*, dan aset thumbnail WebP terkompresi). WordPress Core, `wp-config.php`, dan plugin pihak ketiga dikecualikan melalui `.gitignore`.
+Official personal developer portfolio of **Muhammad Rafi Rizqi**, designed with **Taqy ✦ Farline Modern Architectural Light-Mode Aesthetic**.
 
----
-
-## Proyek Pilihan (Featured Projects)
-
-1. **Area51 — Self-Ordering, POS Kasir & Kitchen Display System (2024)**
-   - *Tech Stack*: PHP Native (Modular Architecture), MySQL, Bootstrap 5.3, AJAX, REST/Stream API, Excel Export.
-   - *Fitur Kunci*: Pemesanan mandiri meja pelanggan (*self-ordering*) dengan dynamic addons & kode voucher promo, live order tracking, antarmuka Kitchen Display System (KDS) untuk staf dapur realtime, kasir POS cetak struk termal, pembukuan operasional, dan laporan omset harian otomatis ekspor Excel.
-2. **Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)**
-   - *Tech Stack*: PHP, MySQL, Algoritma TOPSIS, Bootstrap, JavaScript.
-   - *Klien*: SDN 3 Way Laga (Proyek Skripsi / Akademik).
-   - *Fitur Kunci*: Perhitungan matriks ternormalisasi terbobot, solusi ideal positif/negatif, perankingan objektif, dan laporan hasil seleksi siap cetak.
-3. **Sistem Informasi Manajemen Inventaris & Penjualan**
-   - *Tech Stack*: PHP, MySQL, Inventory Control, POS, Waterfall SDLC.
-   - *Klien*: CV. Barokah Sedaya Usaha (Kerja Praktik).
-   - *Fitur Kunci*: Monitoring stok multi-gudang, alert stok otomatis, transaksi kasir, dan laporan laba kotor.
-4. **Website Portofolio Profesional Rafi (Live Project)**
-   - *Tech Stack*: WordPress 7.1+, Elementor Flexbox, Child Theme, Custom Plugin, Rank Math SEO.
+Live Website: **[portfolio-rafirizqi.vercel.app](https://portfolio-rafirizqi.vercel.app)**
 
 ---
 
-## Arsitektur Teknis (Separation of Concerns)
+## 🚀 Key Architectural Features
+- **Zero-Dependency Core**: Pure Semantic HTML5, CSS Grid & Flexbox, Modern Vanilla JavaScript (ES6+).
+- **Web Audio API Synthesizer**: Zero-file audio sound effect generation (no MP3/WAV download required).
+- **GPU-Accelerated Cursor Preview**: 60fps floating image hover preview with lerp interpolation.
+- **Dual-View Showcase Switcher**: Seamless toggle between Farline Editorial List and 3D Perspective Coverflow Carousel with `localStorage` state persistence.
+- **Dynamic GMT+7 Jakarta Time Clock**: Real-time localized production status widget.
+- **Instant CI/CD via Vercel**: Automated serverless edge deployment on every GitHub commit.
 
+---
+
+## 🛠️ Tech Stack & Production Systems
+- **Frontend**: Vanilla ES6+, CSS Grid, Flexbox, Web Audio API
+- **Backend Architecture**: PHP 8.3, CodeIgniter 4, Laravel, REST APIs, RBAC
+- **Databases**: MySQL, Relational Schema Design, Query Indexing, ACID Transactions
+- **DevOps & Infrastructure**: Proxmox VE, Docker, Ubuntu Server LTS, Nginx Reverse Proxy, Cloudflare Zero Trust Tunnels
+
+---
+
+## 📂 Project Structure
 ```text
-wp-content/
-├── themes/
-│   └── hello-elementor-child/        # Presentation Layer (Child Theme)
-│       ├── style.css                 # Design system, seamless section gradients, responsive & GPU animations
-│       ├── functions.php             # Enqueue parent/child stylesheet, fonts & lightweight JS
-│       ├── single-proyek.php         # Template studi kasus proyek otomatis
-│       └── assets/js/animations.js   # rAF scroll progress & one-shot IntersectionObserver reveal
-├── plugins/
-│   └── rafi-portfolio-core/          # Data & Functionality Layer (Custom Plugin)
-│       ├── rafi-portfolio-core.php   # Plugin bootstrap & rewrite flush hooks
-│       ├── includes/
-│       │   ├── cpt-proyek.php        # CPT Proyek, Taxonomy Kategori, & Meta Box Studi Kasus
-│       │   ├── cpt-sertifikat.php    # CPT Sertifikat & Meta Box Kredensial
-│       │   └── shortcodes.php        # Shortcode [rafi_projects] & [rafi_certificates] untuk Elementor
-│       └── assets/
-│           ├── css/portfolio-core.css
-│           ├── js/portfolio-filter.js
-│           └── js/portfolio-carousel.js
-└── uploads/
-    └── portfolio-thumbnails/         # Compressed WebP project thumbnails (<40 KB each)
+├── index.html           # Main Taqy ✦ Farline interactive portfolio
+├── vercel.json          # Edge routing, caching, and security headers
+├── assets/
+│   ├── css/style.css    # Unified architectural design system
+│   ├── js/
+│   │   ├── app.js       # Live clock, Web Audio, dual-view motion
+│   │   └── carousel.js  # 3D Coverflow carousel controller
+│   ├── img/             # Responsive thumbnails & HD portrait
+│   ├── certs/           # High-resolution vector certification SVGs
+│   └── docs/            # Curriculum Vitae (PDF)
+└── proyek/              # Comprehensive case study pages
 ```
 
-### Kenapa Child Theme Dipisah dari Custom Plugin?
-- **Child Theme (`hello-elementor-child`)** hanya menangani tampilan (*presentation*) agar modifikasi tetap aman saat parent theme `hello-elementor` mendapat update resmi.
-- **Custom Plugin (`rafi-portfolio-core`)** mengelola Custom Post Type (*Proyek* & *Sertifikat*), Meta Boxes, dan Shortcode agar data bisnis tetap aman di database walaupun tema diganti.
-
 ---
 
-## Fitur & Praktik Standar Industri
-- **Elementor First**: Halaman *Beranda*, *CV*, *Sertifikat*, *Proyek*, *Kontak*, serta *Header & Footer* dibangun menggunakan Flexbox Containers & Global Site Settings.
-- **3D Glassmorphism Card Carousel**: Modul showcase proyek beranda menampilkan 3 kartu berdimensi—kartu tengah fokus tajam dan menonjol, kartu samping kanan-kiri berada di belakang dengan efek frosted glass blur, tombol navigasi bulat di kedua sisi, indikator dot interaktif, serta gesture touch swipe di mobile.
-- **Keamanan PHP WordPress**: Setiap meta box menerapkan verifikasi `nonce`, capability check (`current_user_can`), sanitization saat simpan (`sanitize_text_field`, `sanitize_textarea_field`, `esc_url_raw`), dan output escaping (`esc_html`, `esc_url`, `esc_attr`).
-- **Performa & Responsivitas**: Plugin minimal (`6` plugin aktif), animasi murni GPU (`translate3d` & `opacity`, tanpa library eksternal berat), thumbnail WebP terkompresi super ringan (<40 KB), dan responsif di Desktop (`1280px`), Tablet (`768px`), dan Mobile (`390px`).
-- **SEO & Email**: Terintegrasi dengan **Rank Math SEO** (meta title, description, Open Graph, XML Sitemap) dan **WP Mail SMTP** untuk formulir kontak **Contact Form 7**.
-
----
-
-## Stack & Environment
-- **Core**: WordPress `7.1+`, Elementor, PHP `8.3`, MySQL `8.4`, HTML5, CSS3, Vanilla JS
-- **Local Dev**: Laragon (Apache + MySQL), Git & GitHub
-
----
-
-## Kontak
-- **Nama**: Muhammad Rafi Rizqi (Depok, Jawa Barat)
-- **Email**: `rafi02062003@gmail.com`
-- **Instagram**: [@rafirizqi_](https://instagram.com/rafirizqi_)
+## 📬 Contact & Connect
+- **Email**: [rafi02062003@gmail.com](mailto:rafi02062003@gmail.com)
+- **WhatsApp**: [+62 857-2233-7099](https://wa.me/6285722337099)
+- **LinkedIn**: [linkedin.com/in/rafi-rizqi](https://linkedin.com/in/rafi-rizqi)
 - **GitHub**: [github.com/RafiRizqi](https://github.com/RafiRizqi)
+- **Instagram**: [@rafi_rizqi02](https://instagram.com/rafi_rizqi02)
+
+---
+© 2026 Muhammad Rafi Rizqi. All rights reserved.
