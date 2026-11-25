@@ -60,14 +60,48 @@ document.addEventListener('DOMContentLoaded', function () {
 	hihuAudio.volume = 0.95;
 	var hihuBubbleTimer = null;
 
+	function triggerHihuEgg(toggleSide) {
+		if (!triggerBtn) return;
+		triggerBtn.style.setProperty('--rf-fab-w', (triggerBtn.offsetWidth || 72) + 'px');
+		if (toggleSide) {
+			triggerBtn.classList.toggle('is-hihu-dodged');
+		} else {
+			triggerBtn.classList.add('is-hihu-dodged');
+		}
+		triggerBtn.classList.add('is-hihu-speaking');
+
+		try {
+			hihuAudio.currentTime = 0;
+			var playPromise = hihuAudio.play();
+			if (playPromise && typeof playPromise.catch === 'function') {
+				playPromise.catch(function () {});
+			}
+		} catch (err) {}
+
+		if (hihuBubbleTimer) clearTimeout(hihuBubbleTimer);
+		hihuBubbleTimer = setTimeout(function () {
+			triggerBtn.classList.remove('is-hihu-speaking');
+		}, 2300);
+	}
+
+	window.rfTriggerHihu = function () {
+		triggerHihuEgg(true);
+	};
+
 	function getVisibleItems() {
-		return allItems.filter(function (item) {
+		var liveItems = resultsContainer
+			? Array.from(resultsContainer.querySelectorAll('.rf-palette-item'))
+			: allItems;
+		return liveItems.filter(function (item) {
 			return item.style.display !== 'none';
 		});
 	}
 
 	function updateFocusedItem(visibleItems) {
-		allItems.forEach(function (el) {
+		var allLive = resultsContainer
+			? Array.from(resultsContainer.querySelectorAll('.rf-palette-item'))
+			: allItems;
+		allLive.forEach(function (el) {
 			el.classList.remove('is-focused');
 		});
 
@@ -115,9 +149,92 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.body.classList.remove('rf-palette-locked');
 	}
 
+	function removeSecretItem() {
+		if (!resultsContainer) return;
+		var oldSecret = resultsContainer.querySelector('.rf-palette-secret-item');
+		if (oldSecret) oldSecret.remove();
+	}
+
+	function getSecretCommand(q) {
+		if (q === 'hire' || q === 'gaji') {
+			return {
+				label: '🚀 Cheat Code: Gas Interview!',
+				desc: 'Siap ngoding, siap ngopi, siap deploy. Klik atau Enter buat rayain!',
+				badge: 'SECRET',
+				run: function () {
+					if (typeof window.rfLaunchConfetti === 'function') {
+						window.rfLaunchConfetti(window.innerWidth / 2, window.innerHeight * 0.35);
+					}
+					if (typeof window.rfShowToast === 'function') {
+						window.rfShowToast(
+							'🚀',
+							'Gas Interview!',
+							'Siap ngoding, siap ngopi, siap deploy.',
+							{
+								label: 'Chat WhatsApp',
+								href: 'https://wa.me/62895705372344?text=Halo%20Rafi%2C%20kami%20tertarik%20undang%20interview!'
+							}
+						);
+					}
+				}
+			};
+		}
+		if (q === 'matrix') {
+			return {
+				label: '🕶️ Cheat Code: Matrix Mode',
+				desc: 'Aktifkan hujan kode ala hacker selama 4 detik (Esc untuk keluar).',
+				badge: 'SECRET',
+				run: function () {
+					if (typeof window.rfStartMatrixRain === 'function') {
+						window.rfStartMatrixRain();
+					}
+					if (typeof window.rfShowToast === 'function') {
+						window.rfShowToast('🕶️', 'Wake up, Neo...', 'Matrix mode aktif 4 detik.');
+					}
+				}
+			};
+		}
+		if (q === 'hihu') {
+			return {
+				label: '🤖 Cheat Code: HIIHUU Replay!',
+				desc: 'Putar ulang suara & lompatan robot meme HIIHUU.',
+				badge: 'SECRET',
+				run: function () {
+					triggerHihuEgg(true);
+				}
+			};
+		}
+		return null;
+	}
+
 	function filterItems(query) {
 		var q = (query || '').toLowerCase().trim();
 		var visibleCount = 0;
+
+		removeSecretItem();
+		var secretCmd = getSecretCommand(q);
+		if (secretCmd && resultsContainer) {
+			var secretBtn = document.createElement('button');
+			secretBtn.type = 'button';
+			secretBtn.className = 'rf-palette-item rf-palette-secret-item';
+			secretBtn.setAttribute('role', 'option');
+			secretBtn.innerHTML =
+				'<span class="rf-item-icon">✨</span>' +
+				'<div class="rf-item-text">' +
+				'<span class="rf-item-label"></span>' +
+				'<span class="rf-item-desc"></span>' +
+				'</div>' +
+				'<span class="rf-item-badge"></span>';
+			secretBtn.querySelector('.rf-item-label').textContent = secretCmd.label;
+			secretBtn.querySelector('.rf-item-desc').textContent = secretCmd.desc;
+			secretBtn.querySelector('.rf-item-badge').textContent = secretCmd.badge;
+			secretBtn.addEventListener('click', function () {
+				closePalette();
+				secretCmd.run();
+			});
+			resultsContainer.insertBefore(secretBtn, resultsContainer.firstChild);
+			visibleCount++;
+		}
 
 		allItems.forEach(function (item) {
 			var grp = item.closest('.rf-palette-group');
@@ -230,22 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				try {
 					sessionStorage.setItem(HIHU_KEY, '1');
 				} catch (err) {}
-
-				triggerBtn.style.setProperty('--rf-fab-w', (triggerBtn.offsetWidth || 72) + 'px');
-				triggerBtn.classList.add('is-hihu-dodged', 'is-hihu-speaking');
-
-				try {
-					hihuAudio.currentTime = 0;
-					var playPromise = hihuAudio.play();
-					if (playPromise && typeof playPromise.catch === 'function') {
-						playPromise.catch(function () {});
-					}
-				} catch (err) {}
-
-				if (hihuBubbleTimer) clearTimeout(hihuBubbleTimer);
-				hihuBubbleTimer = setTimeout(function () {
-					triggerBtn.classList.remove('is-hihu-speaking');
-				}, 2300);
+				triggerHihuEgg(false);
 				return;
 			}
 			openPalette();

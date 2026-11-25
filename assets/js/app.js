@@ -294,6 +294,287 @@
 	}
 
 	/* ─────────────────────────────────────────────────────────────────
+	   12. GEN Z EASTER EGGS & VISUAL FX HELPERS
+	──────────────────────────────────────────────────────────────────── */
+	let eggToastEl = null;
+	let eggToastTimer = null;
+
+	window.rfShowToast = function (icon, title, subtitle, action) {
+		if (!eggToastEl) {
+			eggToastEl = document.createElement('div');
+			eggToastEl.className = 'rf-egg-toast';
+			eggToastEl.setAttribute('role', 'status');
+			eggToastEl.setAttribute('aria-live', 'polite');
+			document.body.appendChild(eggToastEl);
+		}
+		eggToastEl.innerHTML = '';
+
+		const iconSpan = document.createElement('span');
+		iconSpan.className = 'rf-egg-toast__icon';
+		iconSpan.textContent = icon || '✨';
+
+		const body = document.createElement('div');
+		body.className = 'rf-egg-toast__body';
+
+		const titleEl = document.createElement('strong');
+		titleEl.className = 'rf-egg-toast__title';
+		titleEl.textContent = title || '';
+
+		const subEl = document.createElement('span');
+		subEl.className = 'rf-egg-toast__sub';
+		subEl.textContent = subtitle || '';
+
+		body.appendChild(titleEl);
+		if (subtitle) body.appendChild(subEl);
+		eggToastEl.appendChild(iconSpan);
+		eggToastEl.appendChild(body);
+
+		if (action && action.href && action.label) {
+			const link = document.createElement('a');
+			link.className = 'rf-egg-toast__cta';
+			link.href = action.href;
+			link.target = '_blank';
+			link.rel = 'noopener noreferrer';
+			link.textContent = action.label;
+			eggToastEl.appendChild(link);
+		}
+
+		void eggToastEl.offsetWidth;
+		eggToastEl.classList.add('is-visible');
+
+		if (eggToastTimer) clearTimeout(eggToastTimer);
+		eggToastTimer = setTimeout(() => {
+			eggToastEl.classList.remove('is-visible');
+		}, action ? 6000 : 4500);
+	};
+
+	window.rfLaunchConfetti = function (originX, originY) {
+		const canvas = document.createElement('canvas');
+		canvas.className = 'rf-egg-canvas';
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		document.body.appendChild(canvas);
+		const ctx = canvas.getContext('2d');
+		if (!ctx) {
+			canvas.remove();
+			return;
+		}
+
+		const colors = ['#38bdf8', '#2563eb', '#f59e0b', '#10b981', '#ec4899', '#ffffff'];
+		const cx = typeof originX === 'number' ? originX : canvas.width / 2;
+		const cy = typeof originY === 'number' ? originY : canvas.height * 0.4;
+		const particles = Array.from({ length: 68 }, () => {
+			const angle = Math.random() * Math.PI * 2;
+			const speed = 4 + Math.random() * 9;
+			return {
+				x: cx,
+				y: cy,
+				vx: Math.cos(angle) * speed,
+				vy: Math.sin(angle) * speed - 4,
+				size: 5 + Math.random() * 5,
+				color: colors[Math.floor(Math.random() * colors.length)],
+				rot: Math.random() * Math.PI,
+				vRot: (Math.random() - 0.5) * 0.25,
+				alpha: 1,
+			};
+		});
+
+		const start = performance.now();
+		function tick(now) {
+			const elapsed = now - start;
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			let alive = false;
+			for (const p of particles) {
+				p.x += p.vx;
+				p.y += p.vy;
+				p.vy += 0.28;
+				p.vx *= 0.99;
+				p.rot += p.vRot;
+				if (elapsed > 1400) p.alpha = Math.max(0, 1 - (elapsed - 1400) / 900);
+				if (p.alpha > 0.02 && p.y < canvas.height + 40) alive = true;
+				ctx.save();
+				ctx.globalAlpha = p.alpha;
+				ctx.translate(p.x, p.y);
+				ctx.rotate(p.rot);
+				ctx.fillStyle = p.color;
+				ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+				ctx.restore();
+			}
+			if (alive && elapsed < 2400) {
+				requestAnimationFrame(tick);
+			} else {
+				canvas.remove();
+			}
+		}
+		requestAnimationFrame(tick);
+	};
+
+	window.rfStartMatrixRain = function () {
+		const existing = document.getElementById('rf-matrix-canvas');
+		if (existing) existing.remove();
+
+		const canvas = document.createElement('canvas');
+		canvas.id = 'rf-matrix-canvas';
+		canvas.className = 'rf-egg-canvas';
+		canvas.style.background = 'rgba(2, 6, 23, 0.42)';
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		document.body.appendChild(canvas);
+
+		const ctx = canvas.getContext('2d');
+		if (!ctx) {
+			canvas.remove();
+			return;
+		}
+
+		const chars = '01RAFI{}<>/$#ABCDEF';
+		const fontSize = 15;
+		const cols = Math.floor(canvas.width / fontSize);
+		const drops = Array.from({ length: cols }, () => Math.floor(Math.random() * -20));
+		let stopped = false;
+		const start = performance.now();
+
+		function stopRain() {
+			if (stopped) return;
+			stopped = true;
+			document.removeEventListener('keydown', onEsc);
+			canvas.style.opacity = '0';
+			setTimeout(() => canvas.remove(), 420);
+		}
+		function onEsc(e) {
+			if (e.key === 'Escape') stopRain();
+		}
+		document.addEventListener('keydown', onEsc);
+
+		function draw(now) {
+			if (stopped) return;
+			const elapsed = now - start;
+			ctx.fillStyle = 'rgba(2, 6, 23, 0.14)';
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = '#22c55e';
+			ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
+
+			for (let i = 0; i < drops.length; i++) {
+				const text = chars[Math.floor(Math.random() * chars.length)];
+				ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+				if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+
+			if (elapsed < 4000) {
+				requestAnimationFrame(draw);
+			} else {
+				stopRain();
+			}
+		}
+		requestAnimationFrame(draw);
+	};
+
+	function initTabVisibilityEgg() {
+		const originalTitle = document.title;
+		let returnTimer = null;
+
+		document.addEventListener('visibilitychange', () => {
+			if (returnTimer) {
+				clearTimeout(returnTimer);
+				returnTimer = null;
+			}
+			if (document.hidden) {
+				document.title = '👀 Eh, jangan lupa balik ya...';
+			} else {
+				document.title = 'Hehe balik lagi ✨ — Rafi Rizqi';
+				returnTimer = setTimeout(() => {
+					document.title = originalTitle;
+				}, 2000);
+			}
+		});
+	}
+
+	function initConsoleGreeting() {
+		try {
+			console.log(
+				'%c ⚡ RAFI RIZQI // DEV CONSOLE %c\nHalo Senior Dev / Tech Recruiter! Lagi ngecek kerapian kode ya?\nTenang — 0 error, zero bloat, & siap diajak ngoding bareng 😎\n👉 Ketik "hire", "matrix", atau "hihu" di Spotlight Search (Ctrl+K)!',
+				'background:#0f172a;color:#38bdf8;font-size:13px;font-weight:700;padding:8px 14px;border-radius:8px;border:1px solid #38bdf8;',
+				'color:#475569;font-size:12px;line-height:1.6;'
+			);
+		} catch (_) {}
+	}
+
+	function initRobotEyeTracking() {
+		const trigger = document.getElementById('rf-palette-trigger');
+		const eyes = trigger ? trigger.querySelector('.rf-robot-eyes') : null;
+		if (!trigger || !eyes) return;
+		if (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			return;
+		}
+
+		let rafPending = false;
+		let lastX = 0;
+		let lastY = 0;
+
+		function updateEyes() {
+			rafPending = false;
+			const rect = trigger.getBoundingClientRect();
+			const cx = rect.left + rect.width / 2;
+			const cy = rect.top + rect.height / 2;
+			const dx = lastX - cx;
+			const dy = lastY - cy;
+			const dist = Math.hypot(dx, dy) || 1;
+			const strength = Math.min(1, dist / 240);
+			const moveX = (dx / dist) * 2.6 * strength;
+			const moveY = (dy / dist) * 1.8 * strength;
+			eyes.style.transform = `translate(${moveX.toFixed(2)}px, ${moveY.toFixed(2)}px)`;
+		}
+
+		document.addEventListener('mousemove', (e) => {
+			lastX = e.clientX;
+			lastY = e.clientY;
+			if (!rafPending) {
+				rafPending = true;
+				requestAnimationFrame(updateEyes);
+			}
+		}, { passive: true });
+
+		document.addEventListener('mouseleave', () => {
+			eyes.style.transform = 'translate(0px, 0px)';
+		});
+	}
+
+	function initPortraitEgg() {
+		const frame = document.querySelector('#rf-tf-root .rf-tf-portrait-frame');
+		if (!frame) return;
+
+		let clicks = 0;
+		let resetTimer = null;
+		let unlocked = false;
+
+		frame.addEventListener('click', () => {
+			clicks++;
+			if (resetTimer) clearTimeout(resetTimer);
+			resetTimer = setTimeout(() => {
+				clicks = 0;
+			}, 3000);
+
+			if (clicks >= 5) {
+				clicks = 0;
+				const coolNow = frame.classList.toggle('is-cool');
+				if (coolNow) {
+					const rect = frame.getBoundingClientRect();
+					if (typeof window.rfLaunchConfetti === 'function') {
+						window.rfLaunchConfetti(rect.left + rect.width / 2, rect.top + rect.height * 0.35);
+					}
+					if (!unlocked && typeof window.rfShowToast === 'function') {
+						unlocked = true;
+						window.rfShowToast('🏆', 'Achievement Unlocked!', 'Stalker HR Terdeteksi 🕵️‍♂️');
+					}
+				}
+			}
+		});
+	}
+
+	/* ─────────────────────────────────────────────────────────────────
 	   INIT
 	──────────────────────────────────────────────────────────────────── */
 	function init() {
@@ -304,6 +585,10 @@
 		initActiveNav();
 		initButtonTicks();
 		initMotionReveals();
+		initTabVisibilityEgg();
+		initConsoleGreeting();
+		initRobotEyeTracking();
+		initPortraitEgg();
 	}
 
 	if (document.readyState === 'loading') {
