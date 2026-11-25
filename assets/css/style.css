@@ -503,7 +503,7 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: center 15%;
+	object-position: center 12%;
 }
 
 #rf-tf-root .rf-tf-portrait-caption {
@@ -984,6 +984,7 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	object-position: top center;
 	transition: transform 400ms var(--tf-ease);
 }
 
@@ -4450,7 +4451,7 @@ html.rf-anim-ready #rf-tf-root .rf-reveal.is-in {
 
 #rf-tf-root .rf-deal-shades {
 	position: absolute;
-	top: 28%;
+	top: 26.5%;
 	left: 50%;
 	width: 44%;
 	height: auto;
