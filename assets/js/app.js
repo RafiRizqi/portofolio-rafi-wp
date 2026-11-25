@@ -381,6 +381,50 @@
 	}
 
 	/* ─────────────────────────────────────────────────────────────────
+	   11. SMOOTH GPU MOTION & SCROLL REVEALS
+	──────────────────────────────────────────────────────────────────── */
+	function initMotionReveals() {
+		const header = document.getElementById('rf-tf-header');
+		if (header) {
+			let scrollTicking = false;
+			const updateHeader = () => {
+				scrollTicking = false;
+				header.classList.toggle('is-scrolled', window.scrollY > 12);
+			};
+			updateHeader();
+			window.addEventListener('scroll', () => {
+				if (!scrollTicking) {
+					scrollTicking = true;
+					requestAnimationFrame(updateHeader);
+				}
+			}, { passive: true });
+		}
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		if (!('IntersectionObserver' in window)) return;
+
+		document.documentElement.classList.add('rf-anim-ready');
+		const targets = document.querySelectorAll(
+			'#rf-tf-root .rf-tf-section-header, #rf-tf-root .rf-tf-carousel-stage, #rf-tf-root .rf-tf-spec-row, #rf-tf-root .rf-tf-ledger-row, #rf-tf-root .rf-tf-cert-card, #rf-tf-root .rf-tf-contact-cta'
+		);
+
+		const io = new IntersectionObserver((entries, obs) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-in');
+					obs.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+		targets.forEach((el, idx) => {
+			el.classList.add('rf-reveal');
+			el.style.transitionDelay = `${(idx % 4) * 65}ms`;
+			io.observe(el);
+		});
+	}
+
+	/* ─────────────────────────────────────────────────────────────────
 	   INIT
 	──────────────────────────────────────────────────────────────────── */
 	function init() {
@@ -393,6 +437,7 @@
 		initSmoothScroll();
 		initActiveNav();
 		initButtonTicks();
+		initMotionReveals();
 	}
 
 	if (document.readyState === 'loading') {

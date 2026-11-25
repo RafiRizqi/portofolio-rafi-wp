@@ -47,6 +47,7 @@ Live Website: **[portfolio-rafirizqi.vercel.app](https://portfolio-rafirizqi.ver
 
 ## 📬 Contact & Connect
 - **Email**: [rafi02062003@gmail.com](mailto:rafi02062003@gmail.com)
+- **LinkedIn**: [linkedin.com/in/rafi-rizqi-783110203](https://www.linkedin.com/in/rafi-rizqi-783110203/)
 - **WhatsApp**: [+62 895-7053-72344](https://wa.me/62895705372344)
 - **GitHub**: [github.com/RafiRizqi](https://github.com/RafiRizqi)
 - **Instagram**: [@rafirizqi_](https://instagram.com/rafirizqi_)

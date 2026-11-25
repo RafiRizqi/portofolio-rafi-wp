@@ -42,9 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	var triggerBtn = document.getElementById('rf-palette-trigger');
 	var allItems = Array.from(backdrop.querySelectorAll('.rf-palette-item'));
 	var allGroups = Array.from(backdrop.querySelectorAll('.rf-palette-group'));
+	var filterTabs = Array.from(backdrop.querySelectorAll('.rf-palette-tab'));
+	var countEl = document.getElementById('rf-palette-count');
 
 	var isOpen = false;
 	var focusedIndex = 0;
+	var activeFilter = 'all';
 
 	function getVisibleItems() {
 		return allItems.filter(function (item) {
@@ -77,6 +80,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.documentElement.classList.add('rf-palette-locked');
 		document.body.classList.add('rf-palette-locked');
 
+		activeFilter = 'all';
+		filterTabs.forEach(function (tab) {
+			var isAll = tab.getAttribute('data-filter') === 'all';
+			tab.classList.toggle('is-active', isAll);
+			tab.setAttribute('aria-selected', String(isAll));
+		});
+
 		if (input) {
 			input.value = '';
 			filterItems('');
@@ -99,12 +109,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		var visibleCount = 0;
 
 		allItems.forEach(function (item) {
+			var grp = item.closest('.rf-palette-group');
+			var grpName = grp ? grp.getAttribute('data-group') : '';
+			var matchesTab = activeFilter === 'all' || grpName === activeFilter;
+
 			var label = (item.querySelector('.rf-item-label') || {}).textContent || '';
 			var desc = (item.querySelector('.rf-item-desc') || {}).textContent || '';
 			var keywords = item.getAttribute('data-keywords') || '';
 			var haystack = (label + ' ' + desc + ' ' + keywords).toLowerCase();
 
-			if (!q || haystack.indexOf(q) !== -1) {
+			if (matchesTab && (!q || haystack.indexOf(q) !== -1)) {
 				item.style.display = 'flex';
 				visibleCount++;
 			} else {
@@ -121,11 +135,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			grp.style.display = hasVisible ? 'block' : 'none';
 		});
 
+		if (countEl) {
+			countEl.textContent = visibleCount + ' item';
+		}
+
 		// Empty state handling
 		if (emptyState) {
 			if (visibleCount === 0) {
 				emptyState.style.display = 'block';
-				if (emptyQuery) emptyQuery.textContent = '"' + query + '"';
+				if (emptyQuery) emptyQuery.textContent = query ? '"' + query + '"' : 'kategori ini';
 			} else {
 				emptyState.style.display = 'none';
 			}
@@ -134,6 +152,20 @@ document.addEventListener('DOMContentLoaded', function () {
 		focusedIndex = 0;
 		updateFocusedItem(getVisibleItems());
 	}
+
+	// Quick filter tab clicks
+	filterTabs.forEach(function (tab) {
+		tab.addEventListener('click', function () {
+			activeFilter = tab.getAttribute('data-filter') || 'all';
+			filterTabs.forEach(function (t) {
+				var active = t === tab;
+				t.classList.toggle('is-active', active);
+				t.setAttribute('aria-selected', String(active));
+			});
+			filterItems(input ? input.value : '');
+			if (input) input.focus();
+		});
+	});
 
 	// Global Keyboard Shortcut: Ctrl + K / Cmd + K
 	document.addEventListener('keydown', function (e) {

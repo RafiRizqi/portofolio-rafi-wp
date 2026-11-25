@@ -107,7 +107,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <link rel='stylesheet' id='hfe-nav-menu-icons-css' href='/assets/vendor/font-awesome/css/solid.css?ver=5.15.3' media='all' />
 <link rel='stylesheet' id='rafi-google-fonts-css' href='https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&#038;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&#038;display=swap' media='all' />
 <link rel='stylesheet' id='hello-elementor-child-style-css' href='/assets/css/child-theme.css' media='all' />
-<link rel='stylesheet' id='rafi-taqy-farline-css' href='/assets/css/style.css?v=20261126' media='all' />
+<link rel='stylesheet' id='rafi-taqy-farline-css' href='/assets/css/style.css?v=20261126b' media='all' />
 <link rel='stylesheet' id='elementor-gf-plusjakartasans-css' href='https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=swap' media='all' />
 <link rel='stylesheet' id='elementor-gf-jetbrainsmono-css' href='https://fonts.googleapis.com/css?family=JetBrains+Mono:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=swap' media='all' />
 <script id="jquery-core-js" src="/assets/vendor/jquery/jquery.min.js?ver=3.7.1"></script>
@@ -174,7 +174,8 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                 "url": "https://unpam.ac.id"
             },
             "sameAs": [
-                "https://github.com/RafiRizqi"
+                "https://github.com/RafiRizqi",
+                "https://www.linkedin.com/in/rafi-rizqi-783110203/"
             ],
             "knowsAbout": [
                 "Web Development",
@@ -326,9 +327,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 						<!-- Sub Description -->
 						<p class="rf-tf-hero-desc">
-							Merancang sistem aplikasi web fungsional, manajemen inventaris &amp; kasir,
-							serta sistem informasi berbasis web — dengan fondasi kode yang
-							bersih dan performa tinggi.
+							Lulusan S1 Teknik Informatika UNPAM (IPK 3.46) tersertifikasi BNSP Pemrograman (Predikat GARUDA). Berpengalaman membangun aplikasi web <em>end-to-end</em> — mulai dari sistem POS kasir, manajemen inventaris, hingga sistem pendukung keputusan berbasis PHP, MySQL, dan JavaScript modern — dengan fokus pada kode yang rapi, performa cepat, dan solusi yang langsung berdampak.
 						</p>
 					</div>
 
@@ -728,6 +727,10 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 							class="rf-tf-social-link" aria-label="GitHub Rafi Rizqi">
 							GITHUB ↗
 						</a>
+						<a href="https://www.linkedin.com/in/rafi-rizqi-783110203/" target="_blank" rel="noopener noreferrer"
+							class="rf-tf-social-link" aria-label="LinkedIn Rafi Rizqi">
+							LINKEDIN ↗
+						</a>
 						<a href="https://wa.me/62895705372344" target="_blank" rel="noopener noreferrer"
 							class="rf-tf-social-link" aria-label="WhatsApp Rafi Rizqi">
 							WHATSAPP ↗
@@ -780,28 +783,38 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	</dialog>
 		<!-- Floating Animated Robot Head Spotlight Trigger -->
 	<button type="button" id="rf-palette-trigger" class="rf-palette-trigger rf-robot-trigger" aria-label="Buka Spotlight Search (Ctrl + K)" title="Buka Spotlight Search (Ctrl + K)">
-		<svg class="rf-robot-svg" viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+		<span class="rf-robot-aura" aria-hidden="true"></span>
+		<svg class="rf-robot-svg" viewBox="0 0 64 64" width="60" height="60" fill="none" aria-hidden="true">
+			<defs>
+				<clipPath id="rf-visor-clip">
+					<rect x="16" y="21" width="32" height="21" rx="8.5"/>
+				</clipPath>
+			</defs>
 			<!-- Antenna -->
-			<line x1="32" y1="15" x2="32" y2="8" stroke="#334155" stroke-width="2.6" stroke-linecap="round"/>
-			<circle class="rf-robot-antenna-orb" cx="32" cy="6.5" r="3.2" fill="#38bdf8"/>
+			<line x1="32" y1="15" x2="32" y2="7.5" stroke="#334155" stroke-width="2.6" stroke-linecap="round"/>
+			<circle class="rf-robot-antenna-orb" cx="32" cy="6" r="3.4" fill="#38bdf8"/>
 			<!-- Side Ear Nodes -->
-			<rect x="6" y="27" width="6" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1.4"/>
-			<rect x="52" y="27" width="6" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1.4"/>
-			<circle cx="9" cy="34" r="1.4" fill="#38bdf8"/>
-			<circle cx="55" cy="34" r="1.4" fill="#38bdf8"/>
+			<rect x="5" y="26" width="6" height="15" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1.4"/>
+			<rect x="53" y="26" width="6" height="15" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1.4"/>
+			<circle cx="8" cy="33.5" r="1.5" fill="#38bdf8"/>
+			<circle cx="56" cy="33.5" r="1.5" fill="#38bdf8"/>
 			<!-- Head Shell -->
-			<rect x="12" y="15" width="40" height="38" rx="14" fill="#0f172a" stroke="#334155" stroke-width="1.8"/>
+			<rect x="11" y="14.5" width="42" height="39" rx="14.5" fill="#0f172a" stroke="#334155" stroke-width="1.8"/>
 			<!-- Dark Visor -->
-			<rect x="17" y="22" width="30" height="20" rx="8" fill="#020617" stroke="#1e293b" stroke-width="1.2"/>
+			<rect x="16" y="21" width="32" height="21" rx="8.5" fill="#020617" stroke="#1e293b" stroke-width="1.2"/>
+			<!-- Visor Light Sweep -->
+			<g clip-path="url(#rf-visor-clip)">
+				<rect class="rf-robot-visor-scan" x="-16" y="18" width="14" height="28" rx="4" fill="#38bdf8" fill-opacity="0.16" transform="skewX(-18)"/>
+			</g>
 			<!-- Expressive Eyes -->
 			<g class="rf-robot-eyes">
-				<rect class="rf-robot-eye" x="22.5" y="28" width="5.5" height="8" rx="2.75" fill="#38bdf8"/>
-				<rect class="rf-robot-eye" x="36" y="28" width="5.5" height="8" rx="2.75" fill="#38bdf8"/>
+				<rect class="rf-robot-eye" x="22" y="27.5" width="5.8" height="8.5" rx="2.9" fill="#38bdf8"/>
+				<rect class="rf-robot-eye" x="36.2" y="27.5" width="5.8" height="8.5" rx="2.9" fill="#38bdf8"/>
 			</g>
 			<!-- Friendly LED Mouth Bar -->
-			<path d="M26 46.5 Q32 49.5 38 46.5" stroke="#38bdf8" stroke-opacity="0.7" stroke-width="2" stroke-linecap="round" fill="none"/>
+			<path d="M25.5 46.5 Q32 50 38.5 46.5" stroke="#38bdf8" stroke-opacity="0.78" stroke-width="2.1" stroke-linecap="round" fill="none"/>
 		</svg>
-		<kbd class="rf-robot-kbd">Ctrl K</kbd>
+		<kbd class="rf-robot-kbd">Cari &middot; Ctrl K</kbd>
 	</button>
 
 	<!-- Command Palette Modal Backdrop -->
@@ -810,9 +823,28 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			
 			<!-- Search Input Box -->
 			<div class="rf-palette-search-wrap">
-				<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="rf-search-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+				<span class="rf-palette-mini-bot" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+						<line x1="12" y1="5" x2="12" y2="2.5" stroke="#64748b" stroke-width="1.8" stroke-linecap="round"/>
+						<circle cx="12" cy="2" r="1.4" fill="#2563eb"/>
+						<rect x="4" y="5" width="16" height="15" rx="5" fill="#0f172a"/>
+						<rect x="6.5" y="8.5" width="11" height="6.5" rx="2.5" fill="#020617"/>
+						<circle cx="9.8" cy="11.8" r="1.3" fill="#38bdf8"/>
+						<circle cx="14.2" cy="11.8" r="1.3" fill="#38bdf8"/>
+						<path d="M9.5 17.2 Q12 18.4 14.5 17.2" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round"/>
+					</svg>
+				</span>
 				<input type="text" id="rf-palette-input" class="rf-palette-input" placeholder="Cari bagian, pratinjau proyek, atau sertifikat..." autocomplete="off" spellcheck="false" />
+				<span id="rf-palette-count" class="rf-palette-count" aria-live="polite">14 item</span>
 				<kbd class="rf-esc-kbd">ESC</kbd>
+			</div>
+
+			<!-- Quick Category Filter Tabs -->
+			<div class="rf-palette-tabs" role="tablist" aria-label="Filter kategori Spotlight">
+				<button type="button" class="rf-palette-tab is-active" data-filter="all" role="tab" aria-selected="true">Semua</button>
+				<button type="button" class="rf-palette-tab" data-filter="navigasi" role="tab" aria-selected="false">Bagian</button>
+				<button type="button" class="rf-palette-tab" data-filter="proyek" role="tab" aria-selected="false">Proyek</button>
+				<button type="button" class="rf-palette-tab" data-filter="sertifikat" role="tab" aria-selected="false">Sertifikat</button>
 			</div>
 
 			<!-- Dynamic Items List -->
@@ -1091,7 +1123,7 @@ var wpcf7 = {
 <script id="rafi-portfolio-carousel-js" src="/assets/js/carousel.js?v=20261125b" defer="defer"></script>
 <script id="rafi-portfolio-cv-js" src="/assets/js/portfolio-cv.js?ver=2.4.0" defer="defer"></script>
 <script id="rafi-portfolio-modal-js" src="/assets/js/portfolio-modal.js?v=20261125b" defer="defer"></script>
-<script id="rafi-portfolio-palette-js" src="/assets/js/portfolio-palette.js?v=20261126" defer="defer"></script>
+<script id="rafi-portfolio-palette-js" src="/assets/js/portfolio-palette.js?v=20261126b" defer="defer"></script>
 <script id="elementor-webpack-runtime-js" src="/assets/vendor/elementor/js/webpack.runtime.min.js?ver=4.4.1"></script>
 <script id="elementor-frontend-modules-js" src="/assets/vendor/elementor/js/frontend-modules.min.js?ver=4.4.1"></script>
 <script id="jquery-ui-core-js-before">
@@ -1101,7 +1133,7 @@ jQuery.uiBackCompat = true;
 <script id="jquery-ui-core-js" src="/assets/vendor/jquery/ui-core.min.js?ver=1.14.2"></script>
 <script id="elementor-frontend-js" src="/assets/vendor/elementor/js/frontend.min.js?ver=4.4.1"></script>
 <script id="rafi-child-animations-js" src="/assets/js/animations.js?ver=2.3.0" defer="defer"></script>
-<script id="rafi-taqy-farline-js" src="/assets/js/app.js"></script>
+<script id="rafi-taqy-farline-js" src="/assets/js/app.js?v=20261126b"></script>
 
 
 
