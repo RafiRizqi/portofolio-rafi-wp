@@ -7,6 +7,38 @@
 /* ══════════════════════════════════════════════════════════════════════
    0. RESET + CUSTOM PROPERTIES
    ══════════════════════════════════════════════════════════════════════ */
+.screen-reader-text {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text.skip-link:focus {
+	background-color: #111827;
+	border-radius: 6px;
+	box-shadow: 0 4px 14px rgba(9, 13, 22, 0.2);
+	clip-path: none;
+	color: #ffffff;
+	display: block;
+	font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	height: auto;
+	left: 12px;
+	line-height: normal;
+	padding: 12px 18px;
+	text-decoration: none;
+	top: 12px;
+	width: auto;
+	z-index: 100000;
+}
+
 #rf-tf-root *,
 #rf-tf-root *::before,
 #rf-tf-root *::after {
