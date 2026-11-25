@@ -224,7 +224,7 @@
 			// Restore user preference
 			try {
 				const savedView = localStorage.getItem('rf_showcase_view');
-				if (savedView === 'list') {
+				if (savedView === 'list' && listStage) {
 					switchView('list');
 				}
 			} catch (err) {}
