@@ -4,15 +4,13 @@
  * Version: 3.0.0
  *
  * Features:
- *  1. Real-time digital clock (Pamulang GMT+7)
- *  2. Dual-view switcher (Editorial List ↔ 3D Perspective) + localStorage
- *  3. Floating cursor image preview (desktop/pointer:fine) + GPU lerp
- *  4. Click-to-copy email (hero + contact) + toast notification
- *  5. Web Audio API mechanical tick (zero file download, 0 KB overhead)
- *  6. Sound toggle + localStorage persistence
- *  7. Mobile hamburger nav toggle
- *  8. Smooth anchor scrolling with header offset
- *  9. Nav link active-section highlight on scroll
+ *  1. Click-to-copy email (hero + contact) + toast notification
+ *  2. Web Audio API mechanical tick (zero file download, 0 KB overhead)
+ *  3. Sound toggle + localStorage persistence
+ *  4. Mobile hamburger nav toggle
+ *  5. Smooth anchor scrolling with header offset
+ *  6. Nav link active-section highlight on scroll
+ *  7. Smooth GPU motion & scroll reveals
  */
 
 (function () {
@@ -21,7 +19,6 @@
 	/* ─────────────────────────────────────────────────────────────────
 	   CONSTANTS
 	──────────────────────────────────────────────────────────────────── */
-	const LS_VIEW  = 'rf_tf_view';    // 'list' | 'carousel'
 	const LS_SOUND = 'rf_tf_sound';   // 'on' | 'off'
 
 	/* ─────────────────────────────────────────────────────────────────
@@ -113,134 +110,7 @@
 	}
 
 	/* ─────────────────────────────────────────────────────────────────
-	   3. REAL-TIME CLOCK — PAMULANG GMT+7
-	──────────────────────────────────────────────────────────────────── */
-	function initClock() {
-		const el = document.getElementById('rf-clock-time');
-		if (!el) return;
-
-		function tick() {
-			const now = new Date();
-			// Convert to GMT+7
-			const wib = new Date(now.getTime() + (7 * 60 * 60 * 1000 - now.getTimezoneOffset() * 60 * 1000));
-			const hh  = String(wib.getUTCHours()).padStart(2, '0');
-			const mm  = String(wib.getUTCMinutes()).padStart(2, '0');
-			const ss  = String(wib.getUTCSeconds()).padStart(2, '0');
-			el.textContent = `${hh}:${mm}:${ss}`;
-		}
-
-		tick();
-		setInterval(tick, 1000);
-	}
-
-	/* ─────────────────────────────────────────────────────────────────
-	   4. DUAL-VIEW SWITCHER
-	──────────────────────────────────────────────────────────────────── */
-	function initViewSwitcher() {
-		const btnList     = document.getElementById('rf-view-list');
-		const btnCarousel = document.getElementById('rf-view-3d');
-		const listStage   = document.getElementById('rf-list-stage');
-		const carStage    = document.getElementById('rf-carousel-stage');
-		if (!btnList || !btnCarousel || !listStage || !carStage) return;
-
-		function applyView(view, noSound) {
-			const isList = view === 'list';
-			listStage.hidden    = !isList;
-			carStage.hidden     = isList;
-			btnList.classList.toggle('rf-tf-view-btn--active', isList);
-			btnCarousel.classList.toggle('rf-tf-view-btn--active', !isList);
-			btnList.setAttribute('aria-pressed', String(isList));
-			btnCarousel.setAttribute('aria-pressed', String(!isList));
-			localStorage.setItem(LS_VIEW, view);
-			if (!noSound) playTick();
-		}
-
-		// Restore saved preference
-		const saved = localStorage.getItem(LS_VIEW) || 'list';
-		applyView(saved, true);
-
-		btnList.addEventListener('click', () => applyView('list'));
-		btnCarousel.addEventListener('click', () => applyView('carousel'));
-	}
-
-	/* ─────────────────────────────────────────────────────────────────
-	   5. FLOATING CURSOR IMAGE PREVIEW (desktop pointer:fine only)
-	──────────────────────────────────────────────────────────────────── */
-	function initCursorPreview() {
-		// Only activate on devices with a fine pointer (mouse)
-		if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-		const preview  = document.getElementById('rf-cursor-preview');
-		const previewImg   = document.getElementById('rf-preview-img');
-		const previewLabel = document.getElementById('rf-preview-label');
-		if (!preview || !previewImg) return;
-
-		// GPU lerp state
-		let mouseX = 0, mouseY = 0;
-		let lerpX  = 0, lerpY  = 0;
-		let tiltX  = 0, tiltY  = 0;
-		let visible = false;
-		let raf = null;
-
-		function lerp(a, b, t) { return a + (b - a) * t; }
-
-		function loop() {
-			lerpX = lerp(lerpX, mouseX, 0.11);
-			lerpY = lerp(lerpY, mouseY, 0.11);
-
-			const dx = mouseX - lerpX;
-			const dy = mouseY - lerpY;
-			tiltX = lerp(tiltX, dy * 0.015, 0.1);
-			tiltY = lerp(tiltY, -dx * 0.015, 0.1);
-
-			preview.style.transform =
-				`translate3d(calc(${lerpX}px - 50%), calc(${lerpY}px - 50%), 0) ` +
-				`rotateX(${tiltX}rad) rotateY(${tiltY}rad)`;
-
-			raf = requestAnimationFrame(loop);
-		}
-
-		document.addEventListener('mousemove', (e) => {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-		});
-
-		function showPreview(thumb, title) {
-			if (!thumb) return;
-			if (previewImg.src !== thumb) {
-				previewImg.src = thumb;
-			}
-			if (previewLabel) previewLabel.textContent = title || '';
-			preview.classList.add('is-visible');
-			visible = true;
-			if (!raf) loop();
-		}
-
-		function hidePreview() {
-			preview.classList.remove('is-visible');
-			visible = false;
-			if (raf) { cancelAnimationFrame(raf); raf = null; }
-		}
-
-		// Attach to list rows
-		function attachListeners() {
-			const rows = document.querySelectorAll('.rf-tf-project-row');
-			rows.forEach((row) => {
-				row.addEventListener('mouseenter', () => {
-					showPreview(row.dataset.thumb, row.dataset.title);
-				});
-				row.addEventListener('mouseleave', hidePreview);
-			});
-		}
-
-		attachListeners();
-
-		// Re-attach after view switch (carousel→list)
-		document.addEventListener('rf:viewChange', attachListeners);
-	}
-
-	/* ─────────────────────────────────────────────────────────────────
-	   6. CLICK-TO-COPY EMAIL
+	   3. CLICK-TO-COPY EMAIL
 	──────────────────────────────────────────────────────────────────── */
 	function initCopyEmail() {
 		// Hero copy button
@@ -428,9 +298,6 @@
 	──────────────────────────────────────────────────────────────────── */
 	function init() {
 		initSoundToggle();
-		initClock();
-		initViewSwitcher();
-		initCursorPreview();
 		initCopyEmail();
 		initHamburger();
 		initSmoothScroll();

@@ -9,6 +9,9 @@ Thumbs.db
 
 # Vercel deployment metadata
 .vercel/
-
 .vercel
 .env*
+
+# Agent tooling
+.agents/
+skills-lock.json
