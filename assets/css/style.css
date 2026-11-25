@@ -3677,70 +3677,114 @@ body.rf-palette-locked {
 	overflow: hidden;
 }
 
-/* Floating Spotlight Trigger Button */
+/* Floating Animated Robot Head Spotlight Trigger */
 button#rf-palette-trigger.rf-palette-trigger {
 	position: fixed;
-	bottom: 24px;
-	left: 24px;
+	bottom: 22px;
+	left: 22px;
 	z-index: 9999;
 	display: inline-flex;
+	flex-direction: column;
 	align-items: center;
-	gap: 9px;
-	padding: 9px 16px;
-	background: rgba(15, 23, 42, 0.92);
-	backdrop-filter: blur(12px);
-	-webkit-backdrop-filter: blur(12px);
-	color: #ffffff;
-	border: 1px solid rgba(255, 255, 255, 0.16);
-	border-radius: 999px;
-	box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.35);
+	gap: 4px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	box-shadow: none;
 	cursor: pointer;
 	font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-	font-size: 0.82rem;
-	font-weight: 600;
-	line-height: 1.2;
-	text-transform: none;
-	letter-spacing: normal;
-	transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+	transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 	user-select: none;
 }
 
 button#rf-palette-trigger.rf-palette-trigger:hover {
-	transform: translateY(-2px);
-	background: #0f172a;
-	color: #ffffff;
-	box-shadow: 0 16px 36px -8px rgba(37, 99, 235, 0.4);
-	border-color: rgba(99, 102, 241, 0.55);
+	transform: translateY(-4px) rotate(-4deg) scale(1.06);
+	background: transparent;
+	border: none;
 }
 
 button#rf-palette-trigger.rf-palette-trigger:focus-visible {
 	outline: 2px solid #2563eb;
-	outline-offset: 3px;
+	outline-offset: 4px;
+	border-radius: 14px;
 }
 
-.rf-trigger-text {
-	letter-spacing: 0.2px;
-	white-space: nowrap;
+.rf-robot-svg {
+	display: block;
+	width: 54px;
+	height: 54px;
+	filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.28));
+	transition: filter 0.28s ease;
 }
 
-.rf-trigger-kbd {
+button#rf-palette-trigger.rf-palette-trigger:hover .rf-robot-svg {
+	filter: drop-shadow(0 14px 28px rgba(37, 99, 235, 0.36));
+}
+
+.rf-robot-eye {
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.rf-robot-antenna-orb {
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.rf-robot-eyes {
+	transition: transform 0.14s ease-out;
+}
+
+@keyframes rf-robot-float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-5px); }
+}
+
+@keyframes rf-robot-blink {
+	0%, 44%, 48%, 100% { transform: scaleY(1); }
+	46% { transform: scaleY(0.08); }
+}
+
+@keyframes rf-robot-orb {
+	0%, 100% { opacity: 0.68; transform: scale(0.92); }
+	50% { opacity: 1; transform: scale(1.14); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.rf-robot-svg {
+		animation: rf-robot-float 3.4s ease-in-out infinite;
+	}
+	button#rf-palette-trigger.rf-palette-trigger:hover .rf-robot-svg {
+		animation-play-state: paused;
+	}
+	.rf-robot-eye {
+		animation: rf-robot-blink 4.2s ease-in-out infinite;
+	}
+	.rf-robot-antenna-orb {
+		animation: rf-robot-orb 2.4s ease-in-out infinite;
+	}
+}
+
+.rf-robot-kbd {
 	display: inline-block;
-	padding: 2px 6px;
+	padding: 2px 7px;
 	font-family: 'JetBrains Mono', ui-monospace, monospace;
-	font-size: 0.7rem;
+	font-size: 0.65rem;
 	font-weight: 700;
-	line-height: 1.1;
-	color: #cbd5e1;
-	background: rgba(255, 255, 255, 0.12);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 5px;
+	line-height: 1.15;
+	color: #e2e8f0;
+	background: rgba(15, 23, 42, 0.9);
+	border: 1px solid rgba(56, 189, 248, 0.32);
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
 	white-space: nowrap;
+	transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
 }
 
-button#rf-palette-trigger.rf-palette-trigger:hover .rf-trigger-kbd {
+button#rf-palette-trigger.rf-palette-trigger:hover .rf-robot-kbd {
 	color: #ffffff;
-	background: rgba(37, 99, 235, 0.45);
-	border-color: #60a5fa;
+	background: #0f172a;
+	border-color: #38bdf8;
 }
 
 /* Command Palette Modal Backdrop */
@@ -4071,13 +4115,17 @@ button#rf-palette-trigger.rf-palette-trigger:hover .rf-trigger-kbd {
 
 /* Mobile Adjustments */
 @media (max-width: 640px) {
-	.rf-palette-trigger {
-		bottom: 18px;
-		left: 18px;
-		padding: 7px 13px;
+	button#rf-palette-trigger.rf-palette-trigger {
+		bottom: 16px;
+		left: 16px;
 	}
 
-	.rf-trigger-kbd {
+	.rf-robot-svg {
+		width: 46px;
+		height: 46px;
+	}
+
+	.rf-robot-kbd {
 		display: none;
 	}
 

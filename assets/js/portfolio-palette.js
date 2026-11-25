@@ -211,8 +211,40 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 
-		item.addEventListener('click', function () {
+		item.addEventListener('click', function (e) {
+			var href = item.getAttribute('href') || '';
 			closePalette();
+			if (href.startsWith('#') && !item.classList.contains('rf-preview-trigger')) {
+				var targetEl = document.querySelector(href);
+				if (targetEl) {
+					e.preventDefault();
+					targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}
+			}
 		});
 	});
+
+	// Robot head eye-tracking toward cursor (desktop pointer:fine + motion allowed)
+	if (
+		triggerBtn &&
+		window.matchMedia('(pointer: fine)').matches &&
+		window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+	) {
+		var robotEyes = triggerBtn.querySelector('.rf-robot-eyes');
+		if (robotEyes) {
+			var eyeRaf = null;
+			document.addEventListener('mousemove', function (e) {
+				if (eyeRaf) return;
+				eyeRaf = requestAnimationFrame(function () {
+					eyeRaf = null;
+					var rect = triggerBtn.getBoundingClientRect();
+					var cx = rect.left + rect.width / 2;
+					var cy = rect.top + rect.height / 2;
+					var dx = Math.max(-2.5, Math.min(2.5, (e.clientX - cx) / 140));
+					var dy = Math.max(-2.5, Math.min(2.5, (e.clientY - cy) / 140));
+					robotEyes.style.transform = 'translate3d(' + dx.toFixed(2) + 'px, ' + dy.toFixed(2) + 'px, 0)';
+				});
+			}, { passive: true });
+		}
+	}
 });
