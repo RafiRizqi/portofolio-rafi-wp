@@ -400,7 +400,6 @@
 			}, { passive: true });
 		}
 
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		if (!('IntersectionObserver' in window)) return;
 
 		document.documentElement.classList.add('rf-anim-ready');

@@ -256,11 +256,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// Robot head eye-tracking toward cursor (desktop pointer:fine + motion allowed)
+	// Robot head eye-tracking toward cursor (desktop pointer:fine)
 	if (
 		triggerBtn &&
-		window.matchMedia('(pointer: fine)').matches &&
-		window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+		window.matchMedia('(pointer: fine)').matches
 	) {
 		var robotEyes = triggerBtn.querySelector('.rf-robot-eyes');
 		if (robotEyes) {
