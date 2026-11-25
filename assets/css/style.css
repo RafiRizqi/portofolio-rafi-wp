@@ -3725,7 +3725,7 @@ button#rf-palette-trigger.rf-palette-trigger {
 	box-shadow: none;
 	cursor: pointer;
 	font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-	transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+	transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), left 0.58s cubic-bezier(0.34, 1.56, 0.64, 1);
 	user-select: none;
 }
 
@@ -3860,6 +3860,88 @@ button#rf-palette-trigger.rf-palette-trigger:hover .rf-robot-kbd {
 	color: #ffffff;
 	background: #0f172a;
 	border-color: #38bdf8;
+}
+
+/* Gen Z HIIHUU Easter Egg Dodge & Speech Bubble */
+button#rf-palette-trigger.rf-palette-trigger.is-hihu-dodged {
+	left: calc(100vw - var(--rf-fab-w, 78px) - 32px);
+}
+
+.rf-hihu-bubble {
+	position: absolute;
+	bottom: calc(100% + 10px);
+	left: 50%;
+	transform: translate(-50%, 10px) scale(0.75);
+	padding: 6px 12px;
+	background: #0f172a;
+	color: #38bdf8;
+	border: 1.5px solid #38bdf8;
+	border-radius: 999px;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.28), 0 0 16px rgba(56, 189, 248, 0.28);
+	opacity: 0;
+	pointer-events: none;
+	z-index: 2;
+	transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.rf-hihu-bubble::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -6px;
+	border-width: 6px 6px 0 6px;
+	border-style: solid;
+	border-color: #38bdf8 transparent transparent transparent;
+}
+
+button#rf-palette-trigger.rf-palette-trigger.is-hihu-dodged .rf-hihu-bubble {
+	left: auto;
+	right: 0;
+	transform: translate(0, 10px) scale(0.75);
+}
+
+button#rf-palette-trigger.rf-palette-trigger.is-hihu-dodged .rf-hihu-bubble::after {
+	left: auto;
+	right: 22px;
+	margin-left: 0;
+}
+
+@keyframes rf-hihu-pop {
+	0% {
+		opacity: 0;
+		transform: translate(0, 10px) scale(0.7);
+	}
+	65% {
+		opacity: 1;
+		transform: translate(0, -4px) scale(1.08);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0, 0) scale(1);
+	}
+}
+
+@keyframes rf-hihu-wiggle {
+	0%, 100% { transform: rotate(0deg) scale(1); }
+	25% { transform: rotate(-11deg) scale(1.08); }
+	55% { transform: rotate(10deg) scale(1.08); }
+	80% { transform: rotate(-6deg) scale(1.04); }
+}
+
+button#rf-palette-trigger.rf-palette-trigger.is-hihu-speaking .rf-hihu-bubble {
+	opacity: 1;
+	animation: rf-hihu-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+button#rf-palette-trigger.rf-palette-trigger.is-hihu-speaking .rf-robot-svg {
+	animation: rf-hihu-wiggle 0.55s ease-in-out 2;
 }
 
 /* Command Palette Modal Backdrop */
@@ -4254,6 +4336,10 @@ button.rf-palette-tab.is-active {
 	button#rf-palette-trigger.rf-palette-trigger {
 		bottom: 16px;
 		left: 16px;
+	}
+
+	button#rf-palette-trigger.rf-palette-trigger.is-hihu-dodged {
+		left: calc(100vw - var(--rf-fab-w, 48px) - 24px);
 	}
 
 	.rf-robot-svg {

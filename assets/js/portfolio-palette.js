@@ -48,6 +48,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	var isOpen = false;
 	var focusedIndex = 0;
 	var activeFilter = 'all';
+	var HIHU_KEY = 'rf_hihu_done';
+	var hihuDone = false;
+	try {
+		hihuDone = sessionStorage.getItem(HIHU_KEY) === '1';
+	} catch (err) {
+		hihuDone = false;
+	}
+	var hihuAudio = new Audio('/assets/audio/hihu.mp3');
+	hihuAudio.preload = 'none';
+	hihuAudio.volume = 0.95;
+	var hihuBubbleTimer = null;
 
 	function getVisibleItems() {
 		return allItems.filter(function (item) {
@@ -210,10 +221,33 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	// Trigger button click
+	// Trigger button click (1-time Gen Z HIIHUU troll on first robot click, normal open afterwards)
 	if (triggerBtn) {
 		triggerBtn.addEventListener('click', function (e) {
 			e.preventDefault();
+			if (!hihuDone && triggerBtn.classList.contains('rf-robot-trigger')) {
+				hihuDone = true;
+				try {
+					sessionStorage.setItem(HIHU_KEY, '1');
+				} catch (err) {}
+
+				triggerBtn.style.setProperty('--rf-fab-w', (triggerBtn.offsetWidth || 72) + 'px');
+				triggerBtn.classList.add('is-hihu-dodged', 'is-hihu-speaking');
+
+				try {
+					hihuAudio.currentTime = 0;
+					var playPromise = hihuAudio.play();
+					if (playPromise && typeof playPromise.catch === 'function') {
+						playPromise.catch(function () {});
+					}
+				} catch (err) {}
+
+				if (hihuBubbleTimer) clearTimeout(hihuBubbleTimer);
+				hihuBubbleTimer = setTimeout(function () {
+					triggerBtn.classList.remove('is-hihu-speaking');
+				}, 2300);
+				return;
+			}
 			openPalette();
 		});
 	}
