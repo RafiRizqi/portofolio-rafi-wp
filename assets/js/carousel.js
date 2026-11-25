@@ -126,6 +126,28 @@
 					} else if (card.classList.contains('is-next')) {
 						e.preventDefault();
 						goNext();
+					} else if (card.classList.contains('is-active') && card.dataset.previewImg) {
+						e.preventDefault();
+						document.dispatchEvent(new CustomEvent('rf:openPreview', {
+							detail: {
+								img: card.dataset.previewImg,
+								title: card.dataset.previewTitle || '',
+								badge: card.dataset.previewBadge || 'PROYEK PILIHAN'
+							}
+						}));
+					}
+				});
+
+				card.addEventListener('keydown', (e) => {
+					if ((e.key === 'Enter' || e.key === ' ') && card.classList.contains('is-active') && card.dataset.previewImg) {
+						e.preventDefault();
+						document.dispatchEvent(new CustomEvent('rf:openPreview', {
+							detail: {
+								img: card.dataset.previewImg,
+								title: card.dataset.previewTitle || '',
+								badge: card.dataset.previewBadge || 'PROYEK PILIHAN'
+							}
+						}));
 					}
 				});
 			});

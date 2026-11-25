@@ -29,5 +29,27 @@
                 }
             ]
         }
+    ],
+    "redirects": [
+        {
+            "source": "/proyek",
+            "destination": "/#rf-works",
+            "permanent": false
+        },
+        {
+            "source": "/proyek/:path*",
+            "destination": "/#rf-works",
+            "permanent": false
+        },
+        {
+            "source": "/sertifikat",
+            "destination": "/#rf-credentials",
+            "permanent": false
+        },
+        {
+            "source": "/sertifikat/:path*",
+            "destination": "/#rf-credentials",
+            "permanent": false
+        }
     ]
 }

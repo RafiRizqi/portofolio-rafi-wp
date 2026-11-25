@@ -3,6 +3,73 @@
  * Handles interactive certificate modal, document frame zoom, copy credential code, and keyboard accessibility.
  */
 document.addEventListener('DOMContentLoaded', function () {
+	// --------------------------------------------------------------------------
+	// 0. Native <dialog> Same-Page Preview (Projects & Certificates)
+	// --------------------------------------------------------------------------
+	var previewDialog = document.getElementById('rf-preview-dialog');
+	if (previewDialog) {
+		var pImg = document.getElementById('rf-preview-dialog-img');
+		var pTitle = document.getElementById('rf-preview-dialog-title');
+		var pBadge = document.getElementById('rf-preview-dialog-badge');
+		var pClose = document.getElementById('rf-preview-dialog-close');
+
+		function showPreviewDialog(detail) {
+			if (!detail || !detail.img) return;
+			if (pImg) {
+				pImg.src = detail.img;
+				pImg.alt = detail.title ? 'Pratinjau: ' + detail.title : 'Pratinjau visual';
+			}
+			if (pTitle) pTitle.textContent = detail.title || 'Pratinjau';
+			if (pBadge) pBadge.textContent = detail.badge || 'PRATINJAU';
+			if (!previewDialog.open) {
+				previewDialog.showModal();
+			}
+		}
+
+		document.addEventListener('rf:openPreview', function (e) {
+			showPreviewDialog(e.detail);
+		});
+
+		document.querySelectorAll('.rf-preview-trigger').forEach(function (el) {
+			el.addEventListener('click', function (e) {
+				if (el.getAttribute('href') === '#rf-works') {
+					var target = document.getElementById('rf-works');
+					if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+				e.preventDefault();
+				showPreviewDialog({
+					img: el.getAttribute('data-preview-img'),
+					title: el.getAttribute('data-preview-title'),
+					badge: el.getAttribute('data-preview-badge')
+				});
+			});
+		});
+
+		if (pClose) {
+			pClose.addEventListener('click', function () {
+				previewDialog.close();
+			});
+		}
+
+		// Light-dismiss fallback for browsers without closedby="any" support (e.g. Safari)
+		if (!('closedBy' in HTMLDialogElement.prototype)) {
+			previewDialog.addEventListener('click', function (event) {
+				if (event.target !== previewDialog) return;
+				var rect = previewDialog.getBoundingClientRect();
+				var isInside = (
+					rect.top <= event.clientY &&
+					event.clientY <= rect.top + rect.height &&
+					rect.left <= event.clientX &&
+					event.clientX <= rect.left + rect.width
+				);
+				if (!isInside) previewDialog.close();
+			});
+		}
+	}
+
+	// --------------------------------------------------------------------------
+	// 1. Legacy Certificate Modal (Subpages)
+	// --------------------------------------------------------------------------
 	var modal = document.getElementById('rf-cert-modal');
 	if (!modal) return;
 

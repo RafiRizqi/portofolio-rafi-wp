@@ -107,7 +107,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <link rel='stylesheet' id='hfe-nav-menu-icons-css' href='/assets/vendor/font-awesome/css/solid.css?ver=5.15.3' media='all' />
 <link rel='stylesheet' id='rafi-google-fonts-css' href='https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&#038;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&#038;display=swap' media='all' />
 <link rel='stylesheet' id='hello-elementor-child-style-css' href='/assets/css/child-theme.css' media='all' />
-<link rel='stylesheet' id='rafi-taqy-farline-css' href='/assets/css/style.css?v=20261125' media='all' />
+<link rel='stylesheet' id='rafi-taqy-farline-css' href='/assets/css/style.css?v=20261125b' media='all' />
 <link rel='stylesheet' id='elementor-gf-plusjakartasans-css' href='https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=swap' media='all' />
 <link rel='stylesheet' id='elementor-gf-jetbrainsmono-css' href='https://fonts.googleapis.com/css?family=JetBrains+Mono:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&#038;display=swap' media='all' />
 <script id="jquery-core-js" src="/assets/vendor/jquery/jquery.min.js?ver=3.7.1"></script>
@@ -299,7 +299,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			<a href="#rf-works" class="rf-tf-mobile-nav-link">WORKS</a>
 			<a href="#rf-specs" class="rf-tf-mobile-nav-link">SPECS</a>
 			<a href="#rf-experience" class="rf-tf-mobile-nav-link">EXPERIENCE</a>
-			<a href="/sertifikat/" class="rf-tf-mobile-nav-link">CREDENTIALS</a>
+			<a href="#rf-credentials" class="rf-tf-mobile-nav-link">CREDENTIALS</a>
 			<a href="#rf-contact" class="rf-tf-mobile-nav-link">CONTACT</a>
 		</nav>
 	</header>
@@ -408,15 +408,10 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						<span class="rf-tf-section-kicker rf-tf-mono">// SELECTED WORKS</span>
 						<h2 class="rf-tf-section-title">Proyek Pilihan</h2>
 					</div>
-					<div class="rf-tf-works-controls">
-						<a href="/proyek/" class="rf-tf-all-projects-link">
-							ALL WORKS <span aria-hidden="true">→</span>
-						</a>
-					</div>
 				</div>
 
 
-				<!-- ── VIEW: 3D PERSPECTIVE CAROUSEL ──────────────────── -->
+				<!-- ── VIEW: 3D PERSPECTIVE CAROUSEL (IMAGE ONLY + SAME-PAGE PREVIEW) ──────────────────── -->
 				<div class="rf-tf-carousel-stage" id="rf-carousel-stage" aria-label="Carousel 3D proyek">
 							<div class="rf-showcase-container" data-rf-showcase aria-label="Koleksi Proyek Pilihan">
 
@@ -427,145 +422,50 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</button>
 
 				<div class="rf-carousel-track">
-											<article class="rf-carousel-card" data-index="0">
-							<div class="rf-card-media">
-																	<a href="/proyek/spk-siswa-berprestasi-topsis-sdn-3-way-laga/" class="rf-card-media-link" tabindex="-1">
-										<img src="/assets/img/thumbnails/thumb-spk-topsis.webp" alt="Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)" loading="lazy" />
-									</a>
-																<span class="rf-card-tag-floating ">SPK / Algoritma</span>
-							</div>
+					<article class="rf-carousel-card rf-carousel-card--image-only" data-index="0"
+						data-preview-img="/assets/img/thumbnails/thumb-spk-topsis.webp"
+						data-preview-title="Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)"
+						data-preview-badge="PROYEK PILIHAN · 01"
+						tabindex="0" role="button" aria-label="Pratinjau proyek Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)">
+						<div class="rf-card-media">
+							<img src="/assets/img/thumbnails/thumb-spk-topsis.webp" alt="Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)" loading="lazy" />
+						</div>
+						<div class="rf-card-glass-overlay" aria-hidden="true"></div>
+					</article>
 
-							<div class="rf-card-body">
-								<div class="rf-card-meta">
-									<span class="rf-card-code">PRJ-01 // Jul 2025 – Jul 2026</span>
-																			<span class="rf-card-tech">// PHP (Native) · MySQL · HTML5</span>
-																	</div>
+					<article class="rf-carousel-card rf-carousel-card--image-only" data-index="1"
+						data-preview-img="/assets/img/thumbnails/thumb-sim-barokah.webp"
+						data-preview-title="Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha"
+						data-preview-badge="PROYEK PILIHAN · 02"
+						tabindex="0" role="button" aria-label="Pratinjau proyek Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha">
+						<div class="rf-card-media">
+							<img src="/assets/img/thumbnails/thumb-sim-barokah.webp" alt="Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha" loading="lazy" />
+						</div>
+						<div class="rf-card-glass-overlay" aria-hidden="true"></div>
+					</article>
 
-								<h3 class="rf-card-title">
-									<a href="/proyek/spk-siswa-berprestasi-topsis-sdn-3-way-laga/">Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)</a>
-								</h3>
+					<article class="rf-carousel-card rf-carousel-card--image-only" data-index="2"
+						data-preview-img="/assets/img/thumbnails/thumb-portfolio-wp.webp"
+						data-preview-title="Website Portofolio &amp; Studi Kasus"
+						data-preview-badge="PROYEK PILIHAN · 03"
+						tabindex="0" role="button" aria-label="Pratinjau proyek Website Portofolio &amp; Studi Kasus">
+						<div class="rf-card-media">
+							<img src="/assets/img/thumbnails/thumb-portfolio-wp.webp" alt="Website Portofolio &amp; Studi Kasus" loading="lazy" />
+						</div>
+						<div class="rf-card-glass-overlay" aria-hidden="true"></div>
+					</article>
 
-								<p class="rf-card-desc">
-									Aplikasi web Sistem Pendukung Keputusan berbasis PHP &amp; MySQL dengan metode TOPSIS untuk membantu SDN 3&hellip;								</p>
-
-								<div class="rf-card-footer">
-									<div class="rf-card-action-links">
-																													</div>
-									<a href="/proyek/spk-siswa-berprestasi-topsis-sdn-3-way-laga/" class="rf-card-view-btn" title="Buka Studi Kasus">
-										<span>Studi Kasus</span>
-										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-									</a>
-								</div>
-							</div>
-
-							<!-- Frosted Glass Overlay for non-active cards -->
-							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
-						</article>
-											<article class="rf-carousel-card" data-index="1">
-							<div class="rf-card-media">
-																	<a href="/proyek/sistem-informasi-manajemen-inventaris-barokah-sedaya-usaha/" class="rf-card-media-link" tabindex="-1">
-										<img src="/assets/img/thumbnails/thumb-sim-barokah.webp" alt="Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha" loading="lazy" />
-									</a>
-																<span class="rf-card-tag-floating ">Fullstack Web</span>
-							</div>
-
-							<div class="rf-card-body">
-								<div class="rf-card-meta">
-									<span class="rf-card-code">PRJ-02 // Mar – Jun 2025</span>
-																			<span class="rf-card-tech">// PHP (Native) · MySQL · HTML5</span>
-																	</div>
-
-								<h3 class="rf-card-title">
-									<a href="/proyek/sistem-informasi-manajemen-inventaris-barokah-sedaya-usaha/">Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha</a>
-								</h3>
-
-								<p class="rf-card-desc">
-									Aplikasi web manajemen stok, transaksi barang masuk/keluar otomatis, dashboard monitoring filter cepat, dan ekspor laporan Excel/PDF&hellip;								</p>
-
-								<div class="rf-card-footer">
-									<div class="rf-card-action-links">
-																													</div>
-									<a href="/proyek/sistem-informasi-manajemen-inventaris-barokah-sedaya-usaha/" class="rf-card-view-btn" title="Buka Studi Kasus">
-										<span>Studi Kasus</span>
-										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-									</a>
-								</div>
-							</div>
-
-							<!-- Frosted Glass Overlay for non-active cards -->
-							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
-						</article>
-											<article class="rf-carousel-card" data-index="2">
-							<div class="rf-card-media">
-																	<a href="/proyek/website-portofolio-pribadi-wordpress-elementor/" class="rf-card-media-link" tabindex="-1">
-										<img src="/assets/img/thumbnails/thumb-portfolio-wp.webp" alt="Website Portofolio &#038; Studi Kasus — WordPress + Elementor" loading="lazy" />
-									</a>
-																<span class="rf-card-tag-floating ">WordPress</span>
-							</div>
-
-							<div class="rf-card-body">
-								<div class="rf-card-meta">
-									<span class="rf-card-code">PRJ-03 // 2026</span>
-																			<span class="rf-card-tech">// WordPress · Elementor · Child Theme</span>
-																	</div>
-
-								<h3 class="rf-card-title">
-									<a href="/proyek/website-portofolio-pribadi-wordpress-elementor/">Website Portofolio &#038; Studi Kasus — WordPress + Elementor</a>
-								</h3>
-
-								<p class="rf-card-desc">
-									Website portofolio pribadi dengan arsitektur standar digital agency: Hello Elementor Child Theme, Custom Plugin untuk CPT&hellip;								</p>
-
-								<div class="rf-card-footer">
-									<div class="rf-card-action-links">
-																					<a href="/" target="_blank" rel="noopener noreferrer" class="rf-action-chip">Demo</a>
-																													</div>
-									<a href="/proyek/website-portofolio-pribadi-wordpress-elementor/" class="rf-card-view-btn" title="Buka Studi Kasus">
-										<span>Studi Kasus</span>
-										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-									</a>
-								</div>
-							</div>
-
-							<!-- Frosted Glass Overlay for non-active cards -->
-							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
-						</article>
-											<article class="rf-carousel-card" data-index="3">
-							<div class="rf-card-media">
-																	<a href="/proyek/area51-pos-coffee-shop/" class="rf-card-media-link" tabindex="-1">
-										<img src="/assets/img/thumbnails/thumb-area51-pos.webp" alt="Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System" loading="lazy" />
-									</a>
-																<span class="rf-card-tag-floating rf-pill-homelab">Home Lab</span>
-							</div>
-
-							<div class="rf-card-body">
-								<div class="rf-card-meta">
-									<span class="rf-card-code">PRJ-04 // 2024</span>
-																			<span class="rf-card-tech">// PHP (Native Modular) · MySQL · Bootstrap 5.3</span>
-																	</div>
-
-								<h3 class="rf-card-title">
-									<a href="/proyek/area51-pos-coffee-shop/">Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System</a>
-								</h3>
-
-								<p class="rf-card-desc">
-									Aplikasi web operasional F&amp;B terpadu dengan fitur Self-Ordering meja, kasir POS cetak struk termal, Kitchen Display&hellip;								</p>
-
-								<div class="rf-card-footer">
-									<div class="rf-card-action-links">
-																															<a href="https://github.com/RafiRizqi" target="_blank" rel="noopener noreferrer" class="rf-action-chip">GitHub</a>
-																			</div>
-									<a href="/proyek/area51-pos-coffee-shop/" class="rf-card-view-btn" title="Buka Studi Kasus">
-										<span>Studi Kasus</span>
-										<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-									</a>
-								</div>
-							</div>
-
-							<!-- Frosted Glass Overlay for non-active cards -->
-							<div class="rf-card-glass-overlay" aria-hidden="true"></div>
-						</article>
-									</div>
+					<article class="rf-carousel-card rf-carousel-card--image-only" data-index="3"
+						data-preview-img="/assets/img/thumbnails/thumb-area51-pos.webp"
+						data-preview-title="Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System"
+						data-preview-badge="PROYEK PILIHAN · 04"
+						tabindex="0" role="button" aria-label="Pratinjau proyek Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System">
+						<div class="rf-card-media">
+							<img src="/assets/img/thumbnails/thumb-area51-pos.webp" alt="Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System" loading="lazy" />
+						</div>
+						<div class="rf-card-glass-overlay" aria-hidden="true"></div>
+					</article>
+				</div>
 
 				<button type="button" class="rf-carousel-btn rf-btn-next" aria-label="Geser ke proyek berikutnya" title="Berikutnya">
 					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
@@ -735,36 +635,62 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 					<span class="rf-tf-section-kicker rf-tf-mono">// VERIFIED CREDENTIALS</span>
 					<h2 class="rf-tf-section-title">Sertifikasi &amp; Lisensi</h2>
 				</div>
-								<div class="rf-tf-certs-grid">
-										<div class="rf-tf-cert-card">
-												<div class="rf-tf-cert-body">
+				<div class="rf-tf-certs-grid">
+					<button type="button" class="rf-tf-cert-card rf-preview-trigger"
+						data-preview-img="/assets/certs/cert-toefl-440.svg"
+						data-preview-title="Tes Kemampuan Bahasa Inggris (TOEFL — Skor 440)"
+						data-preview-badge="CERT-01 · 2025 · LEMBAGA BAHASA UNPAM">
+						<div class="rf-tf-cert-thumb">
+							<img src="/assets/certs/cert-toefl-440.svg" alt="Sertifikat TOEFL Skor 440" loading="lazy" width="320" height="180" />
+						</div>
+						<div class="rf-tf-cert-body">
 							<div class="rf-tf-cert-index rf-tf-mono">CERT-01</div>
 							<h3 class="rf-tf-cert-title">Tes Kemampuan Bahasa Inggris (TOEFL — Skor 440)</h3>
-																											</div>
-											</div>
-										<div class="rf-tf-cert-card">
-												<div class="rf-tf-cert-body">
+							<span class="rf-tf-cert-preview-cue rf-tf-mono">PRATINJAU ↗</span>
+						</div>
+					</button>
+
+					<button type="button" class="rf-tf-cert-card rf-preview-trigger"
+						data-preview-img="/assets/certs/cert-ketua-hima.svg"
+						data-preview-title="Ketua Umum HIMTIF"
+						data-preview-badge="CERT-02 · 2024–2025 · HIMTIF UNPAM">
+						<div class="rf-tf-cert-thumb">
+							<img src="/assets/certs/cert-ketua-hima.svg" alt="Sertifikat Ketua Umum HIMTIF" loading="lazy" width="320" height="180" />
+						</div>
+						<div class="rf-tf-cert-body">
 							<div class="rf-tf-cert-index rf-tf-mono">CERT-02</div>
 							<h3 class="rf-tf-cert-title">Ketua Umum HIMTIF</h3>
-																											</div>
-											</div>
-										<div class="rf-tf-cert-card">
-												<div class="rf-tf-cert-body">
+							<span class="rf-tf-cert-preview-cue rf-tf-mono">PRATINJAU ↗</span>
+						</div>
+					</button>
+
+					<button type="button" class="rf-tf-cert-card rf-preview-trigger"
+						data-preview-img="/assets/certs/cert-kampus-mengajar.svg"
+						data-preview-title="Kampus Mengajar Angkatan 7 — SDN 3 Way Laga"
+						data-preview-badge="CERT-03 · 2024 · KEMENDIKBUDRISTEK RI">
+						<div class="rf-tf-cert-thumb">
+							<img src="/assets/certs/cert-kampus-mengajar.svg" alt="Sertifikat Kampus Mengajar Angkatan 7" loading="lazy" width="320" height="180" />
+						</div>
+						<div class="rf-tf-cert-body">
 							<div class="rf-tf-cert-index rf-tf-mono">CERT-03</div>
 							<h3 class="rf-tf-cert-title">Kampus Mengajar Angkatan 7 — SDN 3 Way Laga</h3>
-																											</div>
-											</div>
-										<div class="rf-tf-cert-card">
-												<div class="rf-tf-cert-body">
+							<span class="rf-tf-cert-preview-cue rf-tf-mono">PRATINJAU ↗</span>
+						</div>
+					</button>
+
+					<button type="button" class="rf-tf-cert-card rf-preview-trigger"
+						data-preview-img="/assets/certs/cert-bnsp-garuda.svg"
+						data-preview-title="Sertifikasi Kompetensi BNSP — Skema Pemrograman (Predikat GARUDA)"
+						data-preview-badge="CERT-04 · 2025 · BNSP &amp; LSP UNPAM">
+						<div class="rf-tf-cert-thumb">
+							<img src="/assets/certs/cert-bnsp-garuda.svg" alt="Sertifikat Kompetensi BNSP Predikat GARUDA" loading="lazy" width="320" height="180" />
+						</div>
+						<div class="rf-tf-cert-body">
 							<div class="rf-tf-cert-index rf-tf-mono">CERT-04</div>
 							<h3 class="rf-tf-cert-title">Sertifikasi Kompetensi BNSP — Skema Pemrograman (Predikat GARUDA)</h3>
-																											</div>
-											</div>
-									</div>
-								<div class="rf-tf-certs-footer">
-					<a href="/sertifikat/" class="rf-tf-btn rf-tf-btn--ghost">
-						SEMUA CREDENTIALS → 
-					</a>
+							<span class="rf-tf-cert-preview-cue rf-tf-mono">PRATINJAU ↗</span>
+						</div>
+					</button>
 				</div>
 			</div>
 		</section>
@@ -835,79 +761,23 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	<!-- Reading / Scroll Progress Bar -->
 	<div id="rf-progress-bar" class="rf-progress-bar" aria-hidden="true"></div>
 	
-	<!-- Certificate Lightbox Modal (Rafi Portfolio Core v2.0.0) -->
-	<div id="rf-cert-modal" class="rf-cert-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rf-modal-title">
-		<div class="rf-cert-modal-card" role="document">
-			
-			<!-- Modal Header Bar -->
-			<div class="rf-cert-modal-header">
-				<div class="rf-cert-status-badge">
-					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-					<span>Dokumen Resmi Terverifikasi</span>
+	<!-- Native Same-Page Preview Dialog (Projects & Certificates) -->
+	<dialog id="rf-preview-dialog" class="rf-preview-dialog" closedby="any" aria-labelledby="rf-preview-dialog-title">
+		<div class="rf-preview-dialog__card">
+			<div class="rf-preview-dialog__header">
+				<div class="rf-preview-dialog__meta">
+					<span id="rf-preview-dialog-badge" class="rf-tf-mono rf-preview-dialog__badge">PRATINJAU</span>
+					<h3 id="rf-preview-dialog-title" class="rf-preview-dialog__title">Pratinjau</h3>
 				</div>
-				<button type="button" class="rf-cert-modal-close" aria-label="Tutup jendela pratinjau" title="Tutup (Esc)">
+				<button type="button" id="rf-preview-dialog-close" class="rf-preview-dialog__close" aria-label="Tutup jendela pratinjau" title="Tutup (Esc)">
 					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 				</button>
 			</div>
-
-			<!-- Modal Body: 2-Column Responsive Layout -->
-			<div class="rf-cert-modal-body">
-				
-				<!-- Left Column: Certificate Document Frame -->
-				<div class="rf-cert-preview-pane">
-					<div class="rf-cert-doc-frame" id="rf-modal-frame">
-						<img id="rf-modal-img" src="" alt="Pratinjau Dokumen Sertifikat" loading="lazy" />
-					</div>
-					<p class="rf-cert-doc-hint">Dokumen vektor resolusi tinggi resmi &bull; Bebas distorsi &amp; tajam</p>
-				</div>
-
-				<!-- Right Column: Verification Metadata & Actions -->
-				<div class="rf-cert-meta-pane">
-					<div class="rf-cert-meta-tags">
-						<span id="rf-modal-issuer" class="rf-pill rf-pill-primary">Penerbit</span>
-						<span id="rf-modal-date" class="rf-pill rf-pill-muted">Tahun</span>
-					</div>
-
-					<h3 id="rf-modal-title" class="rf-cert-modal-heading">Judul Sertifikat</h3>
-					
-					<p id="rf-modal-desc" class="rf-cert-modal-summary">Keterangan kompetensi sertifikasi.</p>
-
-					<!-- Credential Box with Copy Button -->
-					<div class="rf-cert-cred-card">
-						<div class="rf-cred-card-header">
-							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="13" y2="12"></line><circle cx="16" cy="16" r="2"></circle></svg>
-							<span class="rf-cred-label">Nomor / Predikat Kredensial</span>
-						</div>
-						<div class="rf-cred-card-body">
-							<code id="rf-modal-code" class="rf-cred-code-val"></code>
-							<button type="button" id="rf-modal-copy-btn" class="rf-copy-trigger" title="Salin ke Clipboard" aria-label="Salin nomor kredensial">
-								<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-								<span class="rf-copy-text">Salin</span>
-							</button>
-						</div>
-					</div>
-
-					<!-- Security Notice -->
-					<div class="rf-cert-security-note">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#16a34a" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-						<span>Tervalidasi secara akademis dan profesional dalam portofolio resmi Muhammad Rafi Rizqi.</span>
-					</div>
-
-					<!-- Action Buttons -->
-					<div class="rf-cert-modal-actions">
-						<a id="rf-modal-full-link" href="#" target="_blank" rel="noopener noreferrer" class="rf-btn-full-doc">
-							<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-							<span>Buka Resolusi Penuh</span>
-						</a>
-						<button type="button" class="rf-btn-modal-dismiss rf-modal-close-btn">Tutup</button>
-					</div>
-
-				</div>
-
+			<div class="rf-preview-dialog__media">
+				<img id="rf-preview-dialog-img" src="" alt="Pratinjau visual" />
 			</div>
-
 		</div>
-	</div>
+	</dialog>
 		<!-- Floating Command Palette Pill Trigger -->
 	<button type="button" id="rf-palette-trigger" class="rf-palette-trigger" aria-label="Buka Spotlight Search (Ctrl + K)" title="Buka Spotlight Search (Ctrl + K)">
 		<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -955,26 +825,26 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						<span class="rf-item-badge">Navigasi</span>
 					</a>
 
-					<a href="/proyek/" class="rf-palette-item" role="option" data-keywords="proyek karya studi kasus portofolio web aplikasi coverflow">
+					<a href="#rf-works" class="rf-palette-item" role="option" data-keywords="proyek karya studi kasus portofolio web aplikasi coverflow">
 						<span class="rf-item-icon">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
 						</span>
 						<div class="rf-item-text">
-							<span class="rf-item-label">Studi Kasus &amp; Proyek</span>
-							<span class="rf-item-desc">Koleksi sistem POS, inventaris, dan web app</span>
+							<span class="rf-item-label">Proyek Pilihan</span>
+							<span class="rf-item-desc">Galeri 3D visual sistem POS, inventaris, dan web app</span>
 						</div>
-						<span class="rf-item-badge">Navigasi</span>
+						<span class="rf-item-badge">Bagian</span>
 					</a>
 
-					<a href="/sertifikat/" class="rf-palette-item" role="option" data-keywords="sertifikat lisensi bnsp ketua umum himtif hima kampus mengajar toefl akreditasi">
+					<a href="#rf-credentials" class="rf-palette-item" role="option" data-keywords="sertifikat lisensi bnsp ketua umum himtif hima kampus mengajar toefl akreditasi">
 						<span class="rf-item-icon">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
 						</span>
 						<div class="rf-item-text">
-							<span class="rf-item-label">Sertifikat &amp; Pencapaian</span>
+							<span class="rf-item-label">Sertifikat &amp; Lisensi</span>
 							<span class="rf-item-desc">Sertifikasi BNSP Garuda, Ketua Umum HIMTIF, Kemendikbud</span>
 						</div>
-						<span class="rf-item-badge">Navigasi</span>
+						<span class="rf-item-badge">Bagian</span>
 					</a>
 
 					<a href="/kontak/" class="rf-palette-item" role="option" data-keywords="kontak hubungi email whatsapp pamulang tangerang selatan peluang kerja pesan">
@@ -989,52 +859,68 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 					</a>
 				</div>
 
-				<!-- Group 2: Studi Kasus Proyek Unggulan (Quick Jump) -->
+				<!-- Group 2: Pratinjau Proyek Unggulan (Same-Page) -->
 				<div class="rf-palette-group" data-group="proyek">
-					<div class="rf-group-title">Studi Kasus Proyek</div>
+					<div class="rf-group-title">Pratinjau Proyek</div>
 
-					<a href="/proyek/area51-pos-coffee-shop/" class="rf-palette-item" role="option" data-keywords="area51 pos kasir self ordering kitchen display system kds php mysql bootstrap home lab">
+					<a href="#rf-works" class="rf-palette-item rf-preview-trigger" role="option"
+						data-preview-img="/assets/img/thumbnails/thumb-area51-pos.webp"
+						data-preview-title="Area51 — Self-Ordering, POS Kasir &amp; Kitchen Display System"
+						data-preview-badge="PROYEK PILIHAN · 04"
+						data-keywords="area51 pos kasir self ordering kitchen display system kds php mysql bootstrap home lab">
 						<span class="rf-item-icon rf-icon-proj">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
 						</span>
 						<div class="rf-item-text">
 							<span class="rf-item-label">Area51 — Self-Ordering &amp; POS Kasir F&amp;B</span>
-							<span class="rf-item-desc">Home Lab &bull; PHP Modular, MySQL, AJAX Kitchen Display</span>
+							<span class="rf-item-desc">Pratinjau gambar &bull; PHP Modular, MySQL, AJAX Kitchen Display</span>
 						</div>
-						<span class="rf-item-badge rf-badge-proj">Proyek</span>
+						<span class="rf-item-badge rf-badge-proj">Pratinjau</span>
 					</a>
 
-					<a href="/proyek/sistem-informasi-manajemen-inventaris-barokah-sedaya-usaha/" class="rf-palette-item" role="option" data-keywords="inventaris sim barokah sedaya usaha gudang barang stok masuk keluar laporan excel pdf">
+					<a href="#rf-works" class="rf-palette-item rf-preview-trigger" role="option"
+						data-preview-img="/assets/img/thumbnails/thumb-sim-barokah.webp"
+						data-preview-title="Sistem Informasi Manajemen Inventaris — CV. Barokah Sedaya Usaha"
+						data-preview-badge="PROYEK PILIHAN · 02"
+						data-keywords="inventaris sim barokah sedaya usaha gudang barang stok masuk keluar laporan excel pdf">
 						<span class="rf-item-icon rf-icon-proj">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
 						</span>
 						<div class="rf-item-text">
 							<span class="rf-item-label">Sistem Informasi Manajemen Inventaris</span>
-							<span class="rf-item-desc">CV. Barokah Sedaya Usaha &bull; PHP, MySQL, Mutasi Stok</span>
+							<span class="rf-item-desc">Pratinjau gambar &bull; CV. Barokah Sedaya Usaha</span>
 						</div>
-						<span class="rf-item-badge rf-badge-proj">Proyek</span>
+						<span class="rf-item-badge rf-badge-proj">Pratinjau</span>
 					</a>
 
-					<a href="/proyek/spk-siswa-berprestasi-topsis-sdn-3-way-laga/" class="rf-palette-item" role="option" data-keywords="spk topsis sistem pendukung keputusan skripsi sdn 3 way laga algoritma normalisasi kriteria">
+					<a href="#rf-works" class="rf-palette-item rf-preview-trigger" role="option"
+						data-preview-img="/assets/img/thumbnails/thumb-spk-topsis.webp"
+						data-preview-title="Sistem Pendukung Keputusan Siswa Berprestasi (TOPSIS)"
+						data-preview-badge="PROYEK PILIHAN · 01"
+						data-keywords="spk topsis sistem pendukung keputusan skripsi sdn 3 way laga algoritma normalisasi kriteria">
 						<span class="rf-item-icon rf-icon-proj">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
 						</span>
 						<div class="rf-item-text">
 							<span class="rf-item-label">SPK Siswa Berprestasi Metode TOPSIS</span>
-							<span class="rf-item-desc">SDN 3 Way Laga &bull; Algoritma TOPSIS, Rekomendasi Objektif</span>
+							<span class="rf-item-desc">Pratinjau gambar &bull; SDN 3 Way Laga</span>
 						</div>
-						<span class="rf-item-badge rf-badge-proj">Proyek</span>
+						<span class="rf-item-badge rf-badge-proj">Pratinjau</span>
 					</a>
 
-					<a href="/proyek/website-portofolio-pribadi-wordpress-elementor/" class="rf-palette-item" role="option" data-keywords="portofolio wordpress elementor child theme cpt shortcode agency performa seo">
+					<a href="#rf-works" class="rf-palette-item rf-preview-trigger" role="option"
+						data-preview-img="/assets/img/thumbnails/thumb-portfolio-wp.webp"
+						data-preview-title="Website Portofolio &amp; Studi Kasus"
+						data-preview-badge="PROYEK PILIHAN · 03"
+						data-keywords="portofolio web desain tampilan agency performa seo">
 						<span class="rf-item-icon rf-icon-proj">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
 						</span>
 						<div class="rf-item-text">
-							<span class="rf-item-label">Website Portofolio — WordPress + Elementor</span>
-							<span class="rf-item-desc">Hello Child Theme, Custom Core Plugin, Zero Lag</span>
+							<span class="rf-item-label">Website Portofolio &amp; Studi Kasus</span>
+							<span class="rf-item-desc">Pratinjau gambar &bull; Arsitektur Web Portofolio</span>
 						</div>
-						<span class="rf-item-badge rf-badge-proj">Proyek</span>
+						<span class="rf-item-badge rf-badge-proj">Pratinjau</span>
 					</a>
 				</div>
 
@@ -1145,9 +1031,9 @@ var wpcf7 = {
 </script>
 <script id="contact-form-7-js" src="/assets/vendor/cf7/index.js?ver=6.2.5"></script>
 <script id="rafi-portfolio-filter-js" src="/assets/js/portfolio-filter.js?ver=2.4.0" defer="defer"></script>
-<script id="rafi-portfolio-carousel-js" src="/assets/js/carousel.js" defer="defer"></script>
+<script id="rafi-portfolio-carousel-js" src="/assets/js/carousel.js?v=20261125b" defer="defer"></script>
 <script id="rafi-portfolio-cv-js" src="/assets/js/portfolio-cv.js?ver=2.4.0" defer="defer"></script>
-<script id="rafi-portfolio-modal-js" src="/assets/js/portfolio-modal.js?ver=2.4.0" defer="defer"></script>
+<script id="rafi-portfolio-modal-js" src="/assets/js/portfolio-modal.js?v=20261125b" defer="defer"></script>
 <script id="rafi-portfolio-palette-js" src="/assets/js/portfolio-palette.js?ver=2.4.0" defer="defer"></script>
 <script id="elementor-webpack-runtime-js" src="/assets/vendor/elementor/js/webpack.runtime.min.js?ver=4.4.1"></script>
 <script id="elementor-frontend-modules-js" src="/assets/vendor/elementor/js/frontend-modules.min.js?ver=4.4.1"></script>
