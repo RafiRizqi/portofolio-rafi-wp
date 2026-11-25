@@ -1119,12 +1119,17 @@ body.page .site-footer:not(.rf-tf-footer) {
    ══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
 	/* Hero */
-	#rf-tf-root .rf-tf-hero-top {
-		grid-template-columns: 1fr;
-		gap: 28px;
+	#rf-tf-root .rf-tf-hero {
+		padding: 48px 0 60px;
 	}
-	#rf-tf-root .rf-tf-portrait-card {
-		max-width: 220px;
+	#rf-tf-root .rf-tf-hero-top {
+		grid-template-columns: minmax(0, 1fr) 175px;
+		gap: 24px;
+		margin-bottom: 32px;
+	}
+	#rf-tf-root .rf-tf-hero-headline {
+		font-size: clamp(2.4rem, 7vw, 3.6rem);
+		margin-bottom: 18px;
 	}
 
 	/* Header */
@@ -1153,8 +1158,18 @@ body.page .site-footer:not(.rf-tf-footer) {
 	#rf-tf-root .rf-tf-footer__inner { flex-direction: column; align-items: flex-start; }
 }
 
-@media (max-width: 480px) {
-	#rf-tf-root .rf-tf-hero-headline { font-size: clamp(2.5rem, 14vw, 3.5rem); }
+@media (max-width: 560px) {
+	#rf-tf-root .rf-tf-hero-top {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+	#rf-tf-root .rf-tf-portrait-card {
+		width: 100%;
+		max-width: 190px;
+	}
+	#rf-tf-root .rf-tf-hero-headline {
+		font-size: clamp(2.35rem, 11.5vw, 3.2rem);
+	}
 	#rf-tf-root .rf-tf-certs-grid { grid-template-columns: 1fr; }
 	#rf-tf-root .rf-tf-hero-meta-grid { padding: 16px; }
 	#rf-tf-root .rf-tf-contact-headline { font-size: 2rem; }
