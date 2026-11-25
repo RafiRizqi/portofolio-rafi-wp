@@ -24,7 +24,7 @@ Live Website: **[portfolio-rafirizqi.vercel.app](https://portfolio-rafirizqi.ver
 - **Frontend**: Vanilla ES6+, CSS Grid, Flexbox, Web Audio API
 - **Backend Architecture**: PHP 8.3, CodeIgniter 4, Laravel, REST APIs, RBAC
 - **Databases**: MySQL, Relational Schema Design, Query Indexing, ACID Transactions
-- **DevOps & Infrastructure**: Proxmox VE, Docker, Ubuntu Server LTS, Nginx Reverse Proxy, Cloudflare Zero Trust Tunnels
+- **DevOps & Deployment**: Vercel, GitHub CI/CD, Docker, Nginx Reverse Proxy, Cloudflare Zero Trust Tunnels
 
 ---
 
@@ -47,10 +47,9 @@ Live Website: **[portfolio-rafirizqi.vercel.app](https://portfolio-rafirizqi.ver
 
 ## 📬 Contact & Connect
 - **Email**: [rafi02062003@gmail.com](mailto:rafi02062003@gmail.com)
-- **WhatsApp**: [+62 857-2233-7099](https://wa.me/6285722337099)
-- **LinkedIn**: [linkedin.com/in/rafi-rizqi](https://linkedin.com/in/rafi-rizqi)
+- **WhatsApp**: [+62 895-7053-72344](https://wa.me/62895705372344)
 - **GitHub**: [github.com/RafiRizqi](https://github.com/RafiRizqi)
-- **Instagram**: [@rafi_rizqi02](https://instagram.com/rafi_rizqi02)
+- **Instagram**: [@rafirizqi_](https://instagram.com/rafirizqi_)
 
 ---
 © 2026 Muhammad Rafi Rizqi. All rights reserved.

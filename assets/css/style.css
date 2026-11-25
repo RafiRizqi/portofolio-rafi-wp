@@ -1029,7 +1029,7 @@
 #rf-tf-root .rf-tf-footer__inner {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	flex-wrap: wrap;
 	gap: 12px;
 	font-size: 0.68rem;
