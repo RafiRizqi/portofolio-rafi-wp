@@ -36,6 +36,26 @@
   ],
   "redirects": [
     {
+      "source": "/cv/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/cv/:path*",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/kontak/",
+      "destination": "/#rf-contact",
+      "permanent": false
+    },
+    {
+      "source": "/kontak/:path*",
+      "destination": "/#rf-contact",
+      "permanent": false
+    },
+    {
       "source": "/proyek/",
       "destination": "/#rf-works",
       "permanent": false

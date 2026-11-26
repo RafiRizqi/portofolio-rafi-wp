@@ -38,7 +38,7 @@
 
 <!-- Google Fonts & Main Stylesheet -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" media="all" />
-<link rel="stylesheet" id="rafi-taqy-farline-css" href="/assets/css/style.css?v=20261126j" media="all" />
+<link rel="stylesheet" id="rafi-taqy-farline-css" href="/assets/css/style.css?v=20261126k" media="all" />
 
 <!-- JSON-LD SEO Structured Data -->
 <script type="application/ld+json">{
@@ -285,9 +285,14 @@
 						title="Salin email ke clipboard">
 						<span id="rf-copy-label">SALIN EMAIL 📋</span>
 					</button>
-					<a href="/cv/" class="rf-tf-btn rf-tf-btn--secondary">
+					<button type="button" class="rf-tf-btn rf-tf-btn--secondary rf-preview-trigger"
+						data-preview-img="/assets/docs/cv-preview.webp"
+						data-preview-download="/assets/docs/CV-Muhammad-Rafi-Rizqi.pdf"
+						data-preview-download-name="CV-Muhammad-Rafi-Rizqi.pdf"
+						data-preview-title="Curriculum Vitae — Muhammad Rafi Rizqi"
+						data-preview-badge="CV · PDF RESMI · 2026">
 						UNDUH CV <span aria-hidden="true">↗</span>
-					</a>
+					</button>
 					<a href="https://github.com/RafiRizqi" target="_blank" rel="noopener noreferrer"
 						class="rf-tf-btn rf-tf-btn--ghost">
 						GITHUB <span aria-hidden="true">↗</span>
@@ -842,9 +847,12 @@
 					<span id="rf-preview-dialog-badge" class="rf-tf-mono rf-preview-dialog__badge">PRATINJAU</span>
 					<h3 id="rf-preview-dialog-title" class="rf-preview-dialog__title">Pratinjau</h3>
 				</div>
-				<button type="button" id="rf-preview-dialog-close" class="rf-preview-dialog__close" aria-label="Tutup jendela pratinjau" title="Tutup (Esc)">
-					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-				</button>
+				<div class="rf-preview-dialog__actions">
+					<a id="rf-preview-dialog-download" class="rf-preview-dialog__download" href="#" download hidden>Unduh PDF &darr;</a>
+					<button type="button" id="rf-preview-dialog-close" class="rf-preview-dialog__close" aria-label="Tutup jendela pratinjau" title="Tutup (Esc)">
+						<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+					</button>
+				</div>
 			</div>
 			<div class="rf-preview-dialog__pages" id="rf-preview-dialog-pages" hidden>
 				<button type="button" id="rf-preview-page-1" class="rf-preview-page-btn is-active">Halaman 1 · Sertifikat</button>
@@ -984,7 +992,7 @@
 						<span class="rf-item-badge">Bagian</span>
 					</a>
 
-					<a href="#rf-contact" class="rf-palette-item" role="option" data-keywords="kontak hubungi email whatsapp instagram pamulang peluang kerja">
+					<a href="#rf-contact" class="rf-palette-item" role="option" data-keywords="kontak hubungi email whatsapp instagram depok sawangan peluang kerja">
 						<span class="rf-item-icon">
 							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
 						</span>
@@ -994,6 +1002,23 @@
 						</div>
 						<span class="rf-item-badge">Bagian</span>
 					</a>
+
+					<button type="button" class="rf-palette-item rf-preview-trigger" role="option"
+						data-preview-img="/assets/docs/cv-preview.webp"
+						data-preview-download="/assets/docs/CV-Muhammad-Rafi-Rizqi.pdf"
+						data-preview-download-name="CV-Muhammad-Rafi-Rizqi.pdf"
+						data-preview-title="Curriculum Vitae — Muhammad Rafi Rizqi"
+						data-preview-badge="CV · PDF RESMI · 2026"
+						data-keywords="cv resume pdf unduh download curriculum vitae">
+						<span class="rf-item-icon rf-icon-action">
+							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+						</span>
+						<div class="rf-item-text">
+							<span class="rf-item-label">Curriculum Vitae (PDF)</span>
+							<span class="rf-item-desc">Pratinjau &amp; unduh CV resmi Muhammad Rafi Rizqi</span>
+						</div>
+						<span class="rf-item-badge rf-badge-action">Pratinjau</span>
+					</button>
 				</div>
 
 				<!-- Group 2: Pratinjau Proyek Unggulan (Same-Page) -->
@@ -1152,7 +1177,7 @@
 		</div>
 	</div>
 	<script id="rafi-portfolio-carousel-js" src="/assets/js/carousel.js?v=20261126d" defer="defer"></script>
-	<script id="rafi-portfolio-modal-js" src="/assets/js/portfolio-modal.js?v=20261126j" defer="defer"></script>
+	<script id="rafi-portfolio-modal-js" src="/assets/js/portfolio-modal.js?v=20261126k" defer="defer"></script>
 	<script id="rafi-portfolio-palette-js" src="/assets/js/portfolio-palette.js?v=20261126g" defer="defer"></script>
 	<script id="rafi-taqy-farline-js" src="/assets/js/app.js?v=20261126g"></script>
 </body>

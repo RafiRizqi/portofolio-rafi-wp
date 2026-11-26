@@ -1,6 +1,6 @@
 /**
- * Rafi Portfolio Core — Native Same-Page Preview Dialog (Projects & Certificates)
- * Supports optional Page 1 / Page 2 toggle (e.g. BNSP certificate + 9 Units of Competency).
+ * Rafi Portfolio Core — Native Same-Page Preview Dialog (Projects, Certificates & CV)
+ * Supports optional Page 1 / Page 2 toggle and direct file download inside the dialog.
  */
 document.addEventListener('DOMContentLoaded', function () {
 	var previewDialog = document.getElementById('rf-preview-dialog');
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var pTitle = document.getElementById('rf-preview-dialog-title');
 	var pBadge = document.getElementById('rf-preview-dialog-badge');
 	var pClose = document.getElementById('rf-preview-dialog-close');
+	var pDownload = document.getElementById('rf-preview-dialog-download');
 	var pPages = document.getElementById('rf-preview-dialog-pages');
 	var pPage1Btn = document.getElementById('rf-preview-page-1');
 	var pPage2Btn = document.getElementById('rf-preview-page-2');
@@ -43,6 +44,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		if (pTitle) pTitle.textContent = activeTitle;
 		if (pBadge) pBadge.textContent = detail.badge || 'PRATINJAU';
+
+		if (pDownload) {
+			if (detail.download) {
+				pDownload.hidden = false;
+				pDownload.href = detail.download;
+				if (detail.downloadName) {
+					pDownload.setAttribute('download', detail.downloadName);
+				} else {
+					pDownload.setAttribute('download', '');
+				}
+			} else {
+				pDownload.hidden = true;
+				pDownload.removeAttribute('href');
+			}
+		}
 
 		if (pPages) {
 			if (activeAltImg) {
@@ -88,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
 				img: el.getAttribute('data-preview-img'),
 				imgAlt: el.getAttribute('data-preview-img-alt'),
 				altLabel: el.getAttribute('data-preview-alt-label'),
+				download: el.getAttribute('data-preview-download'),
+				downloadName: el.getAttribute('data-preview-download-name'),
 				title: el.getAttribute('data-preview-title'),
 				badge: el.getAttribute('data-preview-badge')
 			});
