@@ -862,6 +862,65 @@
 	line-height: 1.6;
 }
 
+#rf-tf-root .rf-tech-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+#rf-tf-root .rf-tech-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 6px 11px;
+	background: var(--tf-bg);
+	border: 1px solid var(--tf-border);
+	border-radius: 8px;
+	font-family: var(--tf-font-mono);
+	font-size: 0.74rem;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: 0.01em;
+	color: var(--tf-ink);
+	box-shadow: 0 1px 2px rgba(9, 13, 22, 0.04);
+	transition: transform var(--tf-dur) var(--tf-ease), border-color var(--tf-dur) var(--tf-ease), box-shadow var(--tf-dur) var(--tf-ease);
+}
+
+#rf-tf-root .rf-tech-pill:hover {
+	transform: translateY(-1px);
+	border-color: var(--tf-border-md);
+	box-shadow: 0 4px 10px -4px rgba(9, 13, 22, 0.12);
+}
+
+#rf-tf-root .rf-tech-pill__icon {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#rf-tf-root .rf-tech-pill__icon svg {
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+
+#rf-tf-root .rf-tech-pill--concept {
+	background: transparent;
+	border: 1px dashed var(--tf-border-md);
+	color: var(--tf-ink-mid);
+	font-weight: 500;
+	box-shadow: none;
+}
+
+#rf-tf-root .rf-tech-pill--concept:hover {
+	border-color: var(--tf-ink-muted);
+	box-shadow: none;
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    7. EXPERIENCE LEDGER
    ══════════════════════════════════════════════════════════════════════ */
