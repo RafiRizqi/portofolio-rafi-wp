@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-rafirizqi.vercel.app/sitemap.xml
