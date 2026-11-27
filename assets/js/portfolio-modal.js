@@ -1,6 +1,6 @@
 /**
  * Rafi Portfolio Core — Native Same-Page Preview Dialog (Projects, Certificates & CV)
- * Supports optional Page 1 / Page 2 toggle and direct file download inside the dialog.
+ * Supports multi-slide switcher (data-preview-gallery or Page 1/2 alt) and direct file download.
  */
 document.addEventListener('DOMContentLoaded', function () {
 	var previewDialog = document.getElementById('rf-preview-dialog');
@@ -12,35 +12,77 @@ document.addEventListener('DOMContentLoaded', function () {
 	var pClose = document.getElementById('rf-preview-dialog-close');
 	var pDownload = document.getElementById('rf-preview-dialog-download');
 	var pPages = document.getElementById('rf-preview-dialog-pages');
-	var pPage1Btn = document.getElementById('rf-preview-page-1');
-	var pPage2Btn = document.getElementById('rf-preview-page-2');
 
-	var activeMainImg = '';
-	var activeAltImg = '';
+	var activeSlides = [];
 	var activeTitle = '';
 
-	function setActivePage(page) {
-		if (!pImg) return;
-		var isSecond = page === 2 && Boolean(activeAltImg);
-		pImg.src = isSecond ? activeAltImg : activeMainImg;
+	function buildSlides(detail) {
+		var slides = [];
+		if (detail.gallery) {
+			detail.gallery.split(';').forEach(function (entry) {
+				var sep = entry.indexOf('|');
+				if (sep !== -1) {
+					var label = entry.slice(0, sep).trim();
+					var url = entry.slice(sep + 1).trim();
+					if (label && url) slides.push({ label: label, img: url });
+				}
+			});
+		}
+		if (slides.length === 0) {
+			slides.push({ label: 'Halaman 1 · Sertifikat', img: detail.img });
+			if (detail.imgAlt) {
+				slides.push({
+					label: detail.altLabel || 'Halaman 2 · Daftar Unit',
+					img: detail.imgAlt
+				});
+			}
+		}
+		return slides;
+	}
+
+	function setActiveSlide(index) {
+		if (!pImg || !activeSlides[index]) return;
+		var slide = activeSlides[index];
+		pImg.src = slide.img;
 		pImg.alt = activeTitle
-			? 'Pratinjau (' + (isSecond ? 'Halaman 2' : 'Halaman 1') + '): ' + activeTitle
+			? 'Pratinjau (' + slide.label + '): ' + activeTitle
 			: 'Pratinjau visual';
-		if (pPage1Btn) {
-			pPage1Btn.classList.toggle('is-active', !isSecond);
-			pPage1Btn.setAttribute('aria-pressed', String(!isSecond));
+
+		if (pPages) {
+			var buttons = pPages.querySelectorAll('.rf-preview-page-btn');
+			buttons.forEach(function (btn, idx) {
+				var active = idx === index;
+				btn.classList.toggle('is-active', active);
+				btn.setAttribute('aria-pressed', String(active));
+			});
 		}
-		if (pPage2Btn) {
-			pPage2Btn.classList.toggle('is-active', isSecond);
-			pPage2Btn.setAttribute('aria-pressed', String(isSecond));
+	}
+
+	function renderSlideTabs() {
+		if (!pPages) return;
+		pPages.innerHTML = '';
+		if (activeSlides.length < 2) {
+			pPages.hidden = true;
+			return;
 		}
+		pPages.hidden = false;
+		activeSlides.forEach(function (slide, idx) {
+			var btn = document.createElement('button');
+			btn.type = 'button';
+			btn.className = 'rf-preview-page-btn' + (idx === 0 ? ' is-active' : '');
+			btn.setAttribute('aria-pressed', String(idx === 0));
+			btn.textContent = slide.label;
+			btn.addEventListener('click', function () {
+				setActiveSlide(idx);
+			});
+			pPages.appendChild(btn);
+		});
 	}
 
 	function showPreviewDialog(detail) {
 		if (!detail || !detail.img) return;
-		activeMainImg = detail.img;
-		activeAltImg = detail.imgAlt || '';
 		activeTitle = detail.title || 'Pratinjau';
+		activeSlides = buildSlides(detail);
 
 		if (pTitle) pTitle.textContent = activeTitle;
 		if (pBadge) pBadge.textContent = detail.badge || 'PRATINJAU';
@@ -49,44 +91,19 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (detail.download) {
 				pDownload.hidden = false;
 				pDownload.href = detail.download;
-				if (detail.downloadName) {
-					pDownload.setAttribute('download', detail.downloadName);
-				} else {
-					pDownload.setAttribute('download', '');
-				}
+				pDownload.setAttribute('download', detail.downloadName || '');
 			} else {
 				pDownload.hidden = true;
 				pDownload.removeAttribute('href');
 			}
 		}
 
-		if (pPages) {
-			if (activeAltImg) {
-				pPages.hidden = false;
-				if (pPage2Btn && detail.altLabel) {
-					pPage2Btn.textContent = detail.altLabel;
-				}
-			} else {
-				pPages.hidden = true;
-			}
-		}
-
-		setActivePage(1);
+		renderSlideTabs();
+		setActiveSlide(0);
 
 		if (!previewDialog.open) {
 			previewDialog.showModal();
 		}
-	}
-
-	if (pPage1Btn) {
-		pPage1Btn.addEventListener('click', function () {
-			setActivePage(1);
-		});
-	}
-	if (pPage2Btn) {
-		pPage2Btn.addEventListener('click', function () {
-			setActivePage(2);
-		});
 	}
 
 	document.addEventListener('rf:openPreview', function (e) {
@@ -102,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			e.preventDefault();
 			showPreviewDialog({
 				img: el.getAttribute('data-preview-img'),
+				gallery: el.getAttribute('data-preview-gallery'),
 				imgAlt: el.getAttribute('data-preview-img-alt'),
 				altLabel: el.getAttribute('data-preview-alt-label'),
 				download: el.getAttribute('data-preview-download'),

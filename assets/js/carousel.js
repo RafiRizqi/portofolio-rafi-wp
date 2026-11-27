@@ -131,6 +131,7 @@
 						document.dispatchEvent(new CustomEvent('rf:openPreview', {
 							detail: {
 								img: card.dataset.previewImg,
+								gallery: card.dataset.previewGallery || '',
 								title: card.dataset.previewTitle || '',
 								badge: card.dataset.previewBadge || 'PROYEK PILIHAN'
 							}
@@ -144,6 +145,7 @@
 						document.dispatchEvent(new CustomEvent('rf:openPreview', {
 							detail: {
 								img: card.dataset.previewImg,
+								gallery: card.dataset.previewGallery || '',
 								title: card.dataset.previewTitle || '',
 								badge: card.dataset.previewBadge || 'PROYEK PILIHAN'
 							}
